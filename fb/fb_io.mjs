@@ -6,6 +6,7 @@
 // All variables & function begin with fb_  all const with FB_
 // Diagnostic code lines have a comment appended to them //DIAG
 /**************************************************************/
+
 const COL_C = 'white';	    // These two const are part of the coloured 	
 const COL_B = '#CD7F32';	//  console.log for functions scheme
 console.log('%c fb_io.mjs',
@@ -19,8 +20,7 @@ let userDetails = {
     displayName:'n/a',
     email:'n/a',
     photoURL: 'n/a',
-    uid:'n/a' };
-
+    uid:'n/a' {}
 
 /**************************************************************/
 // Import all external constants & functions required
