@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>13COMP firebase</title>
+    <title>12COMP firebase</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- stylesheets *******************************************-->
     <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" type="text/css" href="./style.css">
@@ -13,24 +14,28 @@
     <!-- firebase end ******************************************-->
 </head>
 
+<!--*************************************************************
+  BODY
+**************************************************************-->
 <body>
-    <header class="container">
-        <h1 class="w3-center">Welcome to Aditi's game project!</h1>
-    </header>
+  <header class="container">
+    <div class="w3-center" style="border: 9px dotted #000; padding: 20px; margin-top: 20px;">
 
-    <section>
-        <div class="container">
-            <div class="column">
-                <div class="w3-container w3-center" style="margin-top: 100px; font-size: 38px;">
-                    <button onclick="fb_authenticate()">LOGIN</button>
-                    <h1>Please login in to move on! </h1>
-                </div>
-            </div>
-        </div>
-    </section>
+      <h1 class="w3-center" style="font-family: 'Luckiest Guy', cursive; font-size: 50px;">
+        Welcome to Aditi's game project!!
+      </h1>
 
-    <!-- Your JS files & main module ***************************-->
-    <script type="module" src="./main.mjs"></script> 
-</body> 
-    <html>
-   
+      <div class="w3-container w3-center" style="margin-top: 40px; font-size: 38px;">
+        <button onclick="fb_authenticate()">LOGIN</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Your JS files & main module ***************************-->
+  <script type="module" src="./main.mjs"></script>
+</body>
+</html>
+
+<!--*************************************************************
+  END OF INDEX.HTML
+**************************************************************-->

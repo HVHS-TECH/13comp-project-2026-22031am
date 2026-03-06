@@ -1,7 +1,7 @@
 /**************************************************************/
 // main.mjs
 // Main entry for index.html
-// Written by Aditi Modi <Your Name Here>, Term 1 2026?
+// Written by Aditi Modi , Term 1 2026?
 /**************************************************************/
 
 const COL_C = 'white';	   	

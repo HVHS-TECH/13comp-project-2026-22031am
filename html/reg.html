@@ -17,3 +17,65 @@
 <!--*************************************************************
   BODY
 **************************************************************-->
+<body style="margin: 0; min-height: 100vh; background: 
+linear-gradient(135deg, #97c2f0, #d197f0); font-family: sans-serif;">
+
+  <h2 style="text-align: center; margin-top: 30px;">REGISTRATION FORM!</h2>
+  <div class="subtext" style="text-align: center; font-size: 24px; margin-bottom: 30px;">
+    Please enter in your details
+  </div>
+
+  <!-- Centered Form Container -->
+  <div class="form-box" style="max-width: 400px; margin: 0 auto; padding: 20px;">
+    <form id="f_userDetails" onsubmit="return false;">
+      
+      <div class="form-row" style="margin-bottom: 15px;">
+        <label for="i_displayName" style="font-weight: bold; color: darkgreen;">displayName:</label><br />
+        <input type="text" id="i_displayName" name="i_displayName" required maxlength="12" style="width: 100%;" />
+      </div>
+
+      <div class="form-row" style="margin-bottom: 15px;">
+        <label for="i_age" style="font-weight: bold; color: darkgreen;">Age:</label><br />
+        <input type="number" id="i_age" name="i_age" min="1" max="100" required style="width: 100%;" />
+      </div>
+
+      <div class="form-row" style="margin-bottom: 15px;">
+        <label for="i_sex" style="font-weight: bold; color: darkgreen;">Sex:</label><br />
+        <select id="i_sex" name="i_sex" required style="width: 100%;">
+          <option value="">-- Please select --</option>
+          <option value="female">Female</option>
+          <option value="male">Male</option>
+          <option value="prefer not to say">Prefer not to say</option>
+        </select>
+      </div>
+
+      <div class="form-row" style="margin-bottom: 25px;">
+        <label for="i_email" style="font-weight: bold; color: darkgreen;">Email:</label><br />
+        <input type="email" id="i_email" name="i_email" required style="width: 100%;" />
+      </div>
+
+    <div style="
+      position: absolute;
+      top: 32%;     
+      left: 180%;    
+">
+  <button id="registerBtn" style="
+    background-color: #7fffbf;
+    border: 2px dotted green;
+    padding: 12px 25px;
+    border-radius: 40px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+      padding: 25px 50px;
+  ">REGISTER</button>
+</div>
+
+  <script type="module" src="reg.mjs"></script>
+
+<!--*************************************************************
+  END OF REG.HTML
+**************************************************************-->
+</body>
+</html>
