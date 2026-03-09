@@ -35,7 +35,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstati
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
 /**************************************************************/
-export { fb_initialise, fb_authenticate, fb_writerecord, userDetails };
+export { fb_initialise, fb_authenticate, fb_writerecord, userDetails, };
 
 /******************************************************/
 // fb_initialise()
