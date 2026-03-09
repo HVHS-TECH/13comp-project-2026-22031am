@@ -1,4 +1,4 @@
-//**************************************************************/
+/**************************************************************/
 // fb_io.mjs
 // Generalised firebase routines
 // Written by Aditi Modi, Term 1 2026?
@@ -13,38 +13,31 @@ console.log('%c fb_io.mjs',
     'color: blue; background-color: white;');
 
 var FB_GAMEDB;
-var FB_GAMEDB;
 var FB_GAMEAUTH;
 
 let userDetails = {
-    displayName:'n/a',
-    email:'n/a',
+    displayName: 'n/a',
+    email: 'n/a',
     photoURL: 'n/a',
-    uid:'n/a' {}
+    uid: 'n/a'
+};
 
 /**************************************************************/
 // Import all external constants & functions required
 /**************************************************************/
 // Import all the methods you want to call from the firebase modules
 
-import { initializeApp }
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-
-import { getDatabase, ref, set, get, update}
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-
-    
-import { getAuth, GoogleAuthProvider, signInWithPopup, }
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js",
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 /**************************************************************/
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
 /**************************************************************/
-export { 
-    fb_initialise, fb_authenticate, fb_detectLogin };
+export { fb_initialise, fb_authenticate, fb_writerecord, userDetails };
 
- /******************************************************/
+/******************************************************/
 // fb_initialise()
 // Called by html initialise button
 // Input:  n/a
@@ -54,17 +47,16 @@ function fb_initialise() {
     console.log('%c fb_initialise(): ',
                  'color: ' + COL_C + '; background-color: ' + COL_B + ';');
                  
-   const firebaseConfig = {
-  apiKey: "AIzaSyDWhGSciprdeHTyBrXQYt_F-6tMMjCg-YM",
-  authDomain: "comp-2026-aditi-modi.firebaseapp.com",
-  databaseURL: "https://comp-2026-aditi-modi-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "comp-2026-aditi-modi",
-  storageBucket: "comp-2026-aditi-modi.firebasestorage.app",
-  messagingSenderId: "153559444524",
-  appId: "1:153559444524:web:7144aeb2795255e4e1b589",
-  measurementId: "G-0KELMX0418"
-};
-
+    const FB_GAMECONFIG = {
+      apiKey: "AIzaSyDWhGSciprdeHTyBrXQYt_F-6tMMjCg-YM",
+      authDomain: "comp-2026-aditi-modi.firebaseapp.com",
+      databaseURL: "https://comp-2026-aditi-modi-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "comp-2026-aditi-modi",
+      storageBucket: "comp-2026-aditi-modi.firebasestorage.app",
+      messagingSenderId: "153559444524",
+      appId: "1:153559444524:web:7144aeb2795255e4e1b589",
+      measurementId: "G-0KELMX0418"
+    };
 
     const FB_GAMEAPP = initializeApp(FB_GAMECONFIG);
     FB_GAMEDB = getDatabase(FB_GAMEAPP);
@@ -73,9 +65,8 @@ function fb_initialise() {
     console.info(FB_GAMEDB);      	//DIAG
 }
 
-
 /******************************************************/
-// fb_login()
+// fb_authenticate()
 // Called by html authenticate button
 // Login to Firebase via Google authentication
 // Input:  n/a
@@ -85,60 +76,66 @@ function fb_authenticate() {
     console.log('%c fb_authenticate(): ', 
        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
       
-     const AUTH = getAuth();
+    const AUTH = getAuth();
     const PROVIDER = new GoogleAuthProvider();
 
     PROVIDER.setCustomParameters({
         prompt: 'select_account'
     });
 
-      signInWithPopup(AUTH, PROVIDER).then((result) => {
+    signInWithPopup(AUTH, PROVIDER)
+    .then((result) => {
         // Code for a successful authentication goes here
         console.log('%c fb_authenticate():successful! ', 
             'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+
         userDetails.displayName = result.user.displayName;
         userDetails.email = result.user.email;
         userDetails.photoURL = result.user.photoURL;
         userDetails.uid = result.user.uid;
 
-            console.log(userDetails);
-            console.table(userDetails);
+        //sessionStorage set for registration later
+        sessionStorage.setItem('uid', userDetails.uid);
+        sessionStorage.setItem('photoURL', userDetails.photoURL);
 
-             window.location.href = "select_game.html";
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    }
+        // Check if user record exists
+        const dbReference = ref(FB_GAMEDB, 'userDetails/' + userDetails.uid);
+        get(dbReference).then((snapshot) => {
+            if (snapshot.val() != null) {
+                // User exists → go to game
+                window.location.href = "select_game.html";
+            } else {
+                // No record → go to registration
+                window.location.href = "reg.html";
+            }
+        }).catch((error) => console.error(error));
+
+    })
+    .catch((error) => console.error(error));
+}
 
 /******************************************************/
-// fb_detectLogin()
-// Called by html detect login change button
-// Login to Firebase via Google authentication
-// Input:  n/a
+// fb_writerecord()
+// Called by html write record
+// Write a specific record to the DB
+// Input:  userDetails object
 // Return: n/a
 /******************************************************/
-function fb_detectLogin() {
-    console.log('%c fb_detectLogin(): ', 
-        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+function fb_writerecord(userDetails) {
+    console.log('%c fb_writerecord(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
 
-    let fb_loginStatus = 'n/a';
+    const dbReference = ref(FB_GAMEDB, 'userDetails/' + userDetails.uid);
+    set(dbReference, userDetails).then(() => {
+         // Code for a successful write rec
+        console.log('%c fb_writerecord(): successful! ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
 
-    const AUTH = getAuth();
-    onAuthStateChanged(AUTH, (user) => {
-    if (user) {
-    // Code for user logged in goes here
-    console.log('%c fb_detectLogin(): logged in', 
-        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    } else {
-
-    // Code for user logged out goes here
-    console.log('%c fb_detectLogin(): logged out', 
-    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    }
-    }, (error) => {
-    // Code for an onAuthStateChanged error goes here
-    console.log(error);
+        window.location.href = 'select_game.html';
+    }).catch((error) => {
+        alert("Look at the console for an error message");
+        console.error(error);
     });
 }
 
+/******************************************************/
+// END OF APP
+/******************************************************/
