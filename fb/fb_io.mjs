@@ -106,7 +106,7 @@ function fb_authenticate() {
                 window.location.href = "select_game.html";
             } else {
                 // No record → go to registration
-                window.location.href = "reg.html";
+                window.location.href = "html/reg.html";
             }
         }).catch((error) => console.error(error));
 
