@@ -102,10 +102,10 @@ function fb_authenticate() {
         const dbReference = ref(FB_GAMEDB, 'userDetails/' + userDetails.uid);
         get(dbReference).then((snapshot) => {
             if (snapshot.val() != null) {
-                // User exists → go to game
+                // User exists → go to the game selection page
                 window.location.href = "select_game.html";
             } else {
-                // No record → go to registration
+                // No record → go to registration page 
                 window.location.href = "html/reg.html";
             }
         }).catch((error) => console.error(error));
