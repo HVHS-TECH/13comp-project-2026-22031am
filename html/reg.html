@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
   <link rel="stylesheet" href="../css/style.css" />
 
+  <!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
   <!-- firebase start ****************************************-->
   <link rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
   <!-- firebase end ******************************************-->
@@ -17,57 +20,65 @@
 <!--*************************************************************
   BODY
 **************************************************************-->
-<body style="margin: 0; min-height: 100vh; background: 
-linear-gradient(135deg, #97c2f0, #d197f0); font-family: sans-serif;">
+<body class="reg-background" style="font-family: sans-serif;">
 
-  <h2 style="text-align: center; margin-top: 30px;">REGISTRATION FORM!</h2>
-  <div class="subtext" style="text-align: center; font-size: 24px; margin-bottom: 30px;">
-    Please enter in your details
+<header class="container">
+  <div class="w3-center" style="
+      border: 7px dotted #055b69;
+      padding: 12px;
+      margin-top: 10px;
+      background-color: rgba(255,255,255,0.7);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+  ">
+
+    <h1 class="w3-center" style="font-family: 'Luckiest Guy', cursive; font-size: 38px; margin-bottom: 5px;">
+      REGISTRATION FORM!
+    </h1>
+
+    <p style="font-size:16px; margin-top: 0; ">
+      Please enter your details below to create your player profile!!
+    </p>
+
   </div>
+</header>
 
-  <!-- for the centered form container -->
-  <div class="form-box" style="max-width: 400px; margin: 0 auto; padding: 20px;">
-    <form id="f_userDetails" onsubmit="return false;">
+  <div class="form-container">
+
+     <!-- LEFT BOX -->
+  <div class="form-section">
+    <h2>General Information</h2> 
+
+    <label for="i_displayName" style="font-weight: bold; color: darkgreen;">displayName:</label><br />
+    <input type="text" id="i_displayName" name="i_displayName" required maxlength="12" style="width: 100%;" />
+
+    <label for="i_age" style="font-weight: bold; color: darkgreen;">Age:</label><br />
+    <input type="number" id="i_age" name="i_age" min="1" max="100" required style="width: 100%;" />
       
-      <div class="form-row" style="margin-bottom: 15px;">
-        <label for="i_displayName" style="font-weight: bold; color: darkgreen;">displayName:</label><br />
-        <input type="text" id="i_displayName" name="i_displayName" required maxlength="12" style="width: 100%;" />
-      </div>
-
-      <div class="form-row" style="margin-bottom: 15px;">
-        <label for="i_age" style="font-weight: bold; color: darkgreen;">Age:</label><br />
-        <input type="number" id="i_age" name="i_age" min="1" max="100" required style="width: 100%;" />
-      </div>
-
-      <div class="form-row" style="margin-bottom: 15px;">
-        <label for="i_sex" style="font-weight: bold; color: darkgreen;">Sex:</label><br />
-        <select id="i_sex" name="i_sex" required style="width: 100%;">
+    <label for="i_sex" style="font-weight: bold; color: darkgreen;">Sex:</label><br />
+    <select id="i_sex" name="i_sex" required style="width: 100%;">
           <option value="">-- Please select --</option>
           <option value="female">Female</option>
           <option value="male">Male</option>
           <option value="prefer not to say">Prefer not to say</option>
         </select>
+
       </div>
 
-      <div class="form-row" style="margin-bottom: 25px;">
+       <!-- RIGHT BOX -->
+       <div class="form-section">
+    <h2>Contact Details</h2>
+
+    <div class="form-row" style="margin-bottom: 25px;">
         <label for="i_email" style="font-weight: bold; color: darkgreen;">Email:</label><br />
         <input type="email" id="i_email" name="i_email" required style="width: 100%;" />
       </div>
 
-  
-<div style="text-align: center; margin-top: 20px;">
-  <button id="registerBtn" style="
-    background-color: #7fffbf;
-    border: 2px dotted green;
-    padding: 25px 50px;
-    border-radius: 40px;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-  ">REGISTER</button>
-</div>
 
+<div style="text-align: center; margin-top: 20px;">
+  <button id="registerBtn"> REGISTER </button>
+ 
   <script type="module" src="../reg.mjs"></script>
 
 <!--*************************************************************
