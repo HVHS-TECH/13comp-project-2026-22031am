@@ -44,14 +44,15 @@
   </div>
 </header>
 
-  <div class="form-container">
+  <form id="f_userDetails">
 
+  <div class="form-container">
      <!-- LEFT BOX -->
   <div class="form-section">
     <h2>General Information</h2> 
 
     <label for="i_displayName" style="font-weight: bold; color: darkgreen;">displayName:</label><br />
-    <input type="text" id="i_displayName" name="i_displayName" required maxlength="12" style="width: 100%;" />
+    <input type="text" id="i_displayName" name="i_displayName" required minlength= "3" maxlength="12" style="width: 100%;" />
 
     <label for="i_age" style="font-weight: bold; color: darkgreen;">Age:</label><br />
     <input type="number" id="i_age" name="i_age" min="1" max="100" required style="width: 100%;" />
@@ -76,9 +77,11 @@
       </div>
 
 
+  </div>
 <div style="text-align: center; margin-top: 20px;">
-  <button id="registerBtn"> REGISTER </button>
+  <button id="registerBtn" type="button"> REGISTER </button>
  
+  </form>
   <script type="module" src="../reg.mjs"></script>
 
 <!--*************************************************************
