@@ -21,6 +21,7 @@ function getUserInput() {
       const age = document.getElementById("i_age").value;
       const sex = document.getElementById("i_sex").value;
       const email = document.getElementById("i_email").value;
+      const phone = document.getElementById("i_phone").value;
 
       console.log("displayName:", displayName);
       console.log("Age:", age);
@@ -28,7 +29,7 @@ function getUserInput() {
       console.log("Email:", email);
 
       const userDetails = { 
-          displayName, age, sex, email, 
+          displayName, age, sex, email, phone, 
           uid: sessionStorage.getItem('uid'),
           photoURL: sessionStorage.getItem('photoURL')
       };

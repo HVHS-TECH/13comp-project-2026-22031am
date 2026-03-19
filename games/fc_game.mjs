@@ -30,23 +30,23 @@ let wallBot;
 function preload() {
     console.log("preload()");
 
-    BGimage = loadImage('/assets/images/treebg.jpg');
-    gameOverImage = loadImage('/assets/images/gameoversdisplay.jpg');
-    imgBasket = loadImage('/assets/images/basket.png');
-    fruitcatcherImage = loadImage('/assets/images/fruitcatcher.jpg');
+    BGimage = loadImage('../assets/images/treebg.jpg');
+    gameOverImage = loadImage('../assets/images/gameoversdisplay.jpg');
+    imgBasket = loadImage('../assets/images/basket.png');
+    fruitcatcherImage = loadImage('../assets/images/fruitcatcher.jpg');
 
-    fruitImages.push(loadImage('/assets/images/apple.jpg'));
-    fruitImages.push(loadImage('/assets/images/banana.jpg'));
-    fruitImages.push(loadImage('/assets/images/grape.jpg'));
-    fruitImages.push(loadImage('/assets/images/kiwi.jpg'));
-    fruitImages.push(loadImage('/assets/images/lemon.jpg'));
-    fruitImages.push(loadImage('/assets/images/neactrine.jpg'));
-    fruitImages.push(loadImage('/assets/images/orange.jpg'));
-    fruitImages.push(loadImage('/assets/images/pear.jpg'));
-    fruitImages.push(loadImage('/assets/images/pineapple.jpg'));
-    fruitImages.push(loadImage('/assets/images/plum.jpg'));
-    fruitImages.push(loadImage('/assets/images/strawberry.jpg'));
-    fruitImages.push(loadImage('/assets/images/watermelon.jpg'));
+    fruitImages.push(loadImage('../assets/images/apple.jpg'));
+    fruitImages.push(loadImage('../assets/images/banana.jpg'));
+    fruitImages.push(loadImage('../assets/images/grape.jpg'));
+    fruitImages.push(loadImage('../assets/images/kiwi.jpg'));
+    fruitImages.push(loadImage('../assets/images/lemon.jpg'));
+    fruitImages.push(loadImage('../assets/images/neactrine.jpg'));
+    fruitImages.push(loadImage('../assets/images/orange.jpg'));
+    fruitImages.push(loadImage('../assets/images/pear.jpg'));
+    fruitImages.push(loadImage('../assets/images/pineapple.jpg'));
+    fruitImages.push(loadImage('../assets/images/plum.jpg'));
+    fruitImages.push(loadImage('../assets/images/strawberry.jpg'));
+    fruitImages.push(loadImage('../assets/images/watermelon.jpg'));
 
     // Build array of images and their widths/heights
     imageArray = [
@@ -333,7 +333,6 @@ function html_listen4Debug() {
 window.preload = preload;
 window.draw = draw;
 window.setup = setup;
-
 window.read_record = read_record;
 
 

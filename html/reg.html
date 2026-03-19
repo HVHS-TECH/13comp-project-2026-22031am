@@ -72,8 +72,21 @@
     <h2>Contact Details</h2>
 
     <div class="form-row" style="margin-bottom: 25px;">
-        <label for="i_email" style="font-weight: bold; color: darkgreen;">Email:</label><br />
+        <label for="i_email" style="font-weight: bold; color: darkgreen;">Email:</label><br/>
         <input type="email" id="i_email" name="i_email" required style="width: 100%;" />
+
+        <br><br>
+
+        <label for="i_phone" style="font-weight: bold; color: darkgreen;"> Phone Number:</label><br/>
+      <input type="tel"
+       id="i_phone"
+       name="i_phone"
+       placeholder="123-45-678"
+       pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+       required
+       style="width: 100%;" />
+
+       <small> Format: 123-45-678</small>
       </div>
 
 
