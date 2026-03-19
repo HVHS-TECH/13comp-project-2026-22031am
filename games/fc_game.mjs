@@ -2,8 +2,7 @@
 // fc_game.js
 // fruit catcher
 // A simple game where you move the basket to catch the falling fruits
-// written by Aditi Modi term 1 2025
-/*******************************************************/
+// written by Aditi Modi term 1 2026
 
 /*******************************************************/
 // variables()
