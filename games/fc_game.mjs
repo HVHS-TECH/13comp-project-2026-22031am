@@ -73,7 +73,7 @@ function preload() {
 function setup() {
     console.log("setup: ");
 
-     let cnv = new Canvas(windowWidth - 5, windowHeight - 5);
+    let cnv = createCanvas(windowWidth - 5, windowHeight - 5);
     world.gravity.y = 10;
    
     createWalls();  
@@ -333,7 +333,6 @@ function html_listen4Debug() {
 window.preload = preload;
 window.draw = draw;
 window.setup = setup;
-window.read_record = read_record;
 
 
 /*******************************************************/

@@ -103,10 +103,10 @@ function fb_authenticate() {
         get(dbReference).then((snapshot) => {
             if (snapshot.val() != null) {
         // User exists → go to the game selection page
-                window.location.href = "/html/select_game.html";
+                window.location.href = "html/select_game.html";
             } else {
                 // No record → go to registration page 
-                window.location.href = "/html/reg.html";
+                window.location.href = "html/reg.html";
             }
         }).catch((error) => console.error(error));
 
@@ -129,7 +129,7 @@ function fb_writerecord(userDetails) {
          // Code for a successful write rec
         console.log('%c fb_writerecord(): successful! ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
 
-        window.location.href = "/html/select_game.html";
+        window.location.href = "html/select_game.html";
     }).catch((error) => {
         alert("Look at the console for an error message");
         console.error(error);
