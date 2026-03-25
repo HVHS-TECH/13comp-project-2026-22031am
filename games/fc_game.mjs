@@ -29,12 +29,12 @@ let wallBot;
 function preload() {
     console.log("preload()");
 
-    // Paths use ../ because JS file is in /html/, images in /assets/images/
+    
     BGimage = loadImage('../assets/images/treebg.jpg');
     gameOverImage = loadImage('../assets/images/gameoversdisplay.jpg');
     imgBasket = loadImage('../assets/images/basket.png');
     fruitcatcherImage = loadImage('../assets/images/fruitcatcher.jpg');
-
+ 
     fruitImages.push(loadImage('../assets/images/apple.jpg'));
     fruitImages.push(loadImage('../assets/images/banana.jpg'));
     fruitImages.push(loadImage('../assets/images/grape.jpg'));
