@@ -1,4 +1,3 @@
-/*******************************************************/
 // fc_game.js
 // fruit catcher
 // A simple game where you move the basket to catch the falling fruits
@@ -30,6 +29,7 @@ let wallBot;
 function preload() {
     console.log("preload()");
 
+    // Paths use ../ because JS file is in /html/, images in /assets/images/
     BGimage = loadImage('../assets/images/treebg.jpg');
     gameOverImage = loadImage('../assets/images/gameoversdisplay.jpg');
     imgBasket = loadImage('../assets/images/basket.png');
@@ -60,8 +60,8 @@ function preload() {
         {name: 'pear',       img: fruitImages[7],  w: 40, h: 45,  imgW: 70, imgH: 70},
         {name: 'pineapple',  img: fruitImages[8],  w: 40, h: 45,  imgW: 70, imgH: 70},
         {name: 'plum',       img: fruitImages[9],  w: 40, h: 45,  imgW: 70, imgH: 70},
-        {name: 'strawberry', img: fruitImages[10],  w: 40, h: 45, imgW: 70, imgH: 70},
-        {name: 'watermelon', img: fruitImages[11],  w: 40, h: 45, imgW: 80, imgH: 70}
+        {name: 'strawberry', img: fruitImages[10], w: 40, h: 45,  imgW: 70, imgH: 70},
+        {name: 'watermelon', img: fruitImages[11], w: 40, h: 45,  imgW: 80, imgH: 70}
     ];
 
     console.log(imageArray);
@@ -85,10 +85,8 @@ function setup() {
     html_listen4Debug();
 }
 
- /*******************************************************/
+/*******************************************************/
 // createWalls()
-// called by setup()
-// creates 4 walls
 /*******************************************************/
 function createWalls() {
     console.log("createWalls()");
@@ -106,8 +104,6 @@ function createWalls() {
 
 /*******************************************************/
 // createBasket()
-// called by setup()
-// creates a basket
 /*******************************************************/
 function createBasket() {
     console.log("createBasket()");
@@ -121,34 +117,28 @@ function createBasket() {
 
 /*******************************************************/
 // createFruits()
-// Creates a new fruit at a random x-position at the top
 /*******************************************************/
 function createFruits() {
     console.log("createFruits()");
 
     let fruit = {};
     let randImg = random(imageArray);
-    //console.log(randImg);
-    // Create fruit sprite at random x, top of the screen as either
-    // circle or a rectangle to match the image shape.
-    if (randImg.h == 0) {  // Create a circle sprite and collider
+
+    if (randImg.h == 0) {
         fruit = new Sprite(random(width), 50, randImg.w, randImg.h, 'd');
-    }
-    else {                        // Create a rectangular sprite and collider
+    } else {
         fruit = new Sprite(random(width), 0, randImg.w, randImg.h, 'd');
     }
 
     fruit.name  = randImg.name;
-    fruit.image = randImg.img; 
+    fruit.image = randImg.img;
     fruit.image.resize(randImg.imgW, randImg.imgH);
-    fruit.vel.y = random(FRUITVELMIN, FRUITVELMAX);  // Random vertical speed for falling fruit
+    fruit.vel.y = random(FRUITVELMIN, FRUITVELMAX);
     fruitGroup.add(fruit);
 }
-   
+
 /*******************************************************/
-// fruitHitWall (_fruit, _wall)
-// Called by callback registered in setup()
-// Input fruit that hit wall
+// fruitHitWall()
 /*******************************************************/
 function fruitHitWall(_fruit, _wall) {
     console.log("fruitHitWall()");
@@ -158,55 +148,45 @@ function fruitHitWall(_fruit, _wall) {
     if (lives <= 0) {
         gameOverScreen();
     }
-} 
+}
 
 /*******************************************************/
-//fruitHitsBasket()
-// Collision detection for fruit and basket
+// fruitHitsBasket()
 /*******************************************************/
 function fruitHitsBasket(fruit, basket) {
-    // Reposition fruit randomly
     fruit.position.x = random(width);
     fruit.position.y = 0;
-
-    // Add 1 to score
     score++;
 }
 
 /*******************************************************/
 // draw()
-// called continuously during the game loop
 /*******************************************************/
 function draw() {
     if (basket.debug == false) {
-    background(BGimage);
-    }
-    else {
+        background(BGimage);
+    } else {
         background('white');
     }
 
-   // Create a new fruit every 30 frames
     if (frameCount % 60 === 0) {
-        for (let i = 0; i < 5; i++) {  // Spawn 3 fruits every 90 frames
+        for (let i = 0; i < 5; i++) {
             createFruits();
         }
     }
 
-    // keyboard pressing for basket movement
     if (kb.pressing('left')) {
-        basket.vel.x = -BASKETVEL * 2; // Move basket to the left
+        basket.vel.x = -BASKETVEL * 2;
     } else if (kb.pressing('right')) {
-        basket.vel.x = BASKETVEL * 2; // Move basket to the right
+        basket.vel.x = BASKETVEL * 2;
     } else {
-        basket.vel.x = 0; // Stops the basket when no keys are pressed
+        basket.vel.x = 0;
     }
 
-    // Check for collision between basket and fruits
     for (let i = 0; i < fruitGroup.length; i++) {
         fruitGroup[i].collides(basket, fruitHitsBasket);
     }
 
-    // Draw score box and lives box
     textAlign(LEFT);
     drawScoreBox();
     drawLivesBox();
@@ -214,8 +194,6 @@ function draw() {
 
 /*******************************************************/
 // drawLivesBox()
-// called by draw()
-// displays the lives box
 /*******************************************************/
 function drawLivesBox() {
     fill(255);
@@ -229,8 +207,6 @@ function drawLivesBox() {
 
 /*******************************************************/
 // drawScoreBox()
-// called by draw()
-// displays the score box
 /*******************************************************/
 function drawScoreBox() {
     fill(220);
@@ -244,18 +220,14 @@ function drawScoreBox() {
 
 /*******************************************************/
 // gameOverScreen()
-// display gameover text
 /*******************************************************/
 function gameOverScreen() {
     console.log('gameOverScreen()');
 
-    noLoop(); //stops the game loop from running further
+    noLoop();
+    background(fruitcatcherImage);
 
- background(fruitcatcherImage);
-    //gameOverImage.resize(800, 700);
-   
-   //display the final score
-    fill(255)
+    fill(255);
     textSize(50);
     textFont('Georgia');
     textAlign(CENTER);
@@ -263,12 +235,9 @@ function gameOverScreen() {
     strokeWeight(4);
     text("YOUR SCORE: " + score, width / 2, height / 2 + 100);
 
-    //display the "Game over"
-    //imageMode(CENTER, TOP);
     image(gameOverImage, width / 2 - gameOverImage.width / 2 + 70, 80);
     allSprites.remove();
-   
-    // Create the restart button
+
     restartButton = createButton('Restart');
     restartButton.position(width / 2 - 50, height / 2 + 200);  
     restartButton.size(200, 60);
@@ -277,54 +246,47 @@ function gameOverScreen() {
 
 /*******************************************************/
 // restartGame()
-// Resets game variables and restarts the game loop
 /*******************************************************/
 function restartGame() {
     console.log('restartGame()');
 
-    //reset everything
     restartButton.remove();
     score = 0;  
     lives = MAXLIVES;  
     missedFruits = 0;
-    //fruits = []; 
+
     createWalls();  
     createBasket();
     fruitGroup = new Group();
     fruitGroup.collides(wallBot, fruitHitWall);
     createFruits();
 
-    loop();  // Start the game loop again
+    loop();
 }
 
 /*******************************************************/
-// html_listen4Debug() {
-// Register keyboard keydown event 
-// To check if user wants sprite debug mode OR not 
-// Input: n/a
-// Return: n/a
+// html_listen4Debug()
 /*******************************************************/
 function html_listen4Debug() {
     console.log('html_listen4Debug(): ');
 
     document.addEventListener('keydown', function(event) {
-    if (event.ctrlKey && event.key === 'z') {
-    console.log('html_listen4Debug(): ACTIVE');
-    for (let i = 0; i < fruitGroup.length; i++) {
-    fruitGroup[i].debug = true; 
-    }
-    basket.debug = true;
-    noLoop();
-}
-    else if (event.ctrlKey && event.key === 'x') {
-        console.log('html_listen4Debug(): INACTIVE');
-        for (let i = 0; i < fruitGroup.length; i++) {
-            fruitGroup[i].debug = false; 
+        if (event.ctrlKey && event.key === 'z') {
+            console.log('html_listen4Debug(): ACTIVE');
+            for (let i = 0; i < fruitGroup.length; i++) {
+                fruitGroup[i].debug = true;
+            }
+            basket.debug = true;
+            noLoop();
+        } else if (event.ctrlKey && event.key === 'x') {
+            console.log('html_listen4Debug(): INACTIVE');
+            for (let i = 0; i < fruitGroup.length; i++) {
+                fruitGroup[i].debug = false;
+            }
+            basket.debug = false;
+            loop();
         }
-        basket.debug = false;
-        loop();
-    }
-});
+    });
 }
 
 /*******************************************************/
@@ -333,7 +295,6 @@ function html_listen4Debug() {
 window.preload = preload;
 window.draw = draw;
 window.setup = setup;
-
 
 /*******************************************************/
 // END OF APP

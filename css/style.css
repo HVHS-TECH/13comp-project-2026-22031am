@@ -70,16 +70,27 @@ body {
     cursor:pointer;
 }
 
-body {
+#game-page {
   font-family: Fantasy;
   display: flex;
   justify-content: center;
   align-items: top;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
-  background-image: url("assets/images/fruitcatcher.jpg");
+  background: none;
+  overflow: hidden;
+  color: #0a4815;
+}
+
+body:not(#game-page) {
+  font-family: Fantasy;
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  min-height: 100vh;
+  margin: 0;
+  background-image: url("../assets/images/fruitcatcher.jpg");
   background-size: 550px;
-  height: 20;
   color: #0a4815;
 }
 
