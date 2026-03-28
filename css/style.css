@@ -181,7 +181,7 @@ h1 {
   }
 
   button {
-  border: 4px dotted #004d00; /* dark green */
+  border: 4px dotted #004d00; 
 }
 
     h2 {
@@ -221,7 +221,200 @@ h1 {
       padding: 15px 40px;
       margin-top: 50px;
     }
- 
 
-   
+ /*=========================
+   GAME HUB PAGE STYLING
+========================= */
+body.game-selection-bg {
+    background-image: url('../assets/background/gravbackg.jpg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+.game-selection-bg {
+    margin: 0;
+    min-height: 100vh;
+    background-image: url('../assets/background/gravbackg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Orbitron', sans-serif;
+    color: #ffffff;
+    position: relative;
+    display: block !important;
+    z-index: 0;
+}
 
+.game-selection-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* =========================
+      NAV BAR (FULL FIX)
+   ========================= */
+
+.nav-wrapper {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    z-index: 999999; 
+}
+
+.nav-bar-sci {
+    display: flex;
+    gap: 16px;
+    background: rgba(0, 0, 0, 0.65);
+    padding: 14px 22px;
+    border: 2px solid #39ffb6;
+    border-radius: 14px;
+    box-shadow: 0 0 18px rgba(0,255,170,0.7);
+}
+
+/* Each nav bar link */
+.nav-bar-sci div {
+    padding: 10px 22px;
+    border: 1px solid #39ffb6;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #b9ffea;
+    text-shadow: 0 0 6px rgba(0,255,200,0.8);
+    transition: 0.25s;
+}
+
+.nav-bar-sci div:hover {
+    background: rgba(0,255,170,0.15);
+    box-shadow: 0 0 10px rgba(0,255,170,0.7);
+}
+
+/* =========================
+      MAIN TITLE AREA
+   ========================= */
+
+.main-title-area {
+    text-align: center;
+    margin-top: 140px; 
+    margin-bottom: 10px;
+}
+
+.main-title-area h1 {
+    font-size: 32px;
+    letter-spacing: 2px;
+    color: #b9ffea;
+    text-shadow: 0 0 14px rgba(0,255,200,0.9);
+    margin: 0;
+}
+
+.divider-line {
+    width: 350px;
+    height: 2px;
+    margin: 8px auto 0;
+    background: linear-gradient(to right, transparent, #39ffb6, transparent);
+    box-shadow: 0 0 10px rgba(0,255,170,0.9);
+}
+
+/* =========================
+      GAME BLOCKS
+   ========================= */
+
+.game-blocks {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 15px auto 0;
+}
+
+.left-block {
+    text-align: left;
+    width: 45%;
+}
+
+.right-block {
+    text-align: right;
+    width: 45%;
+}
+
+.game-block h2 {
+    font-size: 24px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(0,255,170,0.9);
+}
+
+.game-block p {
+    margin: 3px 0;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #ffffff;
+}
+
+/* =========================
+      BOTTOM TEXT OF THE PAGE
+   ========================= */
+
+.bottom-text {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: #7dffb9;
+    text-shadow: 0 0 10px rgba(0,255,170,0.9);
+}
+
+/* =========================
+      POP-UP STICKERS FOR THE GAMES
+   ========================= */
+
+.sticker-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 10px;
+}
+
+.sticker-btn {
+    width: 160px;
+    height: 160px;
+    background: linear-gradient(145deg, #0d1a1f, #1f3a45);
+    border: 4px solid #39ffb6;
+    border-radius: 25px;
+    box-shadow: 0 0 25px #39ffb6, 0 0 45px rgba(0,255,200,0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.25s;
+    transform: translateY(0);
+}
+
+.sticker-btn:hover {
+    transform: translateY(-10px) scale(1.07);
+    box-shadow: 0 0 35px #00f7ff, 0 0 60px rgba(0,247,255,0.6);
+}
+
+.sticker-btn .icon {
+    font-size: 55px;
+    margin-bottom: 6px;
+    color: #b9ffea;
+    text-shadow: 0 0 12px #39ffb6;
+}
+
+.sticker-btn span {
+    font-size: 17px;
+    font-weight: 700;
+    color: #b9ffea;
+    text-shadow: 0 0 10px #39ffb6;
+}

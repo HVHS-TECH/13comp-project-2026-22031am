@@ -30,14 +30,21 @@
     font-family: sans-serif;
 ">
 
-  <header class="container">
-    <div class="w3-center" style="border: 9px dotted #055b69; padding: 20px; margin-top: 20px; background-color: rgba(255,255,255,0.7);">
+  <header class="container w3-center">
+    <div class="w3-center" style="
+        border: 9px dotted #00bcd4; 
+        padding: 20px; 
+        margin-top: 20px; 
+        background-color: rgba(255,255,255,0.7); 
+        display: inline-block;
+        max-width: 600px;   /* 👈 THIS is the fix */
+    ">
 
-      <h1 class="w3-center" style="font-family: 'Luckiest Guy', cursive; font-size: 50px;">
+      <h1 class="w3-center" style="font-family: 'Luckiest Guy', cursive; font-size: 50px; color: #1d609c;">
         Welcome to Aditi's game project!!
       </h1>
 
-      <div class="w3-container w3-center" style="margin-top: 40px; font-size: 38px;">
+      <div class="w3-container w3-center" style="margin-top: 20px; font-size: 38px;">
         <button onclick="fb_authenticate()" style="
             background-color: #a7e4e9;
             border: 2px dotted rgb(2, 0, 128);
@@ -45,7 +52,7 @@
             border-radius: 40px;
             font-size: 24px;
             font-weight: bold;
-            color: white;
+            color: #0a1a40;
             cursor: pointer;
         ">LOGIN</button>
         <h1> please press the login button to login! </h1>

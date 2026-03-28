@@ -1,49 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Game Selection</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- stylesheets *******************************************-->
-    <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <title>Game Selection</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- firebase ui styles ************************************-->
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+  <!-- stylesheets *******************************************-->
+  <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
 
-    <!-- Google Font *******************************************-->
-    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <!-- firebase ui styles ************************************-->
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+
+  <!-- Google Font *******************************************-->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
-<body style="margin:0; min-height:100vh; background-image:url('../assets/background/gravbackg.jpg'); background-size:cover; background-position:center; background-repeat:no-repeat; font-family:sans-serif;">
+<body class="game-selection-bg">
 
-    <header class="container">
-        <h1 style="font-family:'Luckiest Guy', cursive; font-size:50px;color:#ffffff;" class="w3-center"> Welcome to my Game Selection Page! </h1>
-     <h1 style="color:#ffffff;" class="w3-center">Please select one of my games!</h1>
-    </header>
+  <!-- TOP NAV BAR *******************************************-->
+  <div class="nav-wrapper">
+    <div class="nav-bar-sci">
+      <div onclick="window.location.href='instructionsGTN.html'">GTN: GUESS THE NUMBER GAME</div>
+      <div onclick="window.location.href='instructionsFC.html'">DODGE THE ALIEN</div>
+      <div onclick="window.location.href='../index.html'">BACK TO THE HOME PAGE</div>
+      <div onclick="window.location.href='reg.html'">BACK TO THE REGISTRATION PAGE</div>
+      <div onclick="window.location.href='about.html'">ABOUT</div>
+    </div>
+  </div>
 
-    <section>
-        <div class="container w3-center">
-            <div class="column">
-                <button onclick="window.location.href='instructionsFC.html'" style="background-color:#a7e4e9; border:2px dotted green;
-                 padding:15px 35px; border-radius:40px; font-size:24px; font-weight:bold; color:white; cursor:pointer; margin:15px;">
-                    Play my Fruit Catcher Game! (from last year)
-                </button>
-                <button onclick="window.location.href='instructionsGTN.html'" style="background-color:#a7e4e9; border:2px dotted
-                 green; padding:15px 35px; border-radius:40px; font-size:24px; font-weight:bold; color:white; cursor:pointer; margin:15px;">
-                    Guess The Number Game (2 player game)
-                </button> 
-                <button onclick="window.location.href='index.html'" style="background-color:#a7e4e9; border:2px dotted
-                 green; padding:15px 35px; border-radius:40px; font-size:24px; font-weight:bold; color:white; cursor:pointer; margin:15px;">
-                    Back to Home Page
-                </button> 
-            </div>
+  <!-- MAIN TITLE *******************************************-->
+  <div class="main-title-area">
+    <h1>WELCOME TO GAME SELECTION HUB</h1>
+    <div class="divider-line"></div>
+  </div>
 
-        </div>
-    </section>
-    
+  <!-- GAME BLOCKS *******************************************-->
+  <div class="game-blocks">
 
-    <script type="module" src="../main.mjs"></script>
+    <!-- GTN BLOCK (LEFT SIDE) -->
+    <div class="game-block left-block">
+      <h2>GTN:</h2>
+      <p>Guess The Number is a fun logic game where you try to discover a hidden number.</p>
+      <p>Use clues from each guess to narrow it down and beat your opponent.</p>
+    </div>
+
+    <!-- FRUIT CATCHER BLOCK (RIGHT SIDE ) -->
+    <div class="game-block right-block">
+      <h2>FRUIT CATCHER:</h2>
+      <p>Fruit Catcher is a fast-paced game where you catch falling fruits before they hit the ground.</p>
+      <p>Move quickly and collect as many as you can to get the highest score.</p>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM TEXT *******************************************-->
+  <div class="bottom-text">
+    PLEASE CLICK ON WHICH GAME YOU'D LIKE TO PLAY
+  </div>
+
+  <!-- STICKER BUTTONS *******************************************-->
+  <div class="sticker-buttons">
+    <div class="sticker-btn" onclick="window.location.href='instructionsGTN.html'">
+      <div class="icon">#</div>
+      <span>GTN</span>
+    </div>
+
+    <div class="sticker-btn" onclick="window.location.href='instructionsFC.html'">
+      <div class="icon">🍎</div>
+      <span>FRUIT CATCHER</span>
+    </div>
+</div>
+
+
+  <script type="module" src="../main.mjs"></script>
+
 </body>
 </html>
