@@ -327,8 +327,8 @@ body.game-selection-bg {
 }
 
 /* =========================
-      REGISTRATION PAGE BG
-========================= */
+    REGISTRATION PAGE BG
+============================ */
 .reg-background {
     margin: 0;
     min-height: 100vh;
@@ -341,18 +341,18 @@ body.game-selection-bg {
 }
 
 /* =========================
-      HEADER PANEL
+      FOR THE HEADER PANEL
 ========================= */
 .reg-header {
     text-align: center;
-    margin-top: 15px; /* reduced to fit screen */
+    margin-top: 15px; 
 }
 
 .reg-header-box {
     position: relative;
     max-width: 700px;
     margin: auto;
-    padding: 15px 25px; /* smaller */
+    padding: 15px 25px; 
 
     background: linear-gradient(145deg, #1b2a38, #0a141f);
     border: 3px solid #39ff14;
@@ -365,7 +365,7 @@ body.game-selection-bg {
 
 /* avatar icon */
 .avatar {
-    width: 55px; /* smaller */
+    width: 55px; 
     position: absolute;
     top: -25px;
     left: 20px;
@@ -375,7 +375,7 @@ body.game-selection-bg {
 /* glowing title */
 .main-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 30px; /* smaller */
+    font-size: 30px; 
     font-weight: 900;
     margin: 5px 0;
 
@@ -387,7 +387,6 @@ body.game-selection-bg {
         0 0 15px #00ff00;
 }
 
-/* subtitle */
 .subtitle {
     font-size: 14px;
     margin: 3px 0;
@@ -400,9 +399,9 @@ body.game-selection-bg {
 .form-container {
     display: flex;
     justify-content: center;
-    gap: 30px; /* reduced */
-    margin-top: 20px; /* reduced */
-    flex-wrap: nowrap; /* keeps side by side */
+    gap: 30px; 
+    margin-top: 20px; 
+    flex-wrap: nowrap; 
 }
 
 /* =========================
@@ -413,8 +412,8 @@ body.game-selection-bg {
     background: rgba(15, 25, 35, 0.9);
     border: 2px solid #ffaa00;
     border-radius: 6px;
-    padding: 15px; /* smaller */
-    width: 280px; /* smaller */
+    padding: 15px; 
+    width: 280px; 
 
     box-shadow:
         0 0 10px rgba(255,170,0,0.6),
@@ -426,7 +425,7 @@ body.game-selection-bg {
 .form-section::after {
     content: "";
     position: absolute;
-    width: 20px; /* slightly smaller */
+    width: 20px; 
     height: 20px;
     border: 3px solid #ffaa00;
 }
@@ -468,7 +467,7 @@ body.game-selection-bg {
 
 /* section titles */
 .form-section h2 {
-    font-size: 16px; /* smaller */
+    font-size: 16px; 
     margin-bottom: 10px;
     text-align: center;
     color: #ffd700;
@@ -476,10 +475,10 @@ body.game-selection-bg {
     text-shadow: 0 0 8px rgba(255,215,0,0.8);
 }
 
-/* inputs */
+/* for the inputs */
 input, select {
     width: 100%;
-    padding: 5px; /* smaller */
+    padding: 5px; 
     margin-bottom: 8px;
     font-size: 13px;
 
@@ -503,7 +502,7 @@ small {
 #registerBtn {
     background: linear-gradient(145deg, #2aff00, #0f5f00);
     border: 3px solid #c6ff00;
-    padding: 10px 40px; /* smaller */
+    padding: 10px 40px; 
 
     font-family: 'Orbitron', sans-serif;
     font-size: 16px;

@@ -27,35 +27,90 @@
     background-size: cover; 
     background-position: center; 
     background-repeat: no-repeat;
-    font-family: sans-serif;
+    font-family: 'Luckiest Guy', cursive;
 ">
 
   <header class="container w3-center">
+
     <div class="w3-center" style="
-        border: 9px dotted #00bcd4; 
         padding: 20px; 
-        margin-top: 20px; 
-        background-color: rgba(255,255,255,0.7); 
+        margin-top: 40px; 
+        background-color: rgba(0,0,0,0.6); 
         display: inline-block;
-        max-width: 600px;   /* 👈 THIS is the fix */
+        max-width: 650px;
+        position: relative;
+        border-radius: 20px;
+
+        /* ⭐ TRUE VISIBLE DOTTED GRADIENT BORDER ⭐ */
+        border: 9px dotted transparent;
+        background: 
+            linear-gradient(45deg, #00eaff, #ff00ff, #8a2be2) border-box,
+            rgba(0,0,0,0.6) padding-box;
+        background-clip: padding-box, border-box;
+
+        /* glow */
+        box-shadow: 0 0 25px #00eaff;
     ">
 
-      <h1 class="w3-center" style="font-family: 'Luckiest Guy', cursive; font-size: 50px; color: #1d609c;">
-        Welcome to Aditi's game project!!
+      <!--  COIN ICON(TOP LEFT) -->
+      <img src="./assets/images/coin.png" alt="coin" style="
+          position: absolute;
+          top: -35px;
+          left: -35px;
+          width: 70px;
+          filter: drop-shadow(0 0 8px gold);
+      ">
+
+      <!--  DIAMOND ICON (TOP RIGHT) -->
+      <img src="./assets/images/diamond.png" alt="diamond" style="
+          position: absolute;
+          top: -35px;
+          right: -35px;
+          width: 70px;
+          filter: drop-shadow(0 0 8px cyan);
+      ">
+
+      <h1 class="w3-center" style="
+          font-size: 50px; 
+          color: #39ffb6;
+          margin-bottom: 10px;
+          text-shadow: 0 0 12px #39ffb6;
+      ">
+        WELCOME TO ADITI'S GAME PROJECT!!
       </h1>
 
       <div class="w3-container w3-center" style="margin-top: 20px; font-size: 38px;">
+
+        <!-- LOGIN BUTTON -->
         <button onclick="fb_authenticate()" style="
-            background-color: #a7e4e9;
-            border: 2px dotted rgb(2, 0, 128);
+            background-color: #0a1a40;
+            border: 3px dotted #39ffb6;
             padding: 12px 25px;
             border-radius: 40px;
             font-size: 24px;
             font-weight: bold;
-            color: #0a1a40;
+            color: #39ffb6;
             cursor: pointer;
+            box-shadow: 0 0 15px #39ffb6;
+            transition: 0.3s;
         ">LOGIN</button>
-        <h1> please press the login button to login! </h1>
+
+        <!-- LOOP TEXT PANEL -->
+        <div style="
+            margin-top: 20px;
+            padding: 10px 25px;
+            background-color: rgba(0,0,0,0.6);
+            border-radius: 40px;
+            font-size: 22px;
+            color: #39ffb6;
+            font-weight: bold;
+            display: inline-block;
+            border: 2px dotted #39ffb6;
+            box-shadow: 0 0 12px #39ffb6;
+        ">
+          PLEASE PRESS THE LOGIN BUTTON TO LOGIN!
+        </div>
+
       </div>
     </div>
   </header>
