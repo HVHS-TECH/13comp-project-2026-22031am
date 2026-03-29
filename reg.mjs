@@ -35,7 +35,9 @@ function getUserInput() {
       };
 
       // Calling the write rec
-      fb_writerecord(userDetails);
+     fb_writerecord(userDetails);
+window.location.href = "select_game.html";
+
   } else {
      console.log('%c Form is not valid!', 'color: red; font-weight: bold; font-size: 16px;');
   }
