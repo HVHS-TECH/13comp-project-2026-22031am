@@ -78,7 +78,7 @@
     <!-- CONTACT DETAILS -->
     <div class="form-section">
 
-      <!--  metal corners -->
+      <!--  metal corners for both the sections -->
       <span class="corner tr"></span> <!-- top right metal corner for the section -->
       <span class="corner bl"></span> <!-- bottom left metal corner for the section -->
 
@@ -91,6 +91,17 @@
       <input type="tel" id="i_phone" name="i_phone" placeholder="123-45-678"
              pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required />
       <small>Format: 123-45-678</small>
+
+      <script>
+function validateForm() {
+    var name = document.forms["f_userDetails"]["i_phone"].value;
+    if (name == "") {
+        alert(" Phone number must be filled and follow the format 123-45-678");
+        return false; // Prevents the form submission
+    }
+}
+</script>
+
     </div>
 
   </div>
