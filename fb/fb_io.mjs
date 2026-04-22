@@ -25,7 +25,6 @@ let userDetails = {
 /**************************************************************/
 // Import all external constants & functions required
 /**************************************************************/
-// Import all the methods you want to call from the firebase modules
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
@@ -33,15 +32,17 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstati
 
 /**************************************************************/
 // EXPORT FUNCTIONS
-// List all the functions called by code or html outside of this module
 /**************************************************************/
-export { fb_initialise, fb_authenticate, fb_writerecord, userDetails };
+export {
+    fb_initialise,
+    fb_authenticate,
+    fb_writerecord,
+    fb_writeScore,
+    userDetails
+};
 
 /******************************************************/
 // fb_initialise()
-// Called by html initialise button
-// Input:  n/a
-// Return: n/a
 /******************************************************/
 function fb_initialise() {
     console.log('%c fb_initialise(): ',
@@ -67,11 +68,7 @@ function fb_initialise() {
 
 /******************************************************/
 // fb_authenticate()
-// Called by html authenticate button
-// Login to Firebase via Google authentication
-// Input:  n/a
-// Return: n/a
-/*****************************************************/
+/******************************************************/
 function fb_authenticate() {
     console.log('%c fb_authenticate(): ', 
        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
@@ -85,7 +82,7 @@ function fb_authenticate() {
 
     signInWithPopup(AUTH, PROVIDER)
     .then((result) => {
-        // Code for a successful authentication goes here
+
         console.log('%c fb_authenticate():successful! ', 
             'color: ' + COL_C + '; background-color: ' + COL_B + ';');
 
@@ -94,21 +91,18 @@ function fb_authenticate() {
         userDetails.photoURL = result.user.photoURL;
         userDetails.uid = result.user.uid;
 
-        //sessionStorage set for registration later
         sessionStorage.setItem('uid', userDetails.uid);
+        sessionStorage.setItem('displayName', userDetails.displayName);
         sessionStorage.setItem('photoURL', userDetails.photoURL);
 
-        // Check if user record exists
         const dbReference = ref(FB_GAMEDB, 'userDetails/' + userDetails.uid);
         get(dbReference).then((snapshot) => {
             if (snapshot.val() != null) {
-        // User exists → go to the game selection page
                 window.location.href = "html/select_game.html";
             } else {
-                // No record → go to registration page 
                 window.location.href = "html/reg.html";
             }
-        }).catch((error) => console.error(error));
+        });
 
     })
     .catch((error) => console.error(error));
@@ -116,25 +110,38 @@ function fb_authenticate() {
 
 /******************************************************/
 // fb_writerecord()
-// Called by html write record
-// Write a specific record to the DB
-// Input:  userDetails object
-// Return: n/a
 /******************************************************/
 function fb_writerecord(userDetails) {
     console.log('%c fb_writerecord(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
 
     const dbReference = ref(FB_GAMEDB, 'userDetails/' + userDetails.uid);
-    set(dbReference, userDetails).then(() => {
-         // Code for a successful write rec
+    set(dbReference, userDetails)
+    .then(() => {
         console.log('%c fb_writerecord(): successful! ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-
         window.location.href = "html/select_game.html";
-    }).catch((error) => {
-        alert("Look at the console for an error message");
+    })
+    .catch((error) => {
         console.error(error);
-
     });
+}
+
+/******************************************************/
+// fb_writeScore()
+// SAVE GAME SCORE TO FIREBASE
+/******************************************************/
+function fb_writeScore(scoreRecord) {
+    console.log('%c fb_writeScore(): ',
+        'color: white; background-color: #CD7F32;');
+
+    const dbReference = ref(FB_GAMEDB, 'scores/fc/' + scoreRecord.uid);
+
+    set(dbReference, scoreRecord)
+        .then(() => {
+            console.log("Score saved successfully!");
+        })
+        .catch((error) => {
+            console.error("Error saving score:", error);
+        });
 }
 
 /******************************************************/

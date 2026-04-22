@@ -1,0 +1,81 @@
+/* =========================
+      GLOBAL RESETTING
+========================= */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* =========================
+      GRADIENT PAGE STYLE
+========================= */
+#grad {
+  background-image: linear-gradient(to right, #d78ee6, #acdce9);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* ======================
+    NAV BAR (COPIED EXACT STYLE)
+========================= */
+.nav-wrapper {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    z-index: 999999;
+}
+
+.nav-bar-sci {
+    display: flex;
+    gap: 16px;
+    background: rgba(0, 0, 0, 0.65);
+    padding: 14px 22px;
+    border: 2px solid #39ffb6;
+    border-radius: 14px;
+    box-shadow: 0 0 18px rgba(0,255,170,0.7);
+}
+
+.nav-bar-sci div {
+    padding: 10px 22px;
+    border: 1px solid #39ffb6;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #b9ffea;
+    text-shadow: 0 0 6px rgba(0,255,200,0.8);
+    transition: 0.25s;
+}
+
+.nav-bar-sci div:hover {
+    background: rgba(0,255,170,0.15);
+    box-shadow: 0 0 10px rgba(0,255,170,0.7);
+}
+
+/* =========================
+      INSTRUCTIONS BOX
+========================= */
+.instructions-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: dashed 6px #000;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  
+  padding: 30px;
+
+  width: 75%;           /* ⬅️ wider (KEY FIX) */
+  max-width: 1000px;    /* ⬅️ prevents it getting too big */
+
+  font-size: 15px;      /* ⬅️ slightly smaller so it fits */
+  font-family: 'Pacifico', cursive;
+
+  margin: 120px auto 20px auto; /* space below navbar */
+  text-align: center;
+}
