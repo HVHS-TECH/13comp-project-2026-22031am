@@ -9,6 +9,7 @@
 /**************************************************************/
 import { fb_initialise, fb_writerecord } from './fb/fb_io.mjs';
 fb_initialise();
+console.log('%c reg.mjs loaded', 'color: green; font-weight: bold;');
 
 /**************************************************************/
 function getUserInput() {
@@ -27,6 +28,9 @@ function getUserInput() {
       console.log("Age:", age);
       console.log("Sex:", sex);
       console.log("Email:", email);
+      console.log("Phone:", phone);
+      console.log("uid:", sessionStorage.getItem('uid'));
+      console.log("photoURL:", sessionStorage.getItem('photoURL'));
 
       const userDetails = { 
           displayName, age, sex, email, phone, 
@@ -34,16 +38,17 @@ function getUserInput() {
           photoURL: sessionStorage.getItem('photoURL')
       };
 
-      // Calling the write rec
-     fb_writerecord(userDetails);
-window.location.href = "select_game.html";
-
+      // Calling the write record
+      fb_writerecord(userDetails);
   } else {
      console.log('%c Form is not valid!', 'color: red; font-weight: bold; font-size: 16px;');
   }
 }
     
-document.getElementById('registerBtn').onclick = getUserInput;
+window.onload = () => {
+  document.getElementById('registerBtn').onclick = getUserInput;
+};
+
 
 /*******************************************************/
 // END OF APP

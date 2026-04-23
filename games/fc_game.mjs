@@ -26,7 +26,7 @@ let missedFruits = 0;
 let lives = MAXLIVES;
 var fruitGroup;
 let song;
-let restartButton;
+let restartButton, homeButton, selectButton, leaderboardButton;
 let wallBot;
 
 let user = {
@@ -187,20 +187,21 @@ function fruitHitsBasket(fruit, basket) {
 /*******************************************************/
 function draw() {
 
+    if (lives <= 0) return;
+
     background(BGimage);
 
-    if (frameCount % 60 === 0) {
-        console.log("spawning fruit batch...");
-
-        for (let i = 0; i < 5; i++) {
-            createFruits();
-        }
+    // spawn fruits
+    if (frameCount % 45 === 0) {
+        createFruits();
     }
 
+    // movement
     if (kb.pressing('left')) basket.vel.x = -BASKETVEL * 2;
     else if (kb.pressing('right')) basket.vel.x = BASKETVEL * 2;
     else basket.vel.x = 0;
 
+    // collisions
     for (let i = 0; i < fruitGroup.length; i++) {
         fruitGroup[i].collides(basket, fruitHitsBasket);
     }
@@ -249,20 +250,67 @@ function saveScore() {
 function gameOverScreen() {
 
     saveScore();
-
     noLoop();
 
-    background(fruitcatcherImage);
+    //REMOVE ALL FRUITS ON GAME OVER SCREEN
+       fruitGroup.removeAll();
+    
+    // REMOVE BASKET ON GAME OVER SCREEN
+       basket.remove();
 
-    textAlign(CENTER);
-    textSize(50);
-    text("YOUR SCORE: " + score, width / 2, height / 2);
+    // canvas with a clear background
+     background('#ffcccc'); // light red colour
 
-    image(gameOverImage, width / 2 - 200, 80);
+    textAlign(CENTER, CENTER);
 
+    // GAME OVER TITLE
+    fill(90, 0, 0);
+    stroke(0);
+    strokeWeight(4);
+    textSize(90); 
+    textStyle(BOLD);
+    text("GAME OVER", width / 2, height / 5);
+
+    //Score display
+    fill(0);
+    textSize(40);
+    text("Your score: " + score, width / 2, height /2 - 40);
+
+       // ===== BUTTONS =====
+
+    // Restart
     restartButton = createButton('Restart');
-    restartButton.position(width / 2 - 50, height / 2 + 200);
+    restartButton.position(width / 2 - 100, height / 2 + 20);
+    restartButton.size(200, 45);
+    styleButton(restartButton);
     restartButton.mousePressed(restartGame);
+
+    // Home (index.html)
+    homeButton = createButton('Home');
+    homeButton.position(width / 2 - 100, height / 2 + 80);
+    homeButton.size(200, 45);
+    styleButton(homeButton);
+    homeButton.mousePressed(() => {
+    window.location.href = "../index.html";
+});
+
+    // Game Selection
+    selectButton = createButton('Game Selection');
+    selectButton.position(width / 2 - 100, height / 2 + 140);
+    selectButton.size(200, 45);
+    styleButton(selectButton);
+    selectButton.mousePressed(() => {
+    window.location.href = "../html/select_game.html";
+});
+
+    // Leaderboard
+    leaderboardButton = createButton('Leaderboard');
+    leaderboardButton.position(width / 2 - 100, height / 2 + 200);
+    leaderboardButton.size(200, 45);
+    styleButton(leaderboardButton);
+    leaderboardButton.mousePressed(() => {
+    window.location.href = "../html/leaderboard.html";
+});
 }
 
 /*******************************************************/
@@ -270,7 +318,11 @@ function gameOverScreen() {
 /*******************************************************/
 function restartGame() {
 
+    // REMOVE ALL BUTTONS WHEN RESTARTING GAME
     restartButton.remove();
+    homeButton.remove();
+    selectButton.remove();
+    leaderboardButton.remove();
 
     score = 0;
     lives = MAXLIVES;
@@ -298,6 +350,20 @@ function html_listen4Debug() {
         }
     });
 }
+
+/*******************************************************/
+// STYLE BUTTON
+/*******************************************************/
+function styleButton(btn) {
+    btn.style('font-size', '18px');
+    btn.style('background-color', '#ffffff');
+    btn.style('border', '3px solid #660000');
+    btn.style('border-radius', '12px');
+    btn.style('padding', '5px');
+    btn.style('cursor', 'pointer');
+    btn.style('font-weight', 'bold');
+}
+
 
 /*******************************************************/
 window.preload = preload;
