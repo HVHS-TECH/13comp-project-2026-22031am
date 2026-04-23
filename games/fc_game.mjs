@@ -74,6 +74,7 @@ function preload() {
     ];
 
     console.log(imageArray); 
+}
 
 /*******************************************************/
 // setup()
