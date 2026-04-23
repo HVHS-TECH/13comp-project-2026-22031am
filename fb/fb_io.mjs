@@ -119,7 +119,7 @@ function fb_writerecord(userDetails) {
     .then(() => {
         console.log('%c fb_writerecord(): successful! ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
         window.location.href = "html/select_game.html";
-    })
+  })
     .catch((error) => {
         console.error(error);
     });
