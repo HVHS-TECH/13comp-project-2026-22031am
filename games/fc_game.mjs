@@ -292,7 +292,7 @@ function gameOverScreen() {
     styleButton(homeButton);
     homeButton.mousePressed(() => {
     window.location.href = "../index.html";
-});
+    });
 
     // Game Selection
     selectButton = createButton('Game Selection');
