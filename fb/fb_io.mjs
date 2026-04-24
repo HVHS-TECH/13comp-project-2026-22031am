@@ -140,9 +140,9 @@ function fb_authenticate2() {
         const dbReference = ref(FB_GAMEDB, 'userDetails/' + userDetails.uid);
         get(dbReference).then((snapshot) => {
             if (snapshot.val() != null) {
-                window.location.href = "html/select_game.html";
+                window.location.href = "select_game.html";
             } else {
-                window.location.href = "html/reg.html";
+                window.location.href = "reg.html";
             }
         });
 
