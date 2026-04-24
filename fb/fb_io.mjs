@@ -109,6 +109,47 @@ function fb_authenticate() {
 }
 
 /******************************************************/
+// fb_authenticate2()
+/******************************************************/
+function fb_authenticate2() {
+    console.log('%c fb_authenticate2(): ', 
+       'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+      
+    const AUTH = getAuth();
+    const PROVIDER = new GoogleAuthProvider();
+
+    PROVIDER.setCustomParameters({
+        prompt: 'select_account'
+    });
+
+    signInWithPopup(AUTH, PROVIDER)
+    .then((result) => {
+
+        console.log('%c fb_authenticate():successful! ', 
+            'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+
+        userDetails.displayName = result.user.displayName;
+        userDetails.email = result.user.email;
+        userDetails.photoURL = result.user.photoURL;
+        userDetails.uid = result.user.uid;
+
+        sessionStorage.setItem('uid', userDetails.uid);
+        sessionStorage.setItem('displayName', userDetails.displayName);
+        sessionStorage.setItem('photoURL', userDetails.photoURL);
+
+        const dbReference = ref(FB_GAMEDB, 'userDetails/' + userDetails.uid);
+        get(dbReference).then((snapshot) => {
+            if (snapshot.val() != null) {
+                window.location.href = "html/select_game.html";
+            } else {
+                window.location.href = "html/reg.html";
+            }
+        });
+
+    })
+    .catch((error) => console.error(error));
+}
+/******************************************************/
 // fb_writerecord()
 /******************************************************/
 function fb_writerecord(userDetails) {
