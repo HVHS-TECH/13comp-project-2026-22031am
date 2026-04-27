@@ -1,5 +1,5 @@
 /* =========================
-      GLOBAL RESETTING
+      GLOBAL RESETTING (from last year)
 ========================= */
 body {
     margin: 0;
@@ -19,7 +19,7 @@ body {
 }
 
 /* ======================
-    NAV BAR (COPIED EXACT STYLE)
+    NAV BAR 
 ========================= */
 .nav-wrapper {
     width: 100%;
@@ -70,12 +70,12 @@ body {
   
   padding: 30px;
 
-  width: 75%;           /* ⬅️ wider (KEY FIX) */
-  max-width: 1000px;    /* ⬅️ prevents it getting too big */
+  width: 75%;           
+  max-width: 1000px;   
 
-  font-size: 15px;      /* ⬅️ slightly smaller so it fits */
+  font-size: 15px;   
   font-family: 'Pacifico', cursive;
 
-  margin: 120px auto 20px auto; /* space below navbar */
+  margin: 120px auto 20px auto; 
   text-align: center;
 }

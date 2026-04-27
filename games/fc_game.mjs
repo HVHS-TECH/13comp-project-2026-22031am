@@ -309,7 +309,7 @@ function gameOverScreen() {
     leaderboardButton.size(200, 45);
     styleButton(leaderboardButton);
     leaderboardButton.mousePressed(() => {
-    window.location.href = "html/leaderboard.html";
+        window.location.href = "../html/leaderboardFC.html";
 });
 }
 

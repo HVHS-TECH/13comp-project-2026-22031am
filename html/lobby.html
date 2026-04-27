@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Lobby</title>
+  <title>GTN Lobby</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,17 +9,49 @@
   <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
 
-  <!-- firebase ui styles ************************************-->
-  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-
   <!-- Google Font *******************************************-->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
+<body class="game-selection-bg">
 
+  <!-- TOP NAV BAR *******************************************-->
+  <div class="nav-wrapper" style="padding: 10px 0;">
+    <div class="nav-bar-sci">
+      <div onclick="window.location.href='instructionsGTN.html'">GTN: GUESS THE NUMBER GAME</div>
+      <div onclick="window.location.href='instructionsFC.html'">FRUIT CATCHER</div>
+      <div onclick="window.location.href='../index.html'">BACK TO THE HOME PAGE</div>
+      <div onclick="window.location.href='reg.html'">BACK TO THE REGISTRATION PAGE</div>
+      <div onclick="window.location.href='about.html'">ABOUT</div>
+    </div>
+  </div>
 
+  <!-- ADMIN BUTTON *******************************************-->
+  <div style="
+      position: absolute;
+      top: 16px; 
+      left: 20px;
+      z-index: 1000;
+  ">
+    <button onclick="window.location.href='ad_manager.html'" style="
+        font-size: 18px;
+        padding: 8px 18px;
+        background-color: rgba(0,0,0,0.6);
+        color: #00ffcc;
+        border: 2px solid #00ffcc;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 0 10px #00ffcc;
+    ">
+      Admin Panel
+    </button>
+  </div>
 
+  <script type="module" src="../main.mjs"></script>
 
+</body>
+</html>
 
 
 
