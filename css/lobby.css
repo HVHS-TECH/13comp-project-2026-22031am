@@ -40,3 +40,66 @@
 
     text-shadow: 0 0 8px #00ffcc;
 }
+
+/* =========================
+     FOR THE ADMIN BUTTON IN LOBBY
+========================= */
+.admin-btn {
+  font-size: 18px;
+  padding: 8px 18px;
+  background-color: rgba(0,0,0,0.6);
+  color: #00ffcc;
+  border: 2px solid #00ffcc;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 0 10px #00ffcc;
+}
+
+/* ======================
+    NAV BAR
+========================= */
+.nav-wrapper {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    padding: 12px 0;
+    z-index: 999999;
+}
+
+.nav-bar-sci {
+    display: flex;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.65);
+    padding: 10px 16px;
+    border: 2px solid #39ffb6;
+    border-radius: 14px;
+    box-shadow: 0 0 18px rgba(0,255,170,0.7);
+}
+
+.nav-bar-sci div {
+    padding: 8px 16px;
+    border: 1px solid #39ffb6;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #b9ffea;
+    text-shadow: 0 0 6px rgba(0,255,200,0.8);
+    transition: 0.25s;
+}
+
+.nav-bar-sci div:hover {
+    background: rgba(0,255,170,0.15);
+    box-shadow: 0 0 10px rgba(0,255,170,0.7);
+}
+
+body {
+    background-image: url('../assets/background/lobbyBG.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
