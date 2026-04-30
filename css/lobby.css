@@ -1,0 +1,42 @@
+/* =========================
+      LOBBY TITLE
+========================= */
+.lobby-title-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    height: calc(100vh - 100px); /* Adjusted so it goes beneath the nav bar */
+    text-align: center;  
+
+    font-family: 'Orbitron', sans-serif;
+    
+}
+
+/* Main glowing title for the lobby title */
+.lobby-title {
+    font-size: 70px;
+    font-weight: 700;
+    color: #00ffcc;
+    letter-spacing: 6px;
+
+    text-shadow:
+    0 5px #00ffcc,
+    0 0 10px #00ffcc,
+    0 0 20px #00ffcc,
+    0 0 40px #00ffff;
+
+    margin: 0px;
+}
+
+/* Subtitle */
+.lobby-subtitle {
+    margin-top: 15px;
+    font-size: 20px;
+    color: #cccccc;
+    letter-spacing: 2px;
+
+
+    text-shadow: 0 0 8px #00ffcc;
+}
