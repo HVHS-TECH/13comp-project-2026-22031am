@@ -103,3 +103,45 @@ body {
     background-position: center;
     background-repeat: no-repeat;
 }
+
+
+/* ======================
+    PLAYERS SECTION for lobby
+========================= */
+.players-container {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.players-title {
+    font-size: 20px;
+    color: #00ffcc;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #00ffcc;
+
+}
+
+/* Player box */
+.players-list {
+    width: 300px;
+    margin: 0 auto;
+    padding: 15px;
+    border: 2px solid #00ffcc;
+    border-radius: 12px;
+    background: rgba(0,0,0,0,4);
+    box-shadow: 0 0 15px #00ffcc;
+}
+
+/* Each player */
+.player-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    color: #b9ffea;
+    border-bottom: 1px solid rgba(0,255,200,0,3);
+}
+
+.player-item:last-child {
+    border-bottom: none;
+}

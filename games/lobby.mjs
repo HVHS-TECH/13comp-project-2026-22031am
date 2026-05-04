@@ -8,4 +8,32 @@
 /*******************************************************/
 // variables()
 /*******************************************************/
+ 
+// Lobby variables
+let lobbyDiv = document.getElementById("lobbyDiv");
+let writingDiv = document.getElementById("writingDiv");
+let waitingMessage = document.getElementById("waitingMessage");
+let LobbyMessage = document.getElementById("LobbyMessage");
+
+/*******************************************************/
+// functions()
+/*******************************************************/
+
+//function to display the lobby and waiting message
+function displayLobby() {
+    LobbyMessage.style.display = "block";
+    waitingMessage.style.display = "block";
+    lobbyDiv.style.display = "block";
+}
+
+function hideLobby() {
+    LobbyMessage.style.display();
+    waitingMessage.style.display = "none";
+
+
+
+
+
+
+
 
