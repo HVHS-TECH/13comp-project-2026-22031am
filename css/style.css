@@ -199,6 +199,42 @@ body.game-selection-bg {
 }
 
 /* =========================
+     MAIN LOBBY CONTAINER
+========================= */
+.lobby-container {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: 150px;
+
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* =========================
+     LOBBY TITLE
+========================= */
+.lobby-title {
+    font-size: 80px;
+    font-weight: 700;
+
+    color: #00ffcc;
+    letter-spacing: 6px;
+    margin-top: 15px;
+    text-shadow:
+    0 0 10px #00ffcc,
+    0 0 20px #00ffcc,
+    0 0 40px #00ffff;
+
+}
+
+/* Subtitle */
+.lobby-subtitle 
+
+
+
+/* =========================
       GAME HUB MAIN HEADING TITLE
 ========================= */
 .main-title-area {
