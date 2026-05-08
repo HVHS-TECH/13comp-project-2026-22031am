@@ -145,3 +145,78 @@ body {
 .player-item:last-child {
     border-bottom: none;
 }
+
+/* ======================
+    MAIN LOBBY ARE
+========================= */
+
+.lobby-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding-top: 160px;
+    text-align: center;
+}
+
+/* ACTIVE LOBBIES TITLE */
+.active-title {
+    font-size: 55px;
+    color: #00ffcc;
+    letter-spacing: 5px;
+
+    margin-bottom: 40px;
+
+    font-family: 'Orbitron', sans-serif;
+
+    text-shadow:
+    0 0 10px #00ffcc,
+    0 0 20px #00ffcc,
+    0 0 40px #00ffcc;
+}
+
+/* CREATING LOBBY SECTION */
+.create-lobby.section {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+/* INPUT BOX */
+#lobby-name-input { 
+    width: 320px;
+    padding 14px;
+
+    border: 2px solid #00ffcc;
+    border-radius: 12px;
+
+    background: rgba(0,0,0,0,6);
+
+    color:white;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 0 15px #00ffcc;
+}
+
+/* PLACEHOLDER */
+#lobby-name-input::placeholder { 
+    color: #cccccc;
+}
+
+ /* CREATE BUTTON */
+#create-lobby-btn {
+    padding: 14px 22px;
+
+    border: 2px solid #00ffcc;
+    border-radius: 12px;
+    background: rgba (0,0,0,0.6);
+    color: #00ffcc;
+    font-weight: bold;
+    letter-spacing:2px;
+    cursor: pointer;
+    box-shadow: 0 0 15px #00ffcc;
+    transition: 0.3s;
+}
+
+#create-lobby

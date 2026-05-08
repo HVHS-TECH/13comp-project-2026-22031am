@@ -33,37 +33,30 @@
   </button>
 
     <!-- MAIN LOBBY *******************************************-->
-     <div class="lobby-title-container">
-      <h1 class="lobby-title"> WELCOME TO THE LOBBY</h1>
-      <p class="lobby-subtitle"> Waiting for players to join...</p>
-     </div>
 
-      <!-- CREATE LOBBY *******************************************-->
+      <div class="lobby-main-container"> 
 
-      <div class=""create-lobby-section"> 
+        <h1 class="active-title"> ACTIVE LOBBIES</h1>
 
+  <!-- CREATE LOBBY *******************************************-->
+   <div class=""create-lobby-section"> 
   
-     <input 
-     type = "text"
-     id=""lobby-name-input" placeholder=""Enter lobby name..." max length="20"
-     >
+  <input 
+type="text"
+id="lobby-name-input"
+placeholder="Please enter a lobby name..."
+maxlength="20" 
+>
 
-  <button id="create-lobby-btn">
-      CREATE LOBBY
-     </button>
+<button id="create-lobby-btn">
+CREATE LOBBY </button>
 
-    </div> 
+</div> 
 
-      <!-- ACTIVE LOBBIES ************************************-->
-       <div class="active-lobbies">
+ <!-- LOBBY LIST *******************************************-->
+  <div id="lobby-list" class="players-list"></div>
 
-        <h2 class="players-title"> ACTIVE LOBBIES</h2>
-   
-        <div id="lobby-list" class="players-list">
-          
-        </div>
-   </div>
-      </div>
+
 
 
   <script type="module" src="../main.mjs"></script>

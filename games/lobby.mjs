@@ -29,6 +29,7 @@ function displayLobby() {
 function hideLobby() {
     LobbyMessage.style.display();
     waitingMessage.style.display = "none";
+    
 
 
 
