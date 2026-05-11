@@ -52,6 +52,46 @@ if (lobbies.length === 0) {
         alert(`Joining lobby: ${lobbyName}`);
 
         //later you can redirect to the actual game 
+        //window.location.href = "gtn_game.html";
+
+       });
+       lobbyList.appendChild(lobbyItem);
+
+    });
+
+}
+
+
+/*******************************************************/
+// CREATE LOBBY
+/*******************************************************/
+
+createLobbyBtn.addEventListener("click", () => {
+
+    const lobbyName = lobbyInput.value.trim();
+
+    //prevent empty lobby names
+    if (lobbyName === "") {
+        alert("Please enter a lobby name!");
+        return;
+    }
+
+    //add to array 
+    lobbies.push(lobbyName);
+
+    //clear input
+    lobbyInput.value = "";
+
+    //update display
+    displayLobbies();
+}
+
+
+/*******************************************************/
+// START PAGE 
+/*******************************************************/
+
+
         
 
 
