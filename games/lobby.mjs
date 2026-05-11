@@ -8,12 +8,58 @@
 /*******************************************************/
 // variables()
 /*******************************************************/
- 
-// Lobby variables
-let lobbyDiv = document.getElementById("lobbyDiv");
-let writingDiv = document.getElementById("writingDiv");
-let waitingMessage = document.getElementById("waitingMessage");
-let LobbyMessage = document.getElementById("LobbyMessage");
+
+//HTML ELEMENTS
+const lobbyInput = document.getElementById("lobby-name-input");
+const createLobbyBtn = document.getElementById("create-lobby-btn");
+const lobbyList = document.getElementById("lobby-list");
+
+//Array to store lobbies
+let lobbies = [];
+
+/*******************************************************/
+// DISPLAY LOBBIES
+/*******************************************************/
+function displayLobbies() {
+
+    // clear old lobbies
+lobbyList.innerHTML = "";
+
+// if no longer lobbies exist
+if (lobbies.length === 0) {
+    lobbyList.innerHTML = '<p style="color: #b9ffea; font-family: Orbitron; text-align: center;">no active lobbies yet...</p>';
+    return;
+}
+}
+
+   // create each lobby
+    lobbies.forEach((lobbyName, index) => {
+        const lobbyItem = document.createElement("div");
+
+    lobbyItem.classList.add("player-item");
+
+    lobbyItem.innerHTML =  `
+    <span>${lobbyName}</span>
+
+    <button class="join-btn"> JOIN </button>
+       `;
+
+       //JOIN BUTTON
+       const joinBtn = lobbyItem.querySelector(".join-btn");
+
+       joinBtn.addEventListener("click", () => {
+
+        alert(`Joining lobby: ${lobbyName}`);
+
+        //later you can redirect to the actual game 
+        
+
+
+
+
+
+
+
 
 /*******************************************************/
 // functions()

@@ -7,7 +7,7 @@
     justify-content: center;
     align-items: center;
 
-    height: calc(100vh - 100px); /* Adjusted so it goes beneath the nav bar */
+    height: calc(100vh - 100px); 
     text-align: center;  
 
     font-family: 'Orbitron', sans-serif;
@@ -129,7 +129,7 @@ body {
     padding: 15px;
     border: 2px solid #00ffcc;
     border-radius: 12px;
-    background: rgba(0,0,0,0,4);
+    background: rgba(0,0,0,0.4);
     box-shadow: 0 0 15px #00ffcc;
 }
 
@@ -139,7 +139,7 @@ body {
     justify-content: space-between;
     padding: 10px;
     color: #b9ffea;
-    border-bottom: 1px solid rgba(0,255,200,0,3);
+    border-bottom: 1px solid rgba(0,255,200,0.3);
 }
 
 .player-item:last-child {
@@ -177,7 +177,7 @@ body {
 }
 
 /* CREATING LOBBY SECTION */
-.create-lobby.section {
+.create-lobby-section {
     display: flex;
     gap: 15px;
     margin-bottom: 35px;
@@ -186,17 +186,18 @@ body {
 /* INPUT BOX */
 #lobby-name-input { 
     width: 320px;
-    padding 14px;
+    padding: 14px;
 
     border: 2px solid #00ffcc;
     border-radius: 12px;
 
-    background: rgba(0,0,0,0,6);
+    background: rgba(0,0,0,0.6);
 
     color:white;
     font-size: 16px;
     outline: none;
     box-shadow: 0 0 15px #00ffcc;
+    
 }
 
 /* PLACEHOLDER */
@@ -219,4 +220,22 @@ body {
     transition: 0.3s;
 }
 
-#create-lobby
+#create-lobby-btn:hover {
+    background: rgba(0,255,200,0.15);
+    transform: scale(1.05);
+}
+
+/* ACTIVE LOBBIES BOX */
+.players-list {
+    width: 500px;
+    min-height:220px;
+
+    padding: 20px;
+    border: 2px solid #00ffcc;
+    border-radius: 14px;
+
+    background: rgba(0,0,0,0.55);
+    box-shadow: 0 0 18px #00ffcc;
+}
+
+/* EACH LOBBY ITEM */
