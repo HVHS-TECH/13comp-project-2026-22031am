@@ -122,16 +122,6 @@ body {
 
 }
 
-/* Player box */
-.players-list {
-    width: 300px;
-    margin: 0 auto;
-    padding: 15px;
-    border: 2px solid #00ffcc;
-    border-radius: 12px;
-    background: rgba(0,0,0,0.4);
-    box-shadow: 0 0 15px #00ffcc;
-}
 
 /* Each player */
 .player-item {
@@ -238,4 +228,30 @@ body {
     box-shadow: 0 0 18px #00ffcc;
 }
 
-/* EACH LOBBY ITEM */
+.player-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding:12px;
+    margin-bottom: 10px;
+    color: #b9ffea;
+    font-family: 'orbitron', sans-serif;
+}
+
+.join-btn {
+    padding: 8px 14px;
+    border: 2px solid #00ffcc;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.6);
+    color: #00ffcc;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 0 10px #00ffcc;
+    transition: 0.3s;
+}
+
+.join-btn:hover {
+    background: rgba (0,255,200,0.15);
+    transform: scale(1.05);
+}

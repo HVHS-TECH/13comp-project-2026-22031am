@@ -1,64 +1,97 @@
 /*******************************************************/
 // lobby.mjs
 // Guess The Number game
-// A simple lobby where you wait till you get redirected to guess the number game! waiting area (for another player etc)
+// A simple lobby where you wait till you get redirected
+// to guess the number game! waiting area
 // written by Aditi Modi term 1 2026
 /*******************************************************/
 
+import { db, auth } from "./firebase.mjs";
+
+import {
+    ref,
+    push,
+    set,
+    onValue
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+
 /*******************************************************/
-// variables()
+// VARIABLES
 /*******************************************************/
 
-//HTML ELEMENTS
-const lobbyInput = document.getElementById("lobby-name-input");
-const createLobbyBtn = document.getElementById("create-lobby-btn");
-const lobbyList = document.getElementById("lobby-list");
+// HTML ELEMENTS
+const lobbyInput =
+document.getElementById("lobby-name-input");
 
-//Array to store lobbies
-let lobbies = [];
+const createLobbyBtn =
+document.getElementById("create-lobby-btn");
+
+const lobbyList =
+document.getElementById("lobby-list");
+
 
 /*******************************************************/
 // DISPLAY LOBBIES
 /*******************************************************/
-function displayLobbies() {
+
+function displayLobbies(firebaseData) {
 
     // clear old lobbies
-lobbyList.innerHTML = "";
+    lobbyList.innerHTML = "";
 
-// if no longer lobbies exist
-if (lobbies.length === 0) {
-    lobbyList.innerHTML = '<p style="color: #b9ffea; font-family: Orbitron; text-align: center;">no active lobbies yet...</p>';
-    return;
-}
-}
+    // if no lobbies exist
+    if (!firebaseData) {
 
-   // create each lobby
-    lobbies.forEach((lobbyName, index) => {
-        const lobbyItem = document.createElement("div");
+        lobbyList.innerHTML = `
+        <p style="
+            color:#b9ffea;
+            font-family:Orbitron;
+            text-align:center;
+        ">
+            No active lobbies yet...
+        </p>
+        `;
 
-    lobbyItem.classList.add("player-item");
+        return;
+    }
 
-    lobbyItem.innerHTML =  `
-    <span>${lobbyName}</span>
+    // loop through firebase lobbies
+    Object.entries(firebaseData).forEach(([lobbyId, lobby]) => {
 
-    <button class="join-btn"> JOIN </button>
-       `;
+        // create lobby container
+        const lobbyItem =
+        document.createElement("div");
 
-       //JOIN BUTTON
-       const joinBtn = lobbyItem.querySelector(".join-btn");
+        lobbyItem.classList.add("player-item");
 
-       joinBtn.addEventListener("click", () => {
+        // lobby HTML
+        lobbyItem.innerHTML = `
+            <span>${lobby.lobbyName}</span>
 
-        alert(`Joining lobby: ${lobbyName}`);
+            <button class="join-btn">
+                JOIN
+            </button>
+        `;
 
-        //later you can redirect to the actual game 
-        //window.location.href = "gtn_game.html";
+        // JOIN BUTTON
+        const joinBtn =
+        lobbyItem.querySelector(".join-btn");
 
-       });
-       lobbyList.appendChild(lobbyItem);
+        joinBtn.addEventListener("click", () => {
+
+            alert(`Joining lobby: ${lobby.lobbyName}`);
+
+            // later:
+            // window.location.href = "gtn_game.html";
+
+        });
+
+        // add lobby to page
+        lobbyList.appendChild(lobbyItem);
 
     });
-
 }
 
 
@@ -68,59 +101,64 @@ if (lobbies.length === 0) {
 
 createLobbyBtn.addEventListener("click", () => {
 
-    const lobbyName = lobbyInput.value.trim();
+    const lobbyName =
+    lobbyInput.value.trim();
 
-    //prevent empty lobby names
+    // prevent empty lobby names
     if (lobbyName === "") {
+
         alert("Please enter a lobby name!");
         return;
     }
 
-    //add to array 
-    lobbies.push(lobbyName);
+    // current logged in user
+    const user = auth.currentUser;
 
-    //clear input
+    // check user logged in
+    if (!user) {
+
+        alert("You must be logged in!");
+        return;
+    }
+
+    // reference to GTN/lobbies
+    const lobbiesRef =
+    ref(db, "GTN/lobbies");
+
+    // create unique firebase ID
+    const newLobbyRef =
+    push(lobbiesRef);
+
+    /*******************************************************/
+    // WRITE RECORD TO FIREBASE
+    /*******************************************************/
+
+    set(newLobbyRef, {
+
+        lobbyName: lobbyName,
+        hostUID: user.uid,
+        status: "waiting"
+
+    });
+
+    // clear the input
     lobbyInput.value = "";
 
-    //update display
-    displayLobbies();
-}
-
+});
 
 /*******************************************************/
-// START PAGE 
+// LIVE FIREBASE LISTENER
 /*******************************************************/
 
+// reference to firebase lobbies
+const lobbiesRef =
+ref(db, "GTN/lobbies");
 
-        
+// update page whenever firebase changes
+onValue(lobbiesRef, (snapshot) => {
 
+    const data = snapshot.val();
 
+    displayLobbies(data);
 
-
-
-
-
-
-/*******************************************************/
-// functions()
-/*******************************************************/
-
-//function to display the lobby and waiting message
-function displayLobby() {
-    LobbyMessage.style.display = "block";
-    waitingMessage.style.display = "block";
-    lobbyDiv.style.display = "block";
-}
-
-function hideLobby() {
-    LobbyMessage.style.display();
-    waitingMessage.style.display = "none";
-    
-
-
-
-
-
-
-
-
+}); 
