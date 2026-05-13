@@ -27,7 +27,15 @@ let userDetails = {
 /**************************************************************/
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+import {
+    getDatabase,
+    ref,
+    set,
+    get,
+    onValue,
+    push
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 /**************************************************************/
@@ -38,6 +46,8 @@ export {
     fb_authenticate,
     fb_writerecord,
     fb_writeScore,
+    fb_writeLobby,
+    fb_readLobbies,
     userDetails
 };
 
@@ -144,6 +154,57 @@ function fb_writeScore(scoreRecord) {
         });
 }
 
+
 /******************************************************/
-// END OF APP
+// fb_writeLobby()
+// SAVE LOBBY TO FIREBASE
 /******************************************************/
+
+function fb_writeLobby(lobbyRecord) {
+
+    console.log('%c fb_writeLobby(): ',
+        'color: white; background-color: #CD7F32;');
+
+    //firebase path
+    const dbReference =
+        ref(FB_GAMEDB, 'GTN/Lobbies');
+
+    const newLobbyRef = push(dbReference);
+
+    //write data
+    set(newLobbyRef, lobbyRecord)
+        .then(() => {
+            console.log("Lobby saved successfully!");
+        })
+        .catch((error) => {
+            console.error("Error saving lobby:", error);
+        });
+}
+
+/******************************************************/
+// fb_readLobbies()
+// READ LOBBIES FROM FIREBASE
+/******************************************************/
+
+function fb_readLobbies(callback) {
+
+    console.log('%c fb_readLobbies(): ',
+        'color: white; background-color: #CD7F32;');
+
+    //firebase path
+    const dbReference =
+        ref(FB_GAMEDB, 'GTN/Lobbies');
+
+    //listen for changes 
+    onValue(dbReference, (snapshot) => {
+
+        const data =
+            snapshot.val();
+
+        console.log(data);
+
+        //send firebase data back
+        callback(data || {});
+    });
+
+}

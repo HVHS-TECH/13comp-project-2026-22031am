@@ -6,6 +6,13 @@
 // written by Aditi Modi term 1 2026
 /*******************************************************/
 
+import {
+    fb_initialise,
+    fb_writeLobby,
+    fb_readLobbies
+}
+from "../fb/fb_io.mjs";
+
 
 /*******************************************************/
 // variables()
@@ -16,62 +23,68 @@ const lobbyInput = document.getElementById("lobby-name-input");
 const createLobbyBtn = document.getElementById("create-lobby-btn");
 const lobbyList = document.getElementById("lobby-list");
 
-//Array to store lobbies
-let lobbies = [];
+
+/*******************************************************/
+// INITIALISE FIREBASE
+/*******************************************************/
+fb_initialise();
 
 
 /*******************************************************/
 // DISPLAY LOBBIES
 /*******************************************************/
-function displayLobbies() {
-
-    // clear old lobbies
+function displayLobbies(firebaseData) {
+    
+    console.log("displayLobbies called with data:", firebaseData);  //DIAG
+    
+    //clear old lobbies
     lobbyList.innerHTML = "";
 
-    // if no lobbies exist
-    if (lobbies.length === 0) {
+    //if no lobbies exist 
+    if (!firebaseData) {
 
-        lobbyList.innerHTML =
-        '<p style="color: #b9ffea; font-family: Orbitron; text-align: center;">no active lobbies yet...</p>';
+        lobbyList.innerHTML = 
+        '<p style= "color: #b9ffea; font-family: Orbitron; text-align: center;">no active lobbies yet...</p>';
 
         return;
+
     }
 
-    // create each lobby
-    lobbies.forEach((lobbyName, index) => {
+/*******************************************************/
+// LOOP THROUGH FIREBASE LOBBIES
+/*******************************************************/
 
-        const lobbyItem =
-        document.createElement("div");
+    Object.keys(firebaseData).forEach((uid) => {
 
-        lobbyItem.classList.add("player-item");
+    const lobby = 
+    firebaseData[uid];
 
-        lobbyItem.innerHTML = `
-            <span>${lobbyName}</span>
+    const lobbyItem = document.createElement("div");
+    lobbyItem.classList.add("player-item");
 
-            <button class="join-btn">
-                JOIN
-            </button>
-        `;
+    lobbyItem.innerHTML =  `
+    <span>${lobby.lobbyName}</span>
 
-        // JOIN BUTTON
-        const joinBtn =
-        lobbyItem.querySelector(".join-btn");
+    <button class="join-btn"> 
+    JOIN
+    </button>
 
-        joinBtn.addEventListener("click", () => {
+    `;
 
-            alert(`Joining lobby: ${lobbyName}`);
+/*******************************************************/
+// JOIN BUTTON
+/*******************************************************/
 
-            // later you can redirect to the actual game
-            // window.location.href = "gtn_game.html";
+    const joinBtn = lobbyItem.querySelector(".join-btn");
+    joinBtn.addEventListener("click", () => {
 
-        });
-
-        lobbyList.appendChild(lobbyItem);
+        alert(`Joining lobby: ${lobby.lobbyName}`);
 
     });
 
+    lobbyList.appendChild(lobbyItem);
+    });
 }
-
 
 /*******************************************************/
 // CREATE LOBBY
@@ -79,55 +92,64 @@ function displayLobbies() {
 
 createLobbyBtn.addEventListener("click", () => {
 
-    const lobbyName =
-    lobbyInput.value.trim();
+    const lobbyName = lobbyInput.value.trim();
 
-    // prevent empty lobby names
+    console.log("CREATE LOBBY clicked. Lobby name:", lobbyName);  //DIAG
+
+    //stop empty names
     if (lobbyName === "") {
 
         alert("Please enter a lobby name!");
         return;
-    }
 
-    // add to array
-    lobbies.push(lobbyName);
+}
 
-    // clear input
-    lobbyInput.value = "";
+/*******************************************************/
+// CREATE LOBBY OBJECT
+/*******************************************************/
 
-    // update display
-    displayLobbies();
+const lobbyRecord = {
 
+    uid:
+    sessionStorage.getItem("uid"),
+
+    userName:
+    sessionStorage.getItem("displayName"),
+
+    lobbyName:
+    lobbyName,
+
+    accepted:
+    "no"
+};
+
+console.log("Lobby record being written:", lobbyRecord);  //DIAG
+
+/*******************************************************/
+// WRITE TO FIREBASE
+/*******************************************************/
+
+fb_writeLobby(lobbyRecord);
+
+/*******************************************************/
+// LOCAL DISPLAY
+/*******************************************************/
+
+//clear input
+lobbyInput.value = "";
 });
 
 
 /*******************************************************/
-// DISPLAY LOBBIES
+// READ LOBBIES FROM FIREBASE
 /*******************************************************/
-displayLobbies();
+fb_readLobbies((firebaseData) => {
+
+    displayLobbies(firebaseData || {});
+});
 
 
 /*******************************************************/
 // START PAGE
 /*******************************************************/
 
-
-/*******************************************************/
-// functions()
-/*******************************************************/
-
-// function to display the lobby and waiting message
-function displayLobby() {
-
-    LobbyMessage.style.display = "block";
-    waitingMessage.style.display = "block";
-    lobbyDiv.style.display = "block";
-
-}
-
-function hideLobby() {
-
-    LobbyMessage.style.display = "none";
-    waitingMessage.style.display = "none";
-
-}
