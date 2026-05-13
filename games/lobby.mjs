@@ -2,73 +2,51 @@
 // lobby.mjs
 // Guess The Number game
 // A simple lobby where you wait till you get redirected
-// to guess the number game! waiting area
+// to guess the number game! waiting area (for another player etc)
 // written by Aditi Modi term 1 2026
 /*******************************************************/
 
-import { db, auth } from "./firebase.mjs";
-
-import {
-    ref,
-    push,
-    set,
-    onValue
-}
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
 
 /*******************************************************/
-// VARIABLES
+// variables()
 /*******************************************************/
 
-// HTML ELEMENTS
-const lobbyInput =
-document.getElementById("lobby-name-input");
+//HTML ELEMENTS
+const lobbyInput = document.getElementById("lobby-name-input");
+const createLobbyBtn = document.getElementById("create-lobby-btn");
+const lobbyList = document.getElementById("lobby-list");
 
-const createLobbyBtn =
-document.getElementById("create-lobby-btn");
-
-const lobbyList =
-document.getElementById("lobby-list");
+//Array to store lobbies
+let lobbies = [];
 
 
 /*******************************************************/
 // DISPLAY LOBBIES
 /*******************************************************/
-
-function displayLobbies(firebaseData) {
+function displayLobbies() {
 
     // clear old lobbies
     lobbyList.innerHTML = "";
 
     // if no lobbies exist
-    if (!firebaseData) {
+    if (lobbies.length === 0) {
 
-        lobbyList.innerHTML = `
-        <p style="
-            color:#b9ffea;
-            font-family:Orbitron;
-            text-align:center;
-        ">
-            No active lobbies yet...
-        </p>
-        `;
+        lobbyList.innerHTML =
+        '<p style="color: #b9ffea; font-family: Orbitron; text-align: center;">no active lobbies yet...</p>';
 
         return;
     }
 
-    // loop through firebase lobbies
-    Object.entries(firebaseData).forEach(([lobbyId, lobby]) => {
+    // create each lobby
+    lobbies.forEach((lobbyName, index) => {
 
-        // create lobby container
         const lobbyItem =
         document.createElement("div");
 
         lobbyItem.classList.add("player-item");
 
-        // lobby HTML
         lobbyItem.innerHTML = `
-            <span>${lobby.lobbyName}</span>
+            <span>${lobbyName}</span>
 
             <button class="join-btn">
                 JOIN
@@ -81,17 +59,17 @@ function displayLobbies(firebaseData) {
 
         joinBtn.addEventListener("click", () => {
 
-            alert(`Joining lobby: ${lobby.lobbyName}`);
+            alert(`Joining lobby: ${lobbyName}`);
 
-            // later:
+            // later you can redirect to the actual game
             // window.location.href = "gtn_game.html";
 
         });
 
-        // add lobby to page
         lobbyList.appendChild(lobbyItem);
 
     });
+
 }
 
 
@@ -111,54 +89,45 @@ createLobbyBtn.addEventListener("click", () => {
         return;
     }
 
-    // current logged in user
-    const user = auth.currentUser;
+    // add to array
+    lobbies.push(lobbyName);
 
-    // check user logged in
-    if (!user) {
-
-        alert("You must be logged in!");
-        return;
-    }
-
-    // reference to GTN/lobbies
-    const lobbiesRef =
-    ref(db, "GTN/lobbies");
-
-    // create unique firebase ID
-    const newLobbyRef =
-    push(lobbiesRef);
-
-    /*******************************************************/
-    // WRITE RECORD TO FIREBASE
-    /*******************************************************/
-
-    set(newLobbyRef, {
-
-        lobbyName: lobbyName,
-        hostUID: user.uid,
-        status: "waiting"
-
-    });
-
-    // clear the input
+    // clear input
     lobbyInput.value = "";
+
+    // update display
+    displayLobbies();
 
 });
 
+
 /*******************************************************/
-// LIVE FIREBASE LISTENER
+// DISPLAY LOBBIES
+/*******************************************************/
+displayLobbies();
+
+
+/*******************************************************/
+// START PAGE
 /*******************************************************/
 
-// reference to firebase lobbies
-const lobbiesRef =
-ref(db, "GTN/lobbies");
 
-// update page whenever firebase changes
-onValue(lobbiesRef, (snapshot) => {
+/*******************************************************/
+// functions()
+/*******************************************************/
 
-    const data = snapshot.val();
+// function to display the lobby and waiting message
+function displayLobby() {
 
-    displayLobbies(data);
+    LobbyMessage.style.display = "block";
+    waitingMessage.style.display = "block";
+    lobbyDiv.style.display = "block";
 
-}); 
+}
+
+function hideLobby() {
+
+    LobbyMessage.style.display = "none";
+    waitingMessage.style.display = "none";
+
+}
