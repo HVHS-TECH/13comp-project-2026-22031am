@@ -167,12 +167,12 @@ function fb_writeLobby(lobbyRecord) {
 
     //firebase path
     const dbReference =
-        ref(FB_GAMEDB, 'GTN/Lobbies');
+        ref(FB_GAMEDB, 'GTN/Lobbies/' + lobbyRecord.uid);
 
-    const newLobbyRef = push(dbReference);
+        console.log('GTN/Lobbies/' + lobbyRecord.uid);
 
     //write data
-    set(newLobbyRef, lobbyRecord)
+    set(dbReference, ) 
         .then(() => {
             console.log("Lobby saved successfully!");
         })
@@ -195,7 +195,7 @@ function fb_readLobbies(callback) {
     const dbReference =
         ref(FB_GAMEDB, 'GTN/Lobbies');
 
-    //listen for changes 
+    //listen for changes in the system
     onValue(dbReference, (snapshot) => {
 
         const data =
