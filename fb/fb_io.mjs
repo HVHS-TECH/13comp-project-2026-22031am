@@ -32,8 +32,7 @@ import {
     ref,
     set,
     get,
-    onValue,
-    push
+    onValue
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
@@ -172,7 +171,7 @@ function fb_writeLobby(lobbyRecord) {
         console.log('GTN/Lobbies/' + lobbyRecord.uid);
 
     //write data
-    set(dbReference, ) 
+    set(dbReference, lobbyRecord ) 
         .then(() => {
             console.log("Lobby saved successfully!");
         })
