@@ -167,7 +167,7 @@ function fb_writeLobby(lobbyRecord) {
     //firebase path
     const dbReference =
         ref(FB_GAMEDB, 'GTN/Lobbies/' + lobbyRecord.uid);
-
+xc  
         console.log('GTN/Lobbies/' + lobbyRecord.uid);
 
     //write data
