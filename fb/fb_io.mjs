@@ -47,7 +47,8 @@ export {
     fb_writeScore,
     fb_writeLobby,
     fb_readLobbies,
-    userDetails
+    userDetails,
+    FB_GAMEDB
 };
 
 /******************************************************/
@@ -154,6 +155,7 @@ function fb_writeScore(scoreRecord) {
 }
 
 
+
 /******************************************************/
 // fb_writeLobby()
 // SAVE LOBBY TO FIREBASE
@@ -164,19 +166,32 @@ function fb_writeLobby(lobbyRecord) {
     console.log('%c fb_writeLobby(): ',
         'color: white; background-color: #CD7F32;');
 
-    //firebase path
-    const dbReference =
-        ref(FB_GAMEDB, 'GTN/Lobbies/' + lobbyRecord.uid);
-xc  
-        console.log('GTN/Lobbies/' + lobbyRecord.uid);
+    // USING THE LOBBY NAME AS THE KEY
+    const lobbyUID =
+        lobbyRecord.lobbyName;
 
-    //write data
-    set(dbReference, lobbyRecord ) 
+    // firebase path
+    const dbReference =
+        ref(
+            FB_GAMEDB,
+            'GTN/Lobbies/' + lobbyUID
+        );
+
+    console.log(
+        'GTN/Lobbies/' + lobbyUID
+    );
+
+    // WRITING DATA
+    set(dbReference, lobbyRecord)
         .then(() => {
+
             console.log("Lobby saved successfully!");
+
         })
         .catch((error) => {
+
             console.error("Error saving lobby:", error);
+
         });
 }
 
@@ -207,3 +222,11 @@ function fb_readLobbies(callback) {
     });
 
 }
+
+
+/******************************************************/
+// constucting when the 2nd player joins
+// 
+/******************************************************/
+
+
