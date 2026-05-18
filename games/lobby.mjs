@@ -13,8 +13,7 @@ from "../fb/fb_io.mjs";
 
 import {
     ref,
-    update,
-    onValue
+    update
 }
 from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
@@ -30,6 +29,8 @@ const createLobbyBtn =
 
 const lobbyList =
     document.getElementById("lobby-list");
+
+const statusMessage = document.getElementById("status-message");
 
 
 /*******************************************************/
@@ -121,8 +122,7 @@ function displayLobbies(firebaseData) {
 
             });
 
-            // Start watching the lobby
-            watchLobby(lobby.lobbyName);
+            window.location.href = "waiting_room.html?lobby=" + lobby.lobbyName;
 
         });
 
@@ -182,7 +182,7 @@ createLobbyBtn.addEventListener("click", () => {
     /*******************************************************/
     fb_writeLobby(lobbyRecord);
 
-    watchLobby(lobbyName);
+    window.location.href = "waiting_room.html?lobby=" + lobbyName;
 
     // CLEAR INPUT
     lobbyInput.value = "";
@@ -199,36 +199,3 @@ fb_readLobbies((firebaseData) => {
 
 });
 
-
-/*******************************************************/
-// LISTENING FUNCTION FOR UPDATES
-/*******************************************************/
-function watchLobby(lobbyName) {
-
-    const lobbyRef =
-        ref(
-            FB_GAMEDB,
-            'GTN/Lobbies/' + lobbyName
-        );
-
-    onValue(lobbyRef, (snapshot) => {
-
-        const lobby =
-            snapshot.val();
-
-        if (!lobby) return;
-
-        console.log(
-            "Lobby updated:",
-            lobby
-        );
-
-        if (lobby.accepted === "yes") {
-
-            window.location.href =
-                "GTN_game.html?lobby=" + lobbyName;
-        }
-
-    });
-
-}
