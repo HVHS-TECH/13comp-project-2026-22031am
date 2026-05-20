@@ -101,7 +101,7 @@ function fb_authenticate() {
         userDetails.photoURL = result.user.photoURL;
         userDetails.uid = result.user.uid;
 
-        sessionStorage.setItem('uid', userDetails.uid);
+        sessionStorage.setItem('uid', userDetails.uid); 
         sessionStorage.setItem('displayName', userDetails.displayName);
         sessionStorage.setItem('photoURL', userDetails.photoURL);
 

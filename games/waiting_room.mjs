@@ -2,9 +2,8 @@
 // waiting_room.mjs
 /*******************************************************/
 
-import { FB_GAMEDB } from "../fb/fb_io.mjs";
 import {
-    fb_intitialise,
+    fb_initialise,
     FB_GAMEDB
 }
 from "../fb/fb_io.mjs";
@@ -83,7 +82,14 @@ if (lobby.guestName) {
 
 if(lobby.accepted === "yes") {
     
-    statusText.innerHTML = "Opponent connected!";
+    statusText.innerHTML = "Opponent connected! </br>"+ "Redirecting to the guess the number game shortly...";
+    setTimeout(() => {
+
+        window.location.href = "GTN_game.html?lobby=" + lobbyName;
+    }, 2000);
+
+}
+});
 
 
 

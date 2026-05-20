@@ -30,8 +30,6 @@ const createLobbyBtn =
 const lobbyList =
     document.getElementById("lobby-list");
 
-const statusMessage = document.getElementById("status-message");
-
 
 /*******************************************************/
 // INITIALISE FIREBASE
@@ -159,23 +157,16 @@ createLobbyBtn.addEventListener("click", () => {
     /*******************************************************/
     const lobbyRecord = {
 
-        uid:
-            sessionStorage.getItem("uid"),
+        uid: sessionStorage.getItem("uid"),
 
-        userName:
-            sessionStorage.getItem("displayName"),
+        userName: sessionStorage.getItem("displayName"),
 
-        lobbyName:
-            lobbyName,
+        lobbyName: lobbyName,
 
-        accepted:
-            "no"
+        accepted: "no"
     };
 
-    console.log(
-        "Lobby record being written:",
-        lobbyRecord
-    );
+    console.log("Lobby record being written:", lobbyRecord);
 
     /*******************************************************/
     // WRITE TO FIREBASE
