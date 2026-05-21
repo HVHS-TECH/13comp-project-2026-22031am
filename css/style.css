@@ -576,3 +576,59 @@ small {
     background-color: pink;
     p.dotted {border-style: dotted;}
 }
+
+/* =========================
+    HOME PAGE ABOUT PANEL
+============================ */
+.home-about.container {
+
+display: flex;
+justify-content: center; 
+margin-top:  35px;
+margin-bottom: 40px;
+padding: 0 0 20px;
+}
+
+.home-about-box {
+    max-width: 850px;
+
+    background: rgba(0,0,0,0.7);
+    border: 4px dotted #39ffb6;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+
+    box-shadow: 
+    0 0 18px #39ffb6,
+    0 0 30px rgba(0,255,200, 0.4);
+
+    font-family: 'Orbitron', sans-serif;
+}
+
+.home-about-title {
+    font-size: 32px;
+    color: #39ffb6;
+
+    margin-bottom: 15px;
+    text-shadow:
+    0 0 10px #39ffb6,
+    0 0 20px rgba(0,255,200,0.8);
+}
+
+.home-about-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #f5f5f5;
+}
+
+.highlight-blue {
+    color: #00eaff;
+}
+
+.highlight-pink {
+    color: #ff66ff;
+}
+
+
+
+
