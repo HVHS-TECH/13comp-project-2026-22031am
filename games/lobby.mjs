@@ -112,7 +112,7 @@ function displayLobbies(firebaseData) {
                 guestUID:
                     sessionStorage.getItem("uid"),
 
-                guestName:
+                guestgame:
                     sessionStorage.getItem("displayName"),
 
                 accepted:
