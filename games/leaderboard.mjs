@@ -1,8 +1,11 @@
-/**************************************************************/
-// leaderboard.mjs
-// Main entry for leaderboard.html
-// Written by Aditi Modi, Term 1 2026
-/**************************************************************/
+
+/*******************************************************/
+// gtn_game.mjs
+// Guess the number game
+// Main entry for GTN_game.html
+// A simple 2-player game where you play guess the number with another buddy
+// written by Aditi Modi term 1 & 2 2026
+/*******************************************************/
 
 /**************************************************************/
 // Import all the constants & functions required from the fb_io module
@@ -24,3 +27,4 @@ document.getElementById('backHomeBtn').onclick = () => {
 /*******************************************************/
 // END OF APP
 /*******************************************************/
+
