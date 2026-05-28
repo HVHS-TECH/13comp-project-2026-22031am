@@ -18,7 +18,7 @@
   referrerpolicy="no-referrer"></script>
 
   <!-- p5play v3 — hosted on official site *******************-->
-<script src="https://p5play.org/v3/planck.min.js"></script
+<script src="https://p5play.org/v3/planck.min.js"></script>
 <script src="https://p5play.org/v3/p5play.js"></script>
   
    <!-- JQUERY ************************************************-->
@@ -30,7 +30,7 @@
 
     <!-- MAIN CONTAINER ***********************************************-->
      <div class="game-container">
-
+      
       
     <!-- TITLE ***********************************************-->
      <h1 class="title"> GUESS THE NUMBER </h1>
@@ -75,7 +75,7 @@
       </div>
 
       <!-- LAST RESULT ***********************************************-->
-       <div class="result-box">
+       <div class="result-box" id=""result-box">
         Make a guess to see the result! 
        </div>
 
@@ -84,8 +84,9 @@
         <label> Enter your guess (1-100) </label>
 
         <div class="guess-row">
-          <input type="number" placeholder="Enter your number...">
-          <button> SUBMIT YOUR GUESS! </button>
+          <input id="guess-input" type="number" placeholder="Enter your number...">
+          <button onclick="checkGuess()"> SUBMIT YOUR GUESS! </button>
+          
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 
 /*******************************************************/
-// gtn_game.mjs
-// Guess the number game
+// leaderboard.mjs
+// leaderboard page
 // Main entry for GTN_game.html
 // A simple 2-player game where you play guess the number with another buddy
 // written by Aditi Modi term 1 & 2 2026

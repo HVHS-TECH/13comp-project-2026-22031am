@@ -10,7 +10,7 @@ body {
 /*************************************************/
 
 .game-container {
-    padding: 30px;
+    padding: 15px 30px;
 }
 
 /*************************************************/
@@ -19,8 +19,9 @@ body {
 .title {
     text-align: center;
     color: white;
-    font-size: 70px;
-    margin-bottom: 30px;
+    font-size: 52px;
+    margin-bottom: 18px;
+    margin-top: 5px;
 }
 
 /*************************************************/
@@ -30,19 +31,19 @@ body {
     width: fit-content;
     margin: auto;
     background: white;
-    padding: 18px 35px;
-    border-radius: 20px;
-    font-size: 28px;
+    padding: 12px 24px;
+    border-radius: 18px;
+    font-size: 22px;
     font-weight: bold;
     color: #16235c;
-    margin-bottom: 40px;
+    margin-bottom: 28px;
 }
 
 .range-box span {
     background: #8ef2f2;
-    padding: 10px 20px;
-    border-radius: 15px;
-    margin-left: 10px;
+    padding: 8px 16px;
+    border-radius: 12px;
+    margin-left: 8px;
 }
 
 /*************************************************/
@@ -50,7 +51,7 @@ body {
 /*************************************************/
 .main-content {
     display: flex;
-    gap: 40px;
+    gap: 22px;
     justify-content: center; 
     align-items: flex-start;
 }
@@ -59,7 +60,8 @@ body {
 /* PLAYERS PANEL */
 /*************************************************/
 .players-panel {
-    width: 300px;
+    width: 220px;
+    margin-top: 20px;
 }
 
 .players-panel h2 {
@@ -70,9 +72,9 @@ body {
 
 .player-card {
     background: #dffbff;
-    border-radius: 25px;
-    padding: 25px;
-    margin-bottom: 25px;
+    border-radius: 20px;
+    padding: 18px;
+    margin-bottom: 18px;
     text-align: center;
 }
 
@@ -81,13 +83,13 @@ body {
 }
 
 .player-card h3 {
-    font-size: 35px;
+    font-size: 24px;
     margin-bottom: 10px;
     color: #16235c;
 }
 
 .player-card p {
-    font-size: 24px;
+    font-size: 18px;
     color: #6a42d8;
 }
 
@@ -106,16 +108,16 @@ body {
 /*************************************************/
 
 .status-panel {
-    width: 700px;
+    width: 620px;
     background: #f7f5ff;
-    border-radius: 30px;
-    padding: 40px;
+    border-radius: 24px;
+    padding: 28px;
 }
 
 .status-panel h2 {
     text-align: center;
     color: #16235c;
-    font-size: 45px;
+    font-size: 34px;
 }
 
 /*************************************************/
@@ -123,13 +125,13 @@ body {
 /*************************************************/
 .turn-box {
     background: #dffbff;
-    border-radius: 25px;
-    padding: 40px;
+    border-radius: 20px;
+    padding: 28px;
     text-align: center;
-    font-size: 50px;
+    font-size: 36px;
     font-weight: bold;
     color: #00a6b2;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 /*************************************************/
@@ -138,11 +140,11 @@ body {
 
 .result-box {
     background: #efe1ff;
-    border-radius: 20px;
-    padding: 25px;
+    border-radius: 18px;
+    padding: 18px;
     text-align: center;
-    margin-top: 30px;
-    font-size: 28px;
+    margin-top: 20px;
+    font-size: 20px;
     color: #16235c;
 }
 
@@ -155,7 +157,7 @@ body {
 }
 
 .guess-section label {
-    font-size: 28px;
+    font-size: 20px;
     font-weight: bold;
     color: #16235c;
 }
@@ -168,7 +170,7 @@ body {
 
 .guess-row input {
     flex: 1;
-    padding: 20px;
+    padding: 14px;
     border-radius: 20px;
     border: 2px solid #c9b3ff;
     font-size: 22px;
@@ -178,9 +180,9 @@ body {
     background: linear-gradient(to right, #9f7aea, #7f5cff);
     border: none;
     color: white;
-    padding: 20px 30px;
+    padding: 14px 22px;
     border-radius: 20px;
-    font-size: 22px;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
 }
