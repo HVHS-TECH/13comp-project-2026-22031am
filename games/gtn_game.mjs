@@ -11,9 +11,12 @@
 /*******************************************************/
 // variables()
 /*******************************************************/
-let secretNumber = 50;
+let secretNumber = Math.floor(Math.random() * 100) + 1;
 
+console.log("Secret number is: " + secretNumber);
 
+set(ref(database, "GTN/room1, secretNumber");
+    
 /*******************************************************/
 // CHECK THE GUESS FUNCTION
 /*******************************************************/
@@ -43,20 +46,23 @@ function checkGuess() {
 
         resultBox.innerHTML = "Correct! You guessed the number! Congratulations!";
 
+        console.log("Correct! Player guessed the secret number!");
+
     } else if (guess < secretNumber) {
 
         resultBox.innerHTML = "Too low! Please try again";
 
+        console.log("Too low! Please try again");
+
     } else {
 
-        resultBox.innerHTML = "Too high! Please try again, you can have another try";
+        resultBox.innerHTML = "Too high! Please try again";
+        console.log("Too high! Please try again");
+
+        resultBox.innerHTML = "Player 1 turn";
 
     }
 }
-
-
-
-
 
 
 
