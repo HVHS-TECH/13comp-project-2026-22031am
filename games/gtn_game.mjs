@@ -44,17 +44,31 @@ const database = getDatabase(app);
 /*******************************************************/
 // VARIABLES
 /*******************************************************/
-const roomName = "room1";
+const params = new URLSearchParams(window.location.search);
+
+const roomName = params.get("room");
 
 let secretNumber;
+let currentTurn;
 
 /*******************************************************/
 // SECRET NUMBER FIREBASE REFERENCE AND RANDOM GENERATOR
 /*******************************************************/
 const secretNumberRef = ref(
     database,
-    `GTN/Lobbies/${roomName}/secretNumber`
+    `GTN/Lobbies/${roomName}/gameData/secretNumber`
 );
+
+const guessesRef = ref(
+    database,
+    `GTN/Lobbies/${roomName}/gameData/guesses`
+);
+
+const currentTurnRef = ref(
+    database,
+    `GTN/Lobbies/${roomName}/gameData/currentTurn`
+);
+
 
 /*******************************************************/
 // CREATE SECRET NUMBER IF IT DOESN'T EXIST
@@ -80,6 +94,23 @@ get(secretNumberRef).then((snapshot) => {
 
 });
 
+
+/*******************************************************/
+// CREATING FIRST TURN
+/*******************************************************/
+get(currentTurnRef).then((snapshot) => {
+
+    //if no turns exist yet 
+    if (!snapshot.exists()) {
+
+        //HOST STARTS FIRST
+        set(currentTurnRef, "Aditi");
+    }
+});
+
+
+
+
 /*******************************************************/
 // READ SHARED SECRET NUMBER FROM THE FIREBASE
 /*******************************************************/
@@ -88,6 +119,18 @@ onValue(secretNumberRef, (snapshot) => {
     secretNumber = snapshot.val();
 
     console.log("Shared secret number is: " + secretNumber);
+
+});
+
+/*******************************************************/
+// READ CURRENT TURN FROM FIREBASE
+/*******************************************************/
+onValue(currentTurnRef, (snapshot) => {
+    currentTurn = snapshot.val();
+
+    console.log("Current turn is: " + currentTurn);
+
+    document.getElementById("turn-box").innerHTML = currentTurn + "'s turn!";
 
 });
 
@@ -110,6 +153,11 @@ function checkGuess() {
 
     const resultBox = document.getElementById("result-box");
 
+    if(currentTurn !== "Aditi") {
+        resultBox.innerHTML = "It's not your turn! please wait for your buddy to take their turn.";
+        return;
+    }
+
     /*******************************************************/
     // CHECK IF THE GAME IS STILL LOADING
     /*******************************************************/
@@ -124,6 +172,11 @@ function checkGuess() {
     // GET PLAYER GUESS
     /*******************************************************/
     let guess = Number(guessInput.value);
+
+    set(ref(database, `GTN/Lobbies/${roomName}/gameData/guesses/guess1`), {
+        player: currentTurn,
+        number: guess
+    });
 
     console.log("Player guessed: " + guess);
 

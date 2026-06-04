@@ -85,7 +85,7 @@ if(lobby.accepted === "yes") {
     statusText.innerHTML = "Opponent connected! </br>"+ "Redirecting to the guess the number game shortly...";
     setTimeout(() => {
 
-        window.location.href = "GTN_game.html?lobby=" + lobbyName;
+        window.location.href = `GTN_game.html?room=${lobbyName}`;
     }, 2000);
 
 }
