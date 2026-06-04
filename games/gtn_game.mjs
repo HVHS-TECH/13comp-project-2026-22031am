@@ -16,7 +16,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebas
 import {
     getDatabase,
     ref,
-    set
+    set,
+    onValue
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
 /*******************************************************/
@@ -47,7 +48,18 @@ let secretNumber = Math.floor(Math.random() * 100) + 1;
 
 console.log("Secret number is: " + secretNumber);
 
-set(ref(database, "GTN/room1/secretNumber"), secretNumber);
+set(ref(database, "GTN/Lobbies/room1/secretNumber"), secretNumber)
+
+.then(() => {
+    console.log("SECRET NUMBER SAVED");
+})
+
+.catch((error) => {
+
+    console.log("ERROR SAVING:");
+    console.log(error);
+
+});
 
 
 /*******************************************************/
