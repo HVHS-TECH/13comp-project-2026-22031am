@@ -47,9 +47,13 @@ const database = getDatabase(app);
 const params = new URLSearchParams(window.location.search);
 
 const roomName = params.get("room");
+playerName = params.get("player");
 
 let secretNumber;
 let currentTurn;
+let playerName;
+let hostName;
+let guestName;
 
 /*******************************************************/
 // SECRET NUMBER FIREBASE REFERENCE AND RANDOM GENERATOR
@@ -68,6 +72,11 @@ const currentTurnRef = ref(
     database,
     `GTN/Lobbies/${roomName}/gameData/currentTurn`
 );
+
+const hostNameref = ref(
+    database,
+     `GTN/Lobbies/${roomName}/gameData/currentTurn`
+
 
 
 /*******************************************************/
