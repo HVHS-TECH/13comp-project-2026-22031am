@@ -15,7 +15,7 @@ import {
     ref,
     update
 }
-from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
 
 /*******************************************************/
@@ -107,26 +107,19 @@ function displayLobbies(firebaseData) {
                     'GTN/Lobbies/' + lobby.lobbyName
                 );
             
-                if(lobby.accepted === "playing")
-                    alert("Sorry, this lobby is already full!");  // stop if the lobby is already full
+            if (lobby.accepted === "playing" &&
+                lobby.uid !== sessionStorage.getItem("uid")
+            ) {
 
-                    return;
-                }
+                alert("Sorry, this lobby is already full!");  // stop if the lobby is already full
+                return;
+            }
 
             update(lobbyRef, {
-
-                guestUID:
-                    sessionStorage.getItem("uid"),
-
-                guestName:
-                    sessionStorage.getItem("displayName"),
-                
-                guestPhoto:
-                    sessionStorage.getItem("photoURL"),
-
-                accepted:
-                    "playing"
-
+                guestUID: sessionStorage.getItem("uid"),
+                guestName: sessionStorage.getItem("displayName"),
+                guestPhoto: sessionStorage.getItem("photoURL"),
+                accepted: "playing"
             });
 
             window.location.href = "waiting_room.html?lobby=" + lobby.lobbyName;

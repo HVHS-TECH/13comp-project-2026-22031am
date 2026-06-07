@@ -12,7 +12,7 @@ import {
     ref,
     onValue
 }
-from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
 /*******************************************************/
 // INITIALISE FIREBASE
@@ -94,13 +94,13 @@ onValue(lobbyRef, (snapshot) => {
     // START GAME IF ACCEPTED
 /*******************************************************/
 
-    if(lobby.guestName && lobby.accepted === "yes") {
+    if(lobby.guestName && lobby.accepted === "playing") {
 
         statusText.innerHTML = "Opponent has joined! <br> Starting game...";
 
         setTimeout(() => {
             console.log("REDIRECTING NOW");
-            
+
             window.location.href =  `GTN_game.html?room=${lobbyName}`;
 
         }, 1500);
