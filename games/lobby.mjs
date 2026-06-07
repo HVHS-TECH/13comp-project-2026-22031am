@@ -107,7 +107,7 @@ function displayLobbies(firebaseData) {
                     'GTN/Lobbies/' + lobby.lobbyName
                 );
             
-                if(lobby.guestName) {
+                if(lobby.accepted === "playing")
                     alert("Sorry, this lobby is already full!");  // stop if the lobby is already full
 
                     return;
@@ -125,7 +125,7 @@ function displayLobbies(firebaseData) {
                     sessionStorage.getItem("photoURL"),
 
                 accepted:
-                    "yes"
+                    "playing"
 
             });
 
@@ -174,7 +174,9 @@ createLobbyBtn.addEventListener("click", () => {
 
         lobbyName: lobbyName,
 
-        accepted: "no"
+        accepted: "waiting",
+        guestName: "",
+        guestPhoto: ""
     };
 
     console.log("Lobby record being written:", lobbyRecord);
