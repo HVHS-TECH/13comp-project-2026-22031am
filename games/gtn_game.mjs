@@ -52,6 +52,7 @@ let secretNumber;
 let currentTurn;
 let hostName;
 let guestName;
+let gameEnded = false;
 
 const myName = sessionStorage.getItem("displayName");
 
@@ -163,11 +164,27 @@ const winnerRef = ref( database, `GTN/Lobbies/${roomName}/gameData/winner`);
 
 onValue(winnerRef, (snapshot) => {
     if(snapshot.exists()) {
+        
+        gameEnded = true;
 
         document.getElementById("result-box").innerHTML = 
         snapshot.val() + " WINS THE GAME!! ";
     }
 });
+
+/*******************************************************/
+// LIVE GAME MESSAGES (SYNC IN BOTH OF THE PLAYERS)
+/*******************************************************/
+const lastResultRef = ref(database,  `GTN/Lobbies/${roomName}/gameData/lastResult`);
+
+    onValue(lastResultRef, (snapshot) => {
+        if(snapshot.exists()) {
+
+            document.getElementById("result-box").innerHTML = snapshot.val();
+        }
+    });
+
+
 
 /*******************************************************/
 // PLAYER NAMES
@@ -210,6 +227,12 @@ function checkGuess() {
     const guessInput = document.getElementById("guess-input");
 
     const resultBox = document.getElementById("result-box");
+
+        if(gameEnded) {
+            resultBox.innerHTML = "Game already finished! Please start a new game to play again.";
+
+            return;
+        }
 
      /*******************************************************/
     // CHECK TURN
@@ -277,26 +300,45 @@ function checkGuess() {
 
     console.log("Player guessed: " + guess);
 
+    const winnerRef =  ref(database,
+`GTN/Lobbies/${roomName}/gameData/winner`
+);
+
+
+
     /*******************************************************/
     // CHECK GUESS
     /*******************************************************/
 
+    let message = "";
+
     if (guess === secretNumber) {
-        resultBox.innerHTML = "Correct! You guessed the number! Congratulations!";
 
-        set(ref(database,  `GTN/Lobbies/${roomName}/gameData/winner`
-        ),
-        currentTurn);
+        message = `${currentTurn} guessed ${guess} — CORRECT!`;
 
-        return;
+        resultBox.innerHTML = message;
+        set(ref(database, `GTN/Lobbies/${roomName}/gameData/winner`
+    ), currentTurn);
 
-    
-    } else if (guess < secretNumber) {
-        resultBox.innerHTML = "Too low! Please try again";
-
-    } else {
-        resultBox.innerHTML = "Too high! Please try again";
+    return;
     }
+
+    else if (guess < secretNumber) {
+    
+    message = `${currentTurn} guessed ${guess} — too low!`;
+    }
+
+    else {
+         message = `${currentTurn} guessed ${guess} — too high! `;
+
+}
+
+    //show on the screen
+    resultBox.innerHTML = message;
+
+    //send to firebase so BOTH players can see it
+    set(ref(database,  `GTN/Lobbies/${roomName}/gameData/lastResult`), message);
+    
 
     /*******************************************************/
     // SWITCH TURNS
