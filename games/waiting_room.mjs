@@ -46,7 +46,9 @@ console.log("Lobby name:", lobbyName);
 /*******************************************************/
 // SHOW LOBBY NAME
 /*******************************************************/
-lobbyNameText.innerHTML = "Lobby: " + lobbyName;
+if (lobbyNameText) {
+    lobbyNameText.innerHTML = "Lobby: " + lobbyName;
+}
 
 /*******************************************************/
 // FIREBASE REFERENCE
