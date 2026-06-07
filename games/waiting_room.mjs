@@ -27,6 +27,10 @@ const lobbyNameText = document.getElementById("lobby-name");
 
 const hostNameText = document.getElementById("host-name");
 const guestNameText = document.getElementById("guest-name");
+
+const hostPhoto = document.getElementById("host-photo");
+const guestPhoto = document.getElementById("guest-photo");
+
 const statusText = document.getElementById("status-text");
 
 /*******************************************************/
@@ -62,19 +66,29 @@ onValue(lobbyRef, (snapshot) => {
 /*******************************************************/
 // DISPLAY HOST
 /*******************************************************/
-    hostNameText.innerHTML = "Host: " + lobby.userName;
+    hostNameText.innerHTML = lobby.userName;
+
+    if(lobby.userPhoto) {
+        hostPhoto.src = lobby.userPhoto;
+    }
 
 /*******************************************************/
 // DISPLAY GUEST
 /*******************************************************/
 
-if (lobby.guestName) {
+    if(lobby.guestName){
 
-    guestNameText.innerHTML = "Guest: " + lobby.guestName;
+        guestNameText.innerHTML = lobby.guestName;
 
-} else {
-    guestNameText.innerHTML = "Guest: waiting...";
-}
+    } else {
+        guestNameText.innerHTML = 
+        "Waiting for opponent to join...";
+    }
+
+    if(lobby.guestPhoto){
+
+        guestPhoto.src = lobby.guestPhoto;
+    }
 
 /*******************************************************/
     // START GAME IF ACCEPTED
@@ -87,9 +101,9 @@ if(lobby.accepted === "yes") {
 
         window.location.href = `GTN_game.html?room=${lobbyName}`;
     }, 2000);
-
 }
 });
+
 
 
 

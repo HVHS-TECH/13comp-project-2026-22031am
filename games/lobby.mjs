@@ -112,8 +112,11 @@ function displayLobbies(firebaseData) {
                 guestUID:
                     sessionStorage.getItem("uid"),
 
-                guestgame:
+                guestName:
                     sessionStorage.getItem("displayName"),
+                
+                guestPhoto:
+                    sessionStorage.getItem("photoURL"),
 
                 accepted:
                     "yes"
@@ -160,6 +163,8 @@ createLobbyBtn.addEventListener("click", () => {
         uid: sessionStorage.getItem("uid"),
 
         userName: sessionStorage.getItem("displayName"),
+
+        userPhoto: sessionStorage.getItem("photoURL"),
 
         lobbyName: lobbyName,
 

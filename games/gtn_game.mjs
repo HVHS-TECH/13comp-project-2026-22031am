@@ -47,13 +47,13 @@ const database = getDatabase(app);
 const params = new URLSearchParams(window.location.search);
 
 const roomName = params.get("room");
-playerName = params.get("player");
 
 let secretNumber;
 let currentTurn;
-let playerName;
 let hostName;
 let guestName;
+
+const myName = sessionStorage.getItem("displayName");
 
 /*******************************************************/
 // SECRET NUMBER FIREBASE REFERENCE AND RANDOM GENERATOR
@@ -72,11 +72,6 @@ const currentTurnRef = ref(
     database,
     `GTN/Lobbies/${roomName}/gameData/currentTurn`
 );
-
-const hostNameref = ref(
-    database,
-     `GTN/Lobbies/${roomName}/gameData/currentTurn`
-
 
 
 /*******************************************************/
@@ -113,10 +108,12 @@ get(currentTurnRef).then((snapshot) => {
     if (!snapshot.exists()) {
 
         //HOST STARTS FIRST
-        set(currentTurnRef, "Aditi");
+       set(
+        currentTurnRef,
+        sessionStorage.getItem("displayName")
+       );
     }
 });
-
 
 
 
@@ -146,9 +143,32 @@ onValue(currentTurnRef, (snapshot) => {
 /*******************************************************/
 // PLAYER NAMES
 /*******************************************************/
-document.getElementById("host-name").innerHTML = "Aditi";
+    const lobbyRef = 
+    ref(database, `GTN/Lobbies/${roomName}`);
 
-document.getElementById("guest-name").innerHTML = "Buddy";
+    onValue(lobbyRef, (snapshot) => {
+
+        const lobby = snapshot.val();
+
+        if(!lobby) return;
+
+        hostName = lobby.userName;
+        guestName = lobby.guestName; 
+
+        document.getElementById("host-name").innerHTML = 
+        lobby.userName;
+
+        if(lobby.guestName) {
+
+            document.getElementById("guest-name").innerHTML = 
+            lobby.guestName;
+
+        } else {
+
+            document.getElementById("guest-name").innerHTML = 
+            "Waiting for guest to join...";
+        }
+    });
 
 /*******************************************************/
 // CHECK THE GUESS FUNCTION
@@ -162,19 +182,24 @@ function checkGuess() {
 
     const resultBox = document.getElementById("result-box");
 
-    if(currentTurn !== "Aditi") {
-        resultBox.innerHTML = "It's not your turn! please wait for your buddy to take their turn.";
-        return;
+     /*******************************************************/
+    // CHECK TURN
+    /*******************************************************/
+    if(currentTurn !== myName) {
+
+        resultBox.innerHTML = "It's not your turn! Please wait for your buddy to take their turn.";
+
+            return;
     }
 
     /*******************************************************/
-    // CHECK IF THE GAME IS STILL LOADING
+    // CHECK IF GAME LOADING
     /*******************************************************/
-    if (secretNumber == null) {
+    if(secretNumber == null) {
 
         resultBox.innerHTML = "Game still loading...";
-        return;
 
+        return;
     }
 
     /*******************************************************/
@@ -182,39 +207,54 @@ function checkGuess() {
     /*******************************************************/
     let guess = Number(guessInput.value);
 
-    set(ref(database, `GTN/Lobbies/${roomName}/gameData/guesses/guess1`), {
+    const guessID = Date.now();
+
+    /*******************************************************/
+    // SAVE GUESS TO FIREBASE
+    /*******************************************************/
+
+    set(ref(database,  `GTN/Lobbies/${roomName}/gameData/guesses/${guessID}`
+    ),
+    {
         player: currentTurn,
         number: guess
-    });
+    }
+);
 
     console.log("Player guessed: " + guess);
 
     /*******************************************************/
-    // CHECK PLAYER'S GUESS
+    // CHECK GUESS
     /*******************************************************/
+
     if (guess === secretNumber) {
-
-        resultBox.innerHTML =
-            "Correct! You guessed the number! Congratulations!";
-
-        console.log("Correct! Player guessed the secret number!");
-
+        resultBox.innerHTML = "Correct! You guessed the number! Congratulations!";
+    
     } else if (guess < secretNumber) {
-
         resultBox.innerHTML = "Too low! Please try again";
 
-        console.log("Too low! Please try again");
+    } else {
+        resultBox.innerHTML = "Too high! Please try again";
+    }
+
+    /*******************************************************/
+    // SWITCH TURNS
+    /*******************************************************/
+    let nextTurn;
+
+    if(currentTurn === hostName) { 
+        nextTurn = guestName; 
 
     } else {
 
-        resultBox.innerHTML = "Too high! Please try again";
-
-        console.log("Too high! Please try again");
+        nextTurn = hostName; 
+    
+    }
+    set(currentTurnRef, nextTurn);
 
     }
 
-}
-
+   
 /*******************************************************/
 // MAKE FUNCTION ACCESSIBLE FROM HTML
 /*******************************************************/
