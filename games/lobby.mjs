@@ -106,6 +106,12 @@ function displayLobbies(firebaseData) {
                 ref(FB_GAMEDB,
                     'GTN/Lobbies/' + lobby.lobbyName
                 );
+            
+                if(lobby.guestName) {
+                    alert("Sorry, this lobby is already full!");  // stop if the lobby is already full
+
+                    return;
+                }
 
             update(lobbyRef, {
 

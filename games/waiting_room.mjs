@@ -94,14 +94,17 @@ onValue(lobbyRef, (snapshot) => {
     // START GAME IF ACCEPTED
 /*******************************************************/
 
-if(lobby.accepted === "yes") {
-    
-    statusText.innerHTML = "Opponent connected! </br>"+ "Redirecting to the guess the number game shortly...";
-    setTimeout(() => {
+    if(lobby.guestName && lobby.accepted === "yes") {
 
-        window.location.href = `GTN_game.html?room=${lobbyName}`;
-    }, 2000);
-}
+        statusText.innerHTML = "Opponent has joined! <br> Starting game...";
+
+        setTimeout(() => {
+            console.log("REDIRECTING NOW");
+            
+            window.location.href =  `GTN_game.html?room=${lobbyName}`;
+
+        }, 1500);
+    }
 });
 
 

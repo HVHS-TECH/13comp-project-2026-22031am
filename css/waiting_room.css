@@ -30,3 +30,17 @@ body {
     object-fit: cover;
     background: #bbb;
 }
+
+body {
+    background: linear-gradient(
+        135deg,
+        #1e1e2f,
+        #2a2a40
+    );
+    min-height: 100vh;
+    color: white;
+    font-family: Orbitron;
+}
+
+
+    
