@@ -35,330 +35,187 @@ const FB_GAMECONFIG = {
 };
 
 /*******************************************************/
-// INITIALIZE FIREBASE
+// INIT
 /*******************************************************/
 const app = initializeApp(FB_GAMECONFIG);
-
 const database = getDatabase(app);
 
 /*******************************************************/
 // VARIABLES
 /*******************************************************/
 const params = new URLSearchParams(window.location.search);
-
 const roomName = params.get("room");
 
-let secretNumber;
-let currentTurn;
-let hostName;
-let guestName;
+let secretNumber = null;
+let currentTurn = null;
+let hostName = null;
+let guestName = null;
 let gameEnded = false;
 
 const myName = sessionStorage.getItem("displayName");
 
 /*******************************************************/
-// SECRET NUMBER FIREBASE REFERENCE AND RANDOM GENERATOR
+// FIREBASE REFERENCES
 /*******************************************************/
-const secretNumberRef = ref(
-    database,
-    `GTN/Lobbies/${roomName}/gameData/secretNumber`
-);
-
-const guessesRef = ref(
-    database,
-    `GTN/Lobbies/${roomName}/gameData/guesses`
-);
-
-const currentTurnRef = ref(
-    database,
-    `GTN/Lobbies/${roomName}/gameData/currentTurn`
-);
-
+const secretNumberRef = ref(database, `GTN/Lobbies/${roomName}/gameData/secretNumber`);
+const currentTurnRef = ref(database, `GTN/Lobbies/${roomName}/gameData/currentTurn`);
+const winnerRef = ref(database, `GTN/Lobbies/${roomName}/gameData/winner`);
+const lastResultRef = ref(database, `GTN/Lobbies/${roomName}/gameData/lastResult`);
+const playerLobbyRef = ref(database, `GTN/Lobbies/${roomName}`);
 
 /*******************************************************/
-// CREATE SECRET NUMBER IF IT DOESN'T EXIST
+// CREATE SECRET NUMBER
 /*******************************************************/
 get(secretNumberRef).then((snapshot) => {
-
-    // IF NO SECRET NUMBER EXISTS YET
     if (!snapshot.exists()) {
-
-        // Generating random number between 1-100
-        let randomNumber = Math.floor(Math.random() * 100) + 1;
-
-        console.log("Generated secret number: " + randomNumber);
-
-        // SAVE TO THE FIREBASE
+        const randomNumber = Math.floor(Math.random() * 100) + 1;
         set(secretNumberRef, randomNumber);
-
-    } else {
-
-        console.log("Secret number already exists!");
-
+        console.log("Generated secret:", randomNumber);
     }
-
 });
 
-
 /*******************************************************/
-// CREATING FIRST TURN (HOST ONLY)
+// SET FIRST TURN (HOST ONLY)
 /*******************************************************/
-
-const lobbyRef =
-ref(database, `GTN/Lobbies/${roomName}`);
-
-get(lobbyRef).then((snapshot) => {
-
+get(playerLobbyRef).then((snapshot) => {
     const lobby = snapshot.val();
+    if (!lobby) return;
 
-    if(!lobby) return;
-
-    // ONLY HOST CAN CREATE FIRST TURN
-    if(lobby.userName === myName) {
-
-        get(currentTurnRef).then((turnSnapshot) => {
-
-            // only create if doesn't exist
-            if(!turnSnapshot.exists()) {
-
+    if (lobby.userName === myName) {
+        get(currentTurnRef).then((turnSnap) => {
+            if (!turnSnap.exists()) {
                 set(currentTurnRef, lobby.userName);
-
-                console.log("Host created first turn");
-
             }
-
         });
-
     }
-
 });
 
-
 /*******************************************************/
-// READ SHARED SECRET NUMBER FROM THE FIREBASE
+// READ SECRET NUMBER
 /*******************************************************/
 onValue(secretNumberRef, (snapshot) => {
-
     secretNumber = snapshot.val();
-
-    console.log("Shared secret number is: " + secretNumber);
-
 });
 
 /*******************************************************/
-// READ CURRENT TURN FROM FIREBASE
+// READ TURN
 /*******************************************************/
 onValue(currentTurnRef, (snapshot) => {
     currentTurn = snapshot.val();
 
-    console.log("Current turn is: " + currentTurn);
+    const turnBox = document.getElementById("turn-box");
 
-    document.getElementById("turn-box").innerHTML = currentTurn + "'s turn!";
-
+    if (currentTurn) {
+        turnBox.innerHTML = `${currentTurn}'s turn!`;
+    } else {
+        turnBox.innerHTML = "Waiting for game...";
+    }
 });
 
 /*******************************************************/
-// READ THE WINNER
+// READ WINNER
 /*******************************************************/
-const winnerRef = ref( database, `GTN/Lobbies/${roomName}/gameData/winner`);
-
 onValue(winnerRef, (snapshot) => {
-    if(snapshot.exists()) {
-        
+    if (snapshot.exists()) {
         gameEnded = true;
 
-        document.getElementById("result-box").innerHTML = 
-        snapshot.val() + " WINS THE GAME!! ";
+        document.getElementById("result-box").innerHTML =
+            snapshot.val() + " WINS THE GAME!!";
     }
 });
 
 /*******************************************************/
-// LIVE GAME MESSAGES (SYNC IN BOTH OF THE PLAYERS)
+// SYNC LAST RESULT (BOTH SCREENS)
 /*******************************************************/
-const lastResultRef = ref(database,  `GTN/Lobbies/${roomName}/gameData/lastResult`);
-
-    onValue(lastResultRef, (snapshot) => {
-        if(snapshot.exists()) {
-
-            document.getElementById("result-box").innerHTML = snapshot.val();
-        }
-    });
-
-
+onValue(lastResultRef, (snapshot) => {
+    if (snapshot.exists()) {
+        document.getElementById("result-box").innerHTML = snapshot.val();
+    }
+});
 
 /*******************************************************/
-// PLAYER NAMES
+// PLAYER NAMES (FIXED SAFELY)
 /*******************************************************/
-    const playerLobbyRef = 
-    ref(database, `GTN/Lobbies/${roomName}`);
+onValue(playerLobbyRef, (snapshot) => {
+    const lobby = snapshot.val();
+    if (!lobby) return;
 
-    onValue(playerLobbyRef, (snapshot) => {
+    hostName = lobby.userName || "Host";
+    guestName = lobby.guestName || null;
 
-        const lobby = snapshot.val();
+    document.getElementById("host-name").innerHTML = hostName;
 
-        if(!lobby) return;
-
-        hostName = lobby.userName;
-        guestName = lobby.guestName; 
-
-        document.getElementById("host-name").innerHTML = 
-        lobby.userName;
-
-        if(lobby.guestName) {
-
-            document.getElementById("guest-name").innerHTML = 
-            lobby.guestName;
-
-        } else {
-
-            document.getElementById("guest-name").innerHTML = 
-            "Waiting for guest to join...";
-        }
-    });
+    document.getElementById("guest-name").innerHTML =
+        guestName ? guestName : "Waiting for guest...";
+});
 
 /*******************************************************/
-// CHECK THE GUESS FUNCTION
+// CHECK GUESS
 /*******************************************************/
 function checkGuess() {
-
-    /*******************************************************/
-    // GET HTML ELEMENTS
-    /*******************************************************/
     const guessInput = document.getElementById("guess-input");
-
     const resultBox = document.getElementById("result-box");
 
-        if(gameEnded) {
-            resultBox.innerHTML = "Game already finished! Please start a new game to play again.";
-
-            return;
-        }
-
-     /*******************************************************/
-    // CHECK TURN
-    /*******************************************************/
-    if(currentTurn !== myName) {
-
-        resultBox.innerHTML = "It's not your turn! Please wait for your buddy to take their turn.";
-
-            return;
+    // game ended check
+    if (gameEnded) {
+        resultBox.innerHTML = "Game already finished!";
+        return;
     }
 
-    /*******************************************************/
-    // STOP THE GAME IF SOMEONE ALREADY WON
-    /*******************************************************/
-    const winnerRef = ref(database,
-    `GTN/Lobbies/${roomName}/gameData/winner`
-);
+    // turn check
+    if (currentTurn !== myName) {
+        resultBox.innerHTML = "It's not your turn!";
+        return;
+    }
 
-    get(winnerRef).then((snapshot) => {
-        if (snapshot.exists()) {
-
-            resultBox.innerHTML = snapshot.val() + " already won the game! Please start a new game to play again.";
-
-            return;
-        }
-        });
-
-    /*******************************************************/
-    // CHECK IF GAME LOADING
-    /*******************************************************/
-    if(secretNumber == null) {
-
+    // loading check
+    if (secretNumber === null) {
         resultBox.innerHTML = "Game still loading...";
-
         return;
     }
 
-    /*******************************************************/
-    // GET PLAYER GUESS
-    /*******************************************************/
-    let guess = Number(guessInput.value);
+    const guess = Number(guessInput.value);
 
-    if(guessInput.value === "" ||
-        guess < 1 ||
-        guess > 100 
-    ) {
-        resultBox.innerHTML = "Please enter a valid number from 1-100";
+    if (!guess || guess < 1 || guess > 100) {
+        resultBox.innerHTML = "Enter number 1–100";
         return;
     }
-
 
     const guessID = Date.now();
 
-    /*******************************************************/
-    // SAVE GUESS TO FIREBASE
-    /*******************************************************/
-
-    set(ref(database,  `GTN/Lobbies/${roomName}/gameData/guesses/${guessID}`
-    ),
-    {
+    // save guess
+    set(ref(database, `GTN/Lobbies/${roomName}/gameData/guesses/${guessID}`), {
         player: currentTurn,
         number: guess
-    }
-);
-
-    console.log("Player guessed: " + guess);
-
-    const winnerRef =  ref(database,
-`GTN/Lobbies/${roomName}/gameData/winner`
-);
-
-
-
-    /*******************************************************/
-    // CHECK GUESS
-    /*******************************************************/
+    });
 
     let message = "";
 
     if (guess === secretNumber) {
-
         message = `${currentTurn} guessed ${guess} — CORRECT!`;
 
+        set(winnerRef, currentTurn);
+        set(lastResultRef, message);
+
         resultBox.innerHTML = message;
-        set(ref(database, `GTN/Lobbies/${roomName}/gameData/winner`
-    ), currentTurn);
-
-    return;
+        return;
     }
 
-    else if (guess < secretNumber) {
-    
-    message = `${currentTurn} guessed ${guess} — too low!`;
+    if (guess < secretNumber) {
+        message = `${currentTurn} guessed ${guess} — too low!`;
+    } else {
+        message = `${currentTurn} guessed ${guess} — too high!`;
     }
 
-    else {
-         message = `${currentTurn} guessed ${guess} — too high! `;
+    resultBox.innerHTML = message;
+    set(lastResultRef, message);
 
+    // switch turn
+    const nextTurn = currentTurn === hostName ? guestName : hostName;
+    set(currentTurnRef, nextTurn);
 }
 
-    //show on the screen
-    resultBox.innerHTML = message;
-
-    //send to firebase so BOTH players can see it
-    set(ref(database,  `GTN/Lobbies/${roomName}/gameData/lastResult`), message);
-    
-
-    /*******************************************************/
-    // SWITCH TURNS
-    /*******************************************************/
-    let nextTurn;
-
-    if(currentTurn === hostName) { 
-        nextTurn = guestName; 
-
-    } else {
-
-        nextTurn = hostName; 
-    
-    }
-    set(currentTurnRef, nextTurn);
-
-    }
-
-   
 /*******************************************************/
-// MAKE FUNCTION ACCESSIBLE FROM HTML
+// EXPORT
 /*******************************************************/
 window.checkGuess = checkGuess;
