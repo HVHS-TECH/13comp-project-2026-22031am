@@ -105,12 +105,29 @@ onValue(currentTurnRef, (snapshot) => {
 
     const turnBox = document.getElementById("turn-box");
 
+    const guessInput = document.getElementById("guess-input");
+    const guessInput = document.getElementById("guess-button");
+
     if (currentTurn) {
+
         turnBox.innerHTML = `${currentTurn}'s turn!`;
+
+    // MY TURN
+    if (currentTurn === myName) {
+
+        guessInput.disabled = false;
+        guessButton.disabled = false;
+
+    }
+    // NOT MY TURN 
+    else {
+        guessInput.disabled = true;
+        guestButton.disabled = true;
+    }
+
     } else {
         turnBox.innerHTML = "Waiting for game...";
     }
-});
 
 /*******************************************************/
 // READ WINNER
@@ -164,7 +181,8 @@ function checkGuess() {
 
     // turn check
     if (currentTurn !== myName) {
-        resultBox.innerHTML = "It's not your turn!";
+        resultBox.innerHTML = 
+        "<span style='color: red; font-weight: bold;' > Sorry! It's not your turn!. </span>";
         return;
     }
 
@@ -196,6 +214,9 @@ function checkGuess() {
 
         set(winnerRef, currentTurn);
         set(lastResultRef, message);
+
+        // clear the textbox after the guess
+        guessInput.value = "";
 
         resultBox.innerHTML = message;
         return;
