@@ -195,6 +195,30 @@ body {
     opacity: 0.9;
 }
 
+/*************************************************/
+/* LEAVE BUTTON */
+/*************************************************/
+.leave-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+#leave-button {
+    background: #ff5a7a;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 22px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#leave-button:hover {
+    transform: scale(1.05);
+}
 
 
 

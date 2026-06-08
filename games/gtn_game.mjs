@@ -443,8 +443,20 @@ function checkGuess() {
 
 }
 
+/*******************************************************/
+// LEAVE GAME FUNCTION
+/*******************************************************/
+    function leaveGame() {
+
+        const confirmLeave = confirm("Are you sure you want to leave the game?");
+
+        if (!confirmLeave) return;
+        window.location.href = "lobby.html";
+    }
+
 
 /*******************************************************/
 // MAKE FUNCTION ACCESSIBLE FROM HTML
 /*******************************************************/
 window.checkGuess = checkGuess;
+window.leaveGame = leaveGame;
