@@ -20,6 +20,7 @@ import {
     get
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
+
 /*******************************************************/
 // FIREBASE CONFIG
 /*******************************************************/
@@ -34,17 +35,22 @@ const FB_GAMECONFIG = {
     measurementId: "G-0KELMX0418"
 };
 
+
 /*******************************************************/
-// INIT
+// INITIALIZE FIREBASE
 /*******************************************************/
 const app = initializeApp(FB_GAMECONFIG);
+
 const database = getDatabase(app);
+
 
 /*******************************************************/
 // VARIABLES
 /*******************************************************/
 const params = new URLSearchParams(window.location.search);
+
 const roomName = params.get("room");
+    console.log("ROOM NAME:", roomName);
 
 let secretNumber = null;
 let currentTurn = null;
@@ -53,190 +59,392 @@ let guestName = null;
 let gameEnded = false;
 
 const myName = sessionStorage.getItem("displayName");
+    console.log("MY NAME:", myName);
+
 
 /*******************************************************/
 // FIREBASE REFERENCES
 /*******************************************************/
-const secretNumberRef = ref(database, `GTN/Lobbies/${roomName}/gameData/secretNumber`);
-const currentTurnRef = ref(database, `GTN/Lobbies/${roomName}/gameData/currentTurn`);
-const winnerRef = ref(database, `GTN/Lobbies/${roomName}/gameData/winner`);
-const lastResultRef = ref(database, `GTN/Lobbies/${roomName}/gameData/lastResult`);
-const playerLobbyRef = ref(database, `GTN/Lobbies/${roomName}`);
+const secretNumberRef = ref(
+    database,
+    `GTN/Lobbies/${roomName}/gameData/secretNumber`
+);
+
+const currentTurnRef = ref(
+    database,
+    `GTN/Lobbies/${roomName}/gameData/currentTurn`
+);
+
+const winnerRef = ref(
+    database,
+    `GTN/Lobbies/${roomName}/gameData/winner`
+);
+
+const lastResultRef = ref(
+    database,
+    `GTN/Lobbies/${roomName}/gameData/lastResult`
+);
+
+const playerLobbyRef = ref(
+    database,
+    `GTN/Lobbies/${roomName}`
+);
+
+const guessInput = document.getElementById("guess-input");
+const guessButton = document.getElementById("guess-button");
+
 
 /*******************************************************/
 // CREATE SECRET NUMBER
 /*******************************************************/
 get(secretNumberRef).then((snapshot) => {
+
     if (!snapshot.exists()) {
-        const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+        const randomNumber =
+        Math.floor(Math.random() * 100) + 1;
+
         set(secretNumberRef, randomNumber);
-        console.log("Generated secret:", randomNumber);
+
+        console.log("Generated secret number:", randomNumber);
     }
 });
 
+
+
+
 /*******************************************************/
-// SET FIRST TURN (HOST ONLY)
+// CREATE FIRST TURN (HOST ONLY)
 /*******************************************************/
 get(playerLobbyRef).then((snapshot) => {
-    const lobby = snapshot.val();
-    if (!lobby) return;
 
-    if (lobby.userName === myName) {
-        get(currentTurnRef).then((turnSnap) => {
-            if (!turnSnap.exists()) {
-                set(currentTurnRef, lobby.userName);
+    const lobby = snapshot.val();
+
+    if (!lobby) {
+        console.log("Lobby not found");
+        return;
+    }
+    console.log("Lobby data:", lobby);
+
+    hostName = lobby.userName;
+    guestName = lobby.guestName;
+
+    get(currentTurnRef).then((turnSnapshot) => {
+
+        //ONLY CREATE TURN IF IT DOESN'T EXIST
+            if (!turnSnapshot.exists()) {
+        
+        // HOST ALWAYS STARTS
+
+        set(currentTurnRef, hostName);
+        console.log("First turn set to:", hostName);
             }
         });
-    }
 });
 
+
 /*******************************************************/
-// READ SECRET NUMBER
+// READ SHARED SECRET NUMBER
 /*******************************************************/
 onValue(secretNumberRef, (snapshot) => {
+
     secretNumber = snapshot.val();
+
+    console.log("Secret number:", secretNumber);
+
 });
 
+
 /*******************************************************/
-// READ TURN
+// READ CURRENT TURN
 /*******************************************************/
 onValue(currentTurnRef, (snapshot) => {
+
     currentTurn = snapshot.val();
 
-    const turnBox = document.getElementById("turn-box");
-
-    const guessInput = document.getElementById("guess-input");
-    const guessInput = document.getElementById("guess-button");
+    const turnBox =
+    document.getElementById("turn-box");
 
     if (currentTurn) {
 
-        turnBox.innerHTML = `${currentTurn}'s turn!`;
+        turnBox.innerHTML =
+        `${currentTurn}'s turn!`;
 
-    // MY TURN
-    if (currentTurn === myName) {
+        /*******************************************************/
+        // MY TURN
+        /*******************************************************/
+        if (currentTurn === myName) {
 
-        guessInput.disabled = false;
-        guessButton.disabled = false;
+            guessInput.disabled = false;
+            guessButton.disabled = false;
+
+        }
+
+        /*******************************************************/
+        // NOT MY TURN
+        /*******************************************************/
+        else {
+
+            guessInput.disabled = true;
+            guessButton.disabled = true;
+
+        }
 
     }
-    // NOT MY TURN 
+
     else {
-        guessInput.disabled = true;
-        guestButton.disabled = true;
+
+        turnBox.innerHTML =
+        "Loading turn...";
+
     }
 
-    } else {
-        turnBox.innerHTML = "Waiting for game...";
-    }
+});
+
 
 /*******************************************************/
 // READ WINNER
 /*******************************************************/
 onValue(winnerRef, (snapshot) => {
+
     if (snapshot.exists()) {
+
         gameEnded = true;
 
         document.getElementById("result-box").innerHTML =
-            snapshot.val() + " WINS THE GAME!!";
+        snapshot.val() + " WINS THE GAME!!";
+
     }
+
 });
 
+
 /*******************************************************/
-// SYNC LAST RESULT (BOTH SCREENS)
+// LIVE RESULT SYNC
 /*******************************************************/
 onValue(lastResultRef, (snapshot) => {
+
     if (snapshot.exists()) {
-        document.getElementById("result-box").innerHTML = snapshot.val();
+
+        document.getElementById("result-box").innerHTML =
+        snapshot.val();
+
     }
+
 });
 
+
 /*******************************************************/
-// PLAYER NAMES (FIXED SAFELY)
+// PLAYER NAMES
 /*******************************************************/
 onValue(playerLobbyRef, (snapshot) => {
+
     const lobby = snapshot.val();
+
     if (!lobby) return;
 
     hostName = lobby.userName || "Host";
+
     guestName = lobby.guestName || null;
 
-    document.getElementById("host-name").innerHTML = hostName;
+    document.getElementById("host-name").innerHTML =
+    hostName;
 
-    document.getElementById("guest-name").innerHTML =
-        guestName ? guestName : "Waiting for guest...";
+    if (guestName) {
+
+        document.getElementById("guest-name").innerHTML =
+        guestName;
+
+    }
+
+    else {
+
+        document.getElementById("guest-name").innerHTML =
+        "Waiting for guest...";
+
+    }
+
 });
 
+
 /*******************************************************/
-// CHECK GUESS
+// CHECK GUESS FUNCTION
 /*******************************************************/
 function checkGuess() {
-    const guessInput = document.getElementById("guess-input");
-    const resultBox = document.getElementById("result-box");
 
-    // game ended check
+    /*******************************************************/
+    // HTML ELEMENTS
+    /*******************************************************/
+    const resultBox =
+    document.getElementById("result-box");
+
+
+    /*******************************************************/
+    // GAME ENDED CHECK
+    /*******************************************************/
     if (gameEnded) {
-        resultBox.innerHTML = "Game already finished!";
+
+        resultBox.innerHTML =
+        "Game already finished!";
+
         return;
+
     }
 
-    // turn check
+
+    /*******************************************************/
+    // TURN CHECK
+    /*******************************************************/
     if (currentTurn !== myName) {
-        resultBox.innerHTML = 
-        "<span style='color: red; font-weight: bold;' > Sorry! It's not your turn!. </span>";
+
+        resultBox.innerHTML =
+        "<span style='color:red; font-weight:bold;'>Sorry! It's not your turn!</span>";
+
         return;
+
     }
 
-    // loading check
+
+    /*******************************************************/
+    // GAME LOADING CHECK
+    /*******************************************************/
     if (secretNumber === null) {
-        resultBox.innerHTML = "Game still loading...";
+
+        resultBox.innerHTML =
+        "Game still loading...";
+
         return;
+
     }
 
-    const guess = Number(guessInput.value);
 
-    if (!guess || guess < 1 || guess > 100) {
-        resultBox.innerHTML = "Enter number 1–100";
+    /*******************************************************/
+    // GET PLAYER GUESS
+    /*******************************************************/
+    let guess = Number(guessInput.value);
+
+
+    /*******************************************************/
+    // VALIDATION
+    /*******************************************************/
+    if (
+        guessInput.value === "" ||
+        guess < 1 ||
+        guess > 100
+    ) {
+
+        resultBox.innerHTML =
+        "Please enter a number from 1-100";
+
         return;
+
     }
 
+
+    /*******************************************************/
+    // SAVE GUESS
+    /*******************************************************/
     const guessID = Date.now();
 
-    // save guess
-    set(ref(database, `GTN/Lobbies/${roomName}/gameData/guesses/${guessID}`), {
-        player: currentTurn,
-        number: guess
-    });
+    set(
+        ref(
+            database,
+            `GTN/Lobbies/${roomName}/gameData/guesses/${guessID}`
+        ),
+        {
+            player: currentTurn,
+            number: guess
+        }
+    );
 
+
+    /*******************************************************/
+    // CHECK GUESS
+    /*******************************************************/
     let message = "";
 
+
+    /*******************************************************/
+    // CORRECT GUESS
+    /*******************************************************/
     if (guess === secretNumber) {
-        message = `${currentTurn} guessed ${guess} — CORRECT!`;
+
+        message =
+        `${currentTurn} guessed ${guess} — CORRECT!`;
 
         set(winnerRef, currentTurn);
+
         set(lastResultRef, message);
 
-        // clear the textbox after the guess
+        resultBox.innerHTML = message;
+
+        // CLEAR INPUT BOX
         guessInput.value = "";
 
-        resultBox.innerHTML = message;
         return;
+
     }
 
+
+    /*******************************************************/
+    // TOO LOW
+    /*******************************************************/
     if (guess < secretNumber) {
-        message = `${currentTurn} guessed ${guess} — too low!`;
-    } else {
-        message = `${currentTurn} guessed ${guess} — too high!`;
+
+        message =
+        `${currentTurn} guessed ${guess} — too low!`;
+
     }
 
+
+    /*******************************************************/
+    // TOO HIGH
+    /*******************************************************/
+    else {
+
+        message =
+        `${currentTurn} guessed ${guess} — too high!`;
+
+    }
+
+
+    /*******************************************************/
+    // SHOW RESULT
+    /*******************************************************/
     resultBox.innerHTML = message;
+
     set(lastResultRef, message);
 
-    // switch turn
-    const nextTurn = currentTurn === hostName ? guestName : hostName;
+
+    /*******************************************************/
+    // CLEAR INPUT BOX
+    /*******************************************************/
+    guessInput.value = "";
+
+
+    /*******************************************************/
+    // SWITCH TURN
+    /*******************************************************/
+    let nextTurn;
+
+    if (currentTurn === hostName) {
+
+        nextTurn = guestName;
+
+    } else {
+
+        nextTurn = hostName;
+
+    }
+
+    console.log("Switching turn to:", nextTurn);
+
     set(currentTurnRef, nextTurn);
+
 }
 
+
 /*******************************************************/
-// EXPORT
+// MAKE FUNCTION ACCESSIBLE FROM HTML
 /*******************************************************/
 window.checkGuess = checkGuess;
