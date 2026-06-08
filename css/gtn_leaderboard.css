@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #16235c;
+}
+
+/*************************************************/
+/* MAIN CONTAINER */
+/*************************************************/
+
+.leaderboard-container {
+
+width: 90%;
+max-width: 900px;
+margin: auto;
+margin-top: 60px;
+text-align: center;
+}
+
+/*************************************************/
+/* TITLE */
+/*************************************************/
+
+.leaderboard-title {
+    
+    color: white;
+    font-size: 52px;
+    margin-bottom: 40px;
+}
+
+/*************************************************/
+/* TABLE */
+/*************************************************/
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse; 
+    background:white;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/*************************************************/
+/* TABLE HEADERS */
+/*************************************************/
+
+.leaderboard-table th {
+
+    background: #8d63ff;
+    color: white;
+    padding: 18px;
+    font-size: 20px;
+}
+
+/*************************************************/
+/* TABLE DATA */
+/*************************************************/
+.leaderboard-table td {
+
+    padding: 16px;
+    font-size: 18px;
+    border-bottom: 1px solid #ddd;
+}
+
+/*************************************************/
+/* HOVER EFFECT */
+/*************************************************/
+.leaderboard-table tr: hover {
+    background: #f3eeff;
+}
+
+/*************************************************/
+/* BACK BUTTON */
+/*************************************************/
+.back-btn {
+
+    margin-top: 30px;
+    background: #ff5a7a;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 14px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+
+    transform: scale(1.05);
+}
+
+
+
+
+

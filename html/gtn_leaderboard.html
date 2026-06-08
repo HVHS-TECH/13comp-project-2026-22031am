@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>GTN Leaderboard</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="../css/gtn_leaderboard.css">
+
+</head>
+
+<body> 
+
+     <!-- MAIN CONTAINER -->
+    <div class="leaderboard-container">  
+
+    <!-- TITLE -->
+     <h1 class="leaderboard-title">
+        GUESS THE NUMBER LEADERBOARD
+     </h1>
+
+    <!-- TABLE -->
+     <table class="leaderboard-table">
+        <thead>
+
+            <tr> 
+                <th> PLAYER </th>
+                <th> WINS </th>
+                <th> LOSSES </th>
+            </tr>
+        </thead>
+     
+    <tbody id="leaderboard-body">
+
+        <!-- PLAYERS WOULD GET ADDED HERE -->
+        </tbody>
+    </table>
+
+     <!--  BACK BUTTON  -->
+    <button class="back-btn"
+    onclick="window.location.href='lobby.html'">
+
+    BACK TO LOBBY
+    </button>
+</div> 
+
+    <!-- JAVASCRIPT -->
+     <script type="module"
+     src="../games/gtn_leaderboard.mjs">
+    </script>
+
+
+</body>
+</html>

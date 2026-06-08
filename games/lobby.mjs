@@ -110,7 +110,7 @@ function displayLobbies(firebaseData) {
             if (lobby.accepted === "playing" &&
                 lobby.uid !== sessionStorage.getItem("uid")
             ) {
-
+ 
                 alert("Sorry, this lobby is already full!");  // stop if the lobby is already full
                 return;
             }

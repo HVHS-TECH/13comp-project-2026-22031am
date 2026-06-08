@@ -175,7 +175,7 @@ body {
 
 /* INPUT BOX */
 #lobby-name-input { 
-    width: 280px;
+    width: 500px;
     padding: 12px;
 
     border: 2px solid #00ffcc;

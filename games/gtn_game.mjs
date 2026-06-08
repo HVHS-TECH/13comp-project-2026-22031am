@@ -373,6 +373,78 @@ function checkGuess() {
         `${currentTurn} guessed ${guess} — CORRECT!`;
 
         set(winnerRef, currentTurn);
+    
+    /*******************************************************/
+    // UPDATE LEADERBOARD
+    /*******************************************************/
+
+    //WINNER
+    const winnerLeaderboardRef = ref(database, `GTN/Leaderboard/${currentTurn}`
+    );
+
+    // LOSER NAME
+    const loserName = 
+    currentTurn === hostName
+    ? guestName
+    : hostName;
+
+    // LOSER
+    const loserLeaderboardRef = ref(database, `GTN/Leaderboard/${loserName}`
+    );
+
+    /*******************************************************/
+    // UPDATE WINNER STATS
+    /*******************************************************/
+    get(winnerLeaderboardRef).then((snapshot) => {
+
+        let currentWins = 0;
+        let currentLosses = 0;
+
+        if (snapshot.exists()) {
+
+            currentWins = snapshot.val().wins || 0;
+            currentLosses = snapshot.val().losses || 0;
+        }
+
+        set(winnerLeaderboardRef, {
+            wins: currentWins + 1,
+            losses: currentLosses
+        });
+    });
+
+    /*******************************************************/
+    // UPDATE THE LOSER STATS
+    /*******************************************************/
+    get(loserLeaderboardRef).then((snapshot) => {
+
+    let currentWins = 0;
+    let currentLosses = 0;
+
+    if (snapshot.exists()) {
+
+        currentWins = snapshot.val().wins || 0;
+        currentLosses = snapshot.val().losses || 0;
+    }
+
+    set(loserLeaderboardRef, {
+        wins: currentWins,
+        losses: currentLosses + 1
+    });
+
+});
+
+/*******************************************************/
+// UPDATE RESULT MESSAGE
+/*******************************************************/
+    set(lastResultRef, message);
+
+    resultBox.innerHTML = message;
+
+    // CLEAR INPUT BOX 
+    guessInput.value = "";
+    return;
+
+
 
         set(lastResultRef, message);
 
