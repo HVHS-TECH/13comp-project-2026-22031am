@@ -369,6 +369,13 @@ function checkGuess() {
     /*******************************************************/
     if (guess === secretNumber) {
 
+        //console log comments for testing if it works 
+        console.log("CORRECT GUESS!");
+        console.log("Winner:", currentTurn);
+        console.log("Host:", hostName);
+        console.log("Guest:" + guestName);
+        
+
         message =
         `${currentTurn} guessed ${guess} — CORRECT!`;
 
@@ -391,6 +398,7 @@ function checkGuess() {
     // LOSER
     const loserLeaderboardRef = ref(database, `GTN/Leaderboard/${loserName}`
     );
+
 
     /*******************************************************/
     // UPDATE WINNER STATS
