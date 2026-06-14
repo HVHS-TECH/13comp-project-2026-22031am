@@ -14,13 +14,10 @@ from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
 
 /******************************************************/
-// fb_initialise()
+// FIREBASE CONFIG
 /******************************************************/
-function fb_initialise() {
-    console.log('%c fb_initialise(): ',
-                 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-                 
-    const FB_GAMECONFIG = {
+
+     const FB_GAMECONFIG = {
       apiKey: "AIzaSyDWhGSciprdeHTyBrXQYt_F-6tMMjCg-YM",
       authDomain: "comp-2026-aditi-modi.firebaseapp.com",
       databaseURL: "https://comp-2026-aditi-modi-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -31,18 +28,19 @@ function fb_initialise() {
       measurementId: "G-0KELMX0418"
     };
 
-    const FB_GAMEAPP = initializeApp(FB_GAMECONFIG);
-    FB_GAMEDB = getDatabase(FB_GAMEAPP);
-    FB_GAMEAUTH = getAuth(FB_GAMEAPP);
-    
-    console.info(FB_GAMEDB);      	//DIAG
-}
+/******************************************************/
+// INITIALISE FIREBASE
+/******************************************************/
 
-/*******************************************************/
+const app = initializeApp(FB_GAMECONFIG);
+
+const database = getDatabase(app);
+
+/******************************************************/
 // HTML ELEMENT
-/*******************************************************/
-
-const leaderboardBody = document.getElementById("leaderboard-body");
+/******************************************************/
+    const leaderboardBody = 
+        document.getElementById("leaderboard-body");
 
 /*******************************************************/
 // FIREBASE REFERENCE
@@ -91,6 +89,8 @@ Object.keys(leaderboardData).forEach((playerName) => {
         leaderboardBody.appendChild(row);
     });
 });
+
+
 
 
 
