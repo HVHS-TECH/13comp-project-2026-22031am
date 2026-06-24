@@ -93,10 +93,11 @@
       <small>Format: 123-45-678</small>
 
       <script>
+
 function validateForm() {
     var name = document.forms["f_userDetails"]["i_phone"].value;
     if (name == "") {
-        alert(" Phone number must be filled and follow the format 123-45-678");
+        alert(" Phone number must be filled and follow the format 123-45-678"); //restriction for the format of the phone number
         return false; // Prevents the form submission
     }
 }

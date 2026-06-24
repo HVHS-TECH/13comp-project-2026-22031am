@@ -65,32 +65,36 @@ const myName = sessionStorage.getItem("displayName");
 /*******************************************************/
 // FIREBASE REFERENCES
 /*******************************************************/
-const secretNumberRef = ref(
+
+// firebase reference to the shared secret number
+// used by both of the players during the game  
+
+    const secretNumberRef = ref(
     database,
     `GTN/Lobbies/${roomName}/gameData/secretNumber`
 );
 
-const currentTurnRef = ref(
+    const currentTurnRef = ref(
     database,
     `GTN/Lobbies/${roomName}/gameData/currentTurn`
 );
 
-const winnerRef = ref(
+    const winnerRef = ref(
     database,
     `GTN/Lobbies/${roomName}/gameData/winner`
 );
 
-const lastResultRef = ref(
+    const lastResultRef = ref(
     database,
     `GTN/Lobbies/${roomName}/gameData/lastResult`
 );
 
-const playerLobbyRef = ref(
+    const playerLobbyRef = ref(
     database,
     `GTN/Lobbies/${roomName}`
 );
 
-const guessInput = document.getElementById("guess-input");
+    const guessInput = document.getElementById("guess-input");
 const guessButton = document.getElementById("guess-button");
 
 
@@ -98,6 +102,9 @@ const guessButton = document.getElementById("guess-button");
 // CREATE SECRET NUMBER
 /*******************************************************/
 get(secretNumberRef).then((snapshot) => {
+
+    // Only create secret number if one does not already exist
+    // This prevents different players from generating different numbers
 
     if (!snapshot.exists()) {
 
@@ -158,6 +165,9 @@ onValue(secretNumberRef, (snapshot) => {
 /*******************************************************/
 // READ CURRENT TURN
 /*******************************************************/
+
+    // Listen for turn changes and update both players screen
+    // whenever the current turn changes in firebase
 onValue(currentTurnRef, (snapshot) => {
 
     currentTurn = snapshot.val();
@@ -266,7 +276,6 @@ onValue(playerLobbyRef, (snapshot) => {
 
 });
 
-
 /*******************************************************/
 // CHECK GUESS FUNCTION
 /*******************************************************/
@@ -280,7 +289,7 @@ function checkGuess() {
 
 
     /*******************************************************/
-    // GAME ENDED CHECK
+    // CHECK IF GAME ENDED 
     /*******************************************************/
     if (gameEnded) {
 
@@ -290,7 +299,6 @@ function checkGuess() {
         return;
 
     }
-
 
     /*******************************************************/
     // TURN CHECK
@@ -303,7 +311,6 @@ function checkGuess() {
         return;
 
     }
-
 
     /*******************************************************/
     // GAME LOADING CHECK
@@ -323,7 +330,6 @@ function checkGuess() {
     /*******************************************************/
     let guess = Number(guessInput.value);
 
-
     /*******************************************************/
     // VALIDATION
     /*******************************************************/
@@ -340,10 +346,11 @@ function checkGuess() {
 
     }
 
+    /*******************************************************/
+    // SAVE THE GUESS TO THE FIREBASE
+    /*******************************************************/
 
-    /*******************************************************/
-    // SAVE GUESS
-    /*******************************************************/
+    // save every guess to firebase as the game activity and is stored so can be viewed
     const guessID = Date.now();
 
     set(
@@ -382,14 +389,15 @@ function checkGuess() {
         set(winnerRef, currentTurn);
     
     /*******************************************************/
-    // UPDATE LEADERBOARD
+    // UPDATE LEADERBOARD EACH TIME
     /*******************************************************/
 
     //WINNER
     const winnerLeaderboardRef = ref(database, `GTN/Leaderboard/${currentTurn}`
     );
 
-    // LOSER NAME
+    // Determine which player lost the game
+    // based on who correctly guessed the number
     const loserName = 
     currentTurn === hostName
     ? guestName
@@ -403,6 +411,9 @@ function checkGuess() {
     /*******************************************************/
     // UPDATE WINNER STATS
     /*******************************************************/
+
+    // Read the winner's current leaderboard data
+    // and increase their win count by 1
     get(winnerLeaderboardRef).then((snapshot) => {
 
         let currentWins = 0;
@@ -423,6 +434,9 @@ function checkGuess() {
     /*******************************************************/
     // UPDATE THE LOSER STATS
     /*******************************************************/
+
+    // read the loser's current leaderboard data
+    // and increase their loss count by 1
     get(loserLeaderboardRef).then((snapshot) => {
 
     let currentWins = 0;
@@ -505,7 +519,7 @@ function checkGuess() {
     /*******************************************************/
     // SWITCH TURN
     /*******************************************************/
-    let nextTurn;
+    let nextTurn; // alternate turns between the host and guest player
 
     if (currentTurn === hostName) {
 

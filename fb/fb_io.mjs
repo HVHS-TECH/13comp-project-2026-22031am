@@ -101,16 +101,19 @@ function fb_authenticate() {
         userDetails.photoURL = result.user.photoURL;
         userDetails.uid = result.user.uid;
 
+        // sotring the user details for use
         sessionStorage.setItem('uid', userDetails.uid); 
         sessionStorage.setItem('displayName', userDetails.displayName);
         sessionStorage.setItem('photoURL', userDetails.photoURL);
 
+        // check whether this user already has a profile in Firebase
+
         const dbReference = ref(FB_GAMEDB, 'userDetails/' + userDetails.uid);
         get(dbReference).then((snapshot) => {
             if (snapshot.val() != null) {
-                window.location.href = "html/select_game.html";
+                window.location.href = "html/select_game.html"; //existing user -> go straight to game selection 
             } else {
-                window.location.href = "html/reg.html";
+                window.location.href = "html/reg.html"; // New user -> complete registration first
             }
         });
 
@@ -143,7 +146,7 @@ function fb_writeScore(scoreRecord) {
     console.log('%c fb_writeScore(): ',
         'color: white; background-color: #CD7F32;');
 
-    const dbReference = ref(FB_GAMEDB, 'scores/fc/' + scoreRecord.uid);
+    const dbReference = ref(FB_GAMEDB, 'scores/fc/' + scoreRecord.uid); // Save the player's score using their UID as the unique key
 
     set(dbReference, scoreRecord)
         .then(() => {
@@ -166,15 +169,15 @@ function fb_writeLobby(lobbyRecord) {
     console.log('%c fb_writeLobby(): ',
         'color: white; background-color: #CD7F32;');
 
-    // USING THE LOBBY NAME AS THE KEY
+    // USING THE LOBBY NAME AS THE FIREBASE KEY
     const lobbyUID =
-        lobbyRecord.lobbyName;
+        lobbyRecord.lobbyName; 
 
     // firebase path
     const dbReference =
         ref(
             FB_GAMEDB,
-            'GTN/Lobbies/' + lobbyUID
+            'GTN/Lobbies/' + lobbyUID       //create a reference to this lobby in firebase
         );
 
     console.log(
@@ -209,7 +212,7 @@ function fb_readLobbies(callback) {
     const dbReference =
         ref(FB_GAMEDB, 'GTN/Lobbies');
 
-    //listen for changes in the system
+    // Listen for real-time updates to all lobbies
     onValue(dbReference, (snapshot) => {
 
         const data =
@@ -217,7 +220,7 @@ function fb_readLobbies(callback) {
 
         console.log(data);
 
-        //send firebase data back
+        //send firebase data back - pass the latest lobby data back to the calling program
         callback(data || {});
     });
 

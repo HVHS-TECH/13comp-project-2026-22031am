@@ -58,7 +58,7 @@ const lobbyRef = ref(FB_GAMEDB, 'GTN/Lobbies/' + lobbyName);
 /*******************************************************/
 // WATCH LOBBY
 /*******************************************************/
-onValue(lobbyRef, (snapshot) => {
+onValue(lobbyRef, (snapshot) => { // listen for real-time changes to the lobby
 
     const lobby = snapshot.val();
     if (!lobby) return;
