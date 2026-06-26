@@ -39,7 +39,7 @@ const FB_GAMECONFIG = {
 /*******************************************************/
 // INITIALIZE FIREBASE
 /*******************************************************/
-const app = initializeApp(FB_GAMECONFIG);
+const app = initializeApp(FB_GAMECONFIG); //Initialise firebase and connect to the Realtime Database
 
 const database = getDatabase(app);
 
@@ -49,7 +49,7 @@ const database = getDatabase(app);
 /*******************************************************/
 const params = new URLSearchParams(window.location.search);
 
-const roomName = params.get("room");
+const roomName = params.get("room"); //Retrieve the lobby name passed through the URL
     console.log("ROOM NAME:", roomName);
 
 let secretNumber = null;
@@ -77,13 +77,15 @@ const myName = sessionStorage.getItem("displayName");
     const currentTurnRef = ref(
     database,
     `GTN/Lobbies/${roomName}/gameData/currentTurn`
-);
+); //stores into firebase which player's turn it currently is
 
     const winnerRef = ref(
     database,
     `GTN/Lobbies/${roomName}/gameData/winner`
-);
+); // stores the winner once the game has ended
 
+    // Stores the most recent guess result (too high or too low, or correct)
+    // So both players see the same feedback message
     const lastResultRef = ref(
     database,
     `GTN/Lobbies/${roomName}/gameData/lastResult`
@@ -92,10 +94,10 @@ const myName = sessionStorage.getItem("displayName");
     const playerLobbyRef = ref(
     database,
     `GTN/Lobbies/${roomName}`
-);
+); //reference to the entire lobby record containing player and game information
 
     const guessInput = document.getElementById("guess-input");
-const guessButton = document.getElementById("guess-button");
+    const guessButton = document.getElementById("guess-button");
 
 
 /*******************************************************/
@@ -138,7 +140,8 @@ get(playerLobbyRef).then((snapshot) => {
 
     get(currentTurnRef).then((turnSnapshot) => {
 
-        //ONLY CREATE TURN IF IT DOESN'T EXIST
+        // Only the first player to create the lobby sets the initial turn
+        // This prevents both players trying to set different starting turns
             if (!turnSnapshot.exists()) {
         
         // HOST ALWAYS STARTS
@@ -150,11 +153,13 @@ get(playerLobbyRef).then((snapshot) => {
 });
 
 
+
 /*******************************************************/
 // READ SHARED SECRET NUMBER
 /*******************************************************/
+// Keep the local secret number varibale synced with Firebase (listens)
 onValue(secretNumberRef, (snapshot) => {
-
+if (!turnSnapshot.exists()) {
     secretNumber = snapshot.val();
 
     console.log("Secret number:", secretNumber);
@@ -183,9 +188,11 @@ onValue(currentTurnRef, (snapshot) => {
         /*******************************************************/
         // MY TURN
         /*******************************************************/
+
+        // Enable or disable the guess controls depending on whose turn it is 
         if (currentTurn === myName) {
 
-            guessInput.disabled = false;
+            guessInput.disabled = false; //Enable guessing controls when it is this player's turn
             guessButton.disabled = false;
 
         }
@@ -195,7 +202,7 @@ onValue(currentTurnRef, (snapshot) => {
         /*******************************************************/
         else {
 
-            guessInput.disabled = true;
+            guessInput.disabled = true; //Prevent the player from guessing when it is not their turn
             guessButton.disabled = true;
 
         }
@@ -215,11 +222,13 @@ onValue(currentTurnRef, (snapshot) => {
 /*******************************************************/
 // READ WINNER
 /*******************************************************/
-onValue(winnerRef, (snapshot) => {
+
+// Listen for a winner being saved to Firebase and end the game for both players
+    onValue(winnerRef, (snapshot) => { 
 
     if (snapshot.exists()) {
 
-        gameEnded = true;
+        gameEnded = true; //prevent any further guesses once a winner has been declared
 
         document.getElementById("result-box").innerHTML =
         snapshot.val() + " WINS THE GAME!!";
@@ -247,11 +256,13 @@ onValue(lastResultRef, (snapshot) => {
 /*******************************************************/
 // PLAYER NAMES
 /*******************************************************/
-onValue(playerLobbyRef, (snapshot) => {
+
+//Listen for lobby updates and display the current host and guest names on gtn screen
+    onValue(playerLobbyRef, (snapshot) => {
 
     const lobby = snapshot.val();
 
-    if (!lobby) return;
+    if (!lobby) return; //stop if no lobby data exists
 
     hostName = lobby.userName || "Host";
 
@@ -315,7 +326,7 @@ function checkGuess() {
     /*******************************************************/
     // GAME LOADING CHECK
     /*******************************************************/
-    if (secretNumber === null) {
+    if (secretNumber === null) { // Prevents guesses before the secret number has been loaded from firebase
 
         resultBox.innerHTML =
         "Game still loading...";
@@ -327,6 +338,7 @@ function checkGuess() {
 
     /*******************************************************/
     // GET PLAYER GUESS
+    // converts the user's input from text (string) into a number for comparing
     /*******************************************************/
     let guess = Number(guessInput.value);
 
@@ -350,9 +362,11 @@ function checkGuess() {
     // SAVE THE GUESS TO THE FIREBASE
     /*******************************************************/
 
-    // save every guess to firebase as the game activity and is stored so can be viewed
+    // Save every guess to firebase so the game history can be viewed later
+    // Use the current timestamp as a unique ID for each guess so each guess can be stored seperately in Firebase
     const guessID = Date.now();
 
+    // Save each guess to Firebase so a history of all guesses is stored
     set(
         ref(
             database,
@@ -467,26 +481,13 @@ function checkGuess() {
     return;
 
 
-
-        set(lastResultRef, message);
-
-        resultBox.innerHTML = message;
-
-        // CLEAR INPUT BOX
-        guessInput.value = "";
-
-        return;
-
-    }
-
-
     /*******************************************************/
     // TOO LOW
     /*******************************************************/
-    if (guess < secretNumber) {
+    if (guess < secretNumber) { //the player's guess is lower than the secret number
 
         message =
-        `${currentTurn} guessed ${guess} — too low!`;
+        `${currentTurn} guessed ${guess} — too low!`; 
 
     }
 
@@ -505,9 +506,9 @@ function checkGuess() {
     /*******************************************************/
     // SHOW RESULT
     /*******************************************************/
-    resultBox.innerHTML = message;
+    resultBox.innerHTML = message; //Display the result on the current player's screen
 
-    set(lastResultRef, message);
+    set(lastResultRef, message); //Save the result to firebase so both players sees the same message
 
 
     /*******************************************************/
@@ -520,8 +521,8 @@ function checkGuess() {
     // SWITCH TURN
     /*******************************************************/
     let nextTurn; // alternate turns between the host and guest player
-
-    if (currentTurn === hostName) {
+    
+    if (currentTurn === hostName) { //Determine which player should take the next turn
 
         nextTurn = guestName;
 

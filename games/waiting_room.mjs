@@ -71,7 +71,7 @@ onValue(lobbyRef, (snapshot) => { // listen for real-time changes to the lobby
     hostNameText.innerHTML = lobby.userName;
 
     if(lobby.userPhoto) {
-        hostPhoto.src = lobby.userPhoto;
+        hostPhoto.src = lobby.userPhoto; //grabs the google profile pic of the user and displays the host and guest on the waiting room page
     }
 
 /*******************************************************/
@@ -87,7 +87,7 @@ onValue(lobbyRef, (snapshot) => { // listen for real-time changes to the lobby
         "Waiting for opponent to join...";
     }
 
-    if(lobby.guestPhoto){
+     if(lobby.guestPhoto){
 
         guestPhoto.src = lobby.guestPhoto;
     }
