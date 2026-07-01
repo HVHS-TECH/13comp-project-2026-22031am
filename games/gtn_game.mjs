@@ -410,73 +410,38 @@ function checkGuess() {
         // UPDATE LEADERBOARD EACH TIME
         /*******************************************************/
 
-        //WINNER
-        const winnerLeaderboardRef = ref(database, `GTN/Leaderboard/${currentTurn}`);
-
-        // Determine which player lost the game
-        // based on who correctly guessed the number
+        const winnerName = currentTurn;
         const loserName = currentTurn === hostName ? guestName : hostName;
 
-        // LOSER
-        const loserLeaderboardRef = ref(database, `GTN/Leaderboard/${loserName}`);
+        if (winnerName) {
+            const winnerLeaderboardRef = ref(database, `GTN/Leaderboard/${winnerName}`);
 
-        /*******************************************************/
-        // UPDATE WINNER STATS
-        /*******************************************************/
+            get(winnerLeaderboardRef).then((snapshot) => {
+                const existingData = snapshot.val() || {};
+                const currentWins = existingData.wins || 0;
+                const currentLosses = existingData.losses || 0;
 
-        // Read the winner's current leaderboard data
-        // and increase their win count by 1
-        get(winnerLeaderboardRef).then((snapshot) => {
-
-            let currentWins = 0;
-            let currentLosses = 0;
-
-            if (snapshot.exists()) {
-
-                currentWins = snapshot.val().wins || 0;
-                currentLosses = snapshot.val().losses || 0;
-            }
-
-            set(winnerLeaderboardRef, {
-                wins: currentWins + 1,
-                losses: currentLosses
-            })
-            .then(() => {
-                console.log("Winner leaderboard saved");
-            })
-            .catch((error) => {
-                console.error("Winner leaderboard error:", error);
-        });
-    });
-
-        /*******************************************************/
-        // UPDATE THE LOSER STATS
-        /*******************************************************/
-
-        // read the loser's current leaderboard data
-        // and increase their loss count by 1
-        get(loserLeaderboardRef).then((snapshot) => {
-
-            let currentWins = 0;
-            let currentLosses = 0;
-
-            if (snapshot.exists()) {
-
-                currentWins = snapshot.val().wins || 0;
-                currentLosses = snapshot.val().losses || 0;
-            }
-
-            set(loserLeaderboardRef, {
-                wins: currentWins,
-                losses: currentLosses + 1
-            })
-            .then(() => {
-                console.log("Loser leaderboard saved");
-            })
-            .catch((error) => {
-                console.error("Loser leaderboard error:", error);
+                set(winnerLeaderboardRef, {
+                    wins: currentWins + 1,
+                    losses: currentLosses
+                });
             });
-        });
+        }
+
+        if (loserName) {
+            const loserLeaderboardRef = ref(database, `GTN/Leaderboard/${loserName}`);
+
+            get(loserLeaderboardRef).then((snapshot) => {
+                const existingData = snapshot.val() || {};
+                const currentWins = existingData.wins || 0;
+                const currentLosses = existingData.losses || 0;
+
+                set(loserLeaderboardRef, {
+                    wins: currentWins,
+                    losses: currentLosses + 1
+                });
+            });
+        }
     
         
         
