@@ -165,7 +165,7 @@ onValue(secretNumberRef, (snapshot) => {
 
     console.log("Secret number:", secretNumber);
 
-});3
+});
 
 
 /*******************************************************/
@@ -396,113 +396,100 @@ function checkGuess() {
         console.log("Winner:", currentTurn);
         console.log("Host:", hostName);
         console.log("Guest:" + guestName);
-        
 
-        message =
-        `${currentTurn} guessed ${guess} — CORRECT!`;
+        message = `${currentTurn} guessed ${guess} — CORRECT!`;
 
         set(winnerRef, currentTurn);
-    
-    /*******************************************************/
-    // UPDATE LEADERBOARD EACH TIME
-    /*******************************************************/
 
-    //WINNER
-    const winnerLeaderboardRef = ref(database, `GTN/Leaderboard/${currentTurn}`
-    );
+        /*******************************************************/
+        // UPDATE LEADERBOARD EACH TIME
+        /*******************************************************/
 
-    // Determine which player lost the game
-    // based on who correctly guessed the number
-    const loserName = 
-    currentTurn === hostName
-    ? guestName
-    : hostName;
+        //WINNER
+        const winnerLeaderboardRef = ref(database, `GTN/Leaderboard/${currentTurn}`);
 
-    // LOSER
-    const loserLeaderboardRef = ref(database, `GTN/Leaderboard/${loserName}`
-    );
+        // Determine which player lost the game
+        // based on who correctly guessed the number
+        const loserName = currentTurn === hostName ? guestName : hostName;
 
+        // LOSER
+        const loserLeaderboardRef = ref(database, `GTN/Leaderboard/${loserName}`);
 
-    /*******************************************************/
-    // UPDATE WINNER STATS
-    /*******************************************************/
+        /*******************************************************/
+        // UPDATE WINNER STATS
+        /*******************************************************/
 
-    // Read the winner's current leaderboard data
-    // and increase their win count by 1
-    get(winnerLeaderboardRef).then((snapshot) => {
+        // Read the winner's current leaderboard data
+        // and increase their win count by 1
+        get(winnerLeaderboardRef).then((snapshot) => {
 
-        let currentWins = 0;
-        let currentLosses = 0;
+            let currentWins = 0;
+            let currentLosses = 0;
 
-        if (snapshot.exists()) {
+            if (snapshot.exists()) {
 
-            currentWins = snapshot.val().wins || 0;
-            currentLosses = snapshot.val().losses || 0;
-        }
+                currentWins = snapshot.val().wins || 0;
+                currentLosses = snapshot.val().losses || 0;
+            }
 
-        set(winnerLeaderboardRef, {
-            wins: currentWins + 1,
-            losses: currentLosses
+            set(winnerLeaderboardRef, {
+                wins: currentWins + 1,
+                losses: currentLosses
+            });
         });
-    });
 
-    /*******************************************************/
-    // UPDATE THE LOSER STATS
-    /*******************************************************/
+        /*******************************************************/
+        // UPDATE THE LOSER STATS
+        /*******************************************************/
 
-    // read the loser's current leaderboard data
-    // and increase their loss count by 1
-    get(loserLeaderboardRef).then((snapshot) => {
+        // read the loser's current leaderboard data
+        // and increase their loss count by 1
+        get(loserLeaderboardRef).then((snapshot) => {
 
-    let currentWins = 0;
-    let currentLosses = 0;
+            let currentWins = 0;
+            let currentLosses = 0;
 
-    if (snapshot.exists()) {
+            if (snapshot.exists()) {
 
-        currentWins = snapshot.val().wins || 0;
-        currentLosses = snapshot.val().losses || 0;
+                currentWins = snapshot.val().wins || 0;
+                currentLosses = snapshot.val().losses || 0;
+            }
+
+            set(loserLeaderboardRef, {
+                wins: currentWins,
+                losses: currentLosses + 1
+            });
+        });
+
+        /*******************************************************/
+        // UPDATE RESULT MESSAGE
+        /*******************************************************/
+        set(lastResultRef, message);
+
+        resultBox.innerHTML = message;
+
+        // CLEAR INPUT BOX 
+        guessInput.value = "";
+        return;
     }
-
-    set(loserLeaderboardRef, {
-        wins: currentWins,
-        losses: currentLosses + 1
-    });
-
-});
-
-/*******************************************************/
-// UPDATE RESULT MESSAGE
-/*******************************************************/
-    set(lastResultRef, message);
-
-    resultBox.innerHTML = message;
-
-    // CLEAR INPUT BOX 
-    guessInput.value = "";
-    return;
-
 
     /*******************************************************/
     // TOO LOW
     /*******************************************************/
     if (guess < secretNumber) { //the player's guess is lower than the secret number
 
-        message =
-        `${currentTurn} guessed ${guess} — too low!`; 
+        message = `${currentTurn} guessed ${guess} — too low!`;
 
     }
-
 
     /*******************************************************/
     // TOO HIGH
     /*******************************************************/
     else {
 
-        message =
-        `${currentTurn} guessed ${guess} — too high!`;
+        message = `${currentTurn} guessed ${guess} — too high!`;
 
     }
-
 
     /*******************************************************/
     // SHOW RESULT
@@ -511,18 +498,16 @@ function checkGuess() {
 
     set(lastResultRef, message); //Save the result to firebase so both players sees the same message
 
-
     /*******************************************************/
     // CLEAR INPUT BOX
     /*******************************************************/
-    guessInput.value = ""; 
-
+    guessInput.value = "";
 
     /*******************************************************/
     // SWITCH TURN
     /*******************************************************/
     let nextTurn; // alternate turns between the host and guest player
-    
+
     if (currentTurn === hostName) { //Determine which player should take the next turn
 
         nextTurn = guestName;
