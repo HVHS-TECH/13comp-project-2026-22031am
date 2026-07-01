@@ -1,5 +1,6 @@
 /*******************************************************/
 // gtn_leaderboard.mjs
+// GUESS THE NUMBER LEADERBOARD
 /*******************************************************/
 
 import { initializeApp }
@@ -52,14 +53,15 @@ const leaderboardRef = ref(database, "GTN/Leaderboard");
 // READ LEADERBOARD
 /*******************************************************/
     onValue(leaderboardRef, (snapshot) => {
+        leaderboardBody.innerHTML = "";
+
         const leaderboardData = snapshot.val();
 
-        leaderboardBody.innerHTML = "";
         if (!leaderboardData) {
 
             leaderboardBody.innerHTML = `
             <tr>
-                <td colspan="3">
+                <td colspan="4">
                 No leaderboard data yet...
                 </td>
                 </tr>
@@ -69,31 +71,56 @@ const leaderboardRef = ref(database, "GTN/Leaderboard");
         }
 
 /*******************************************************/
-// LOOP THROUGH PLAYERS
+// SORT BY WINS
 /*******************************************************/
+        const players=
+        Object.entries(leaderboardData).sort((a,b)=>{
+            return (b[1].wins || 0) - (a[1].wins || 0);
+        });
 
-Object.keys(leaderboardData).forEach((playerName) => {
+/*******************************************************/
+// DISPLAY TABLE
+/*******************************************************/
+        players.forEach(([playerName, player], index) => {
 
-    const player = leaderboardData[playerName];
+            const row = document.createElement("tr");
 
-    const row = document.createElement("tr");
+            let rank;
+            if (index === 0) {
+                rank = "🥇";
+            }
 
-    row.innerHTML = `
-            <td>${playerName}</td>
+            else if (index === 1) {
+                rank = "🥈";
+            }
 
-            <td>${player.wins || 0}</td>
+            else if (index === 2) {
+                rank = "🥉";
+            }
 
-            <td>${player.losses || 0}</td>
-        `;
+            else {
+                rank = index + 1;
+            }
+        
+        row.innerHTML = `
+        <td>${rank}</td>
+        <td>${playerName}</td>
+        <td>${player.wins || 0}</td>
+        <td>${player.losses || 0}</td>
+    `;
 
-        leaderboardBody.appendChild(row);
+    
+    leaderboardBody.appendChild(row);
+        });
     });
-});
+
+
+        
 
 
 
 
-
+    
 
 
 

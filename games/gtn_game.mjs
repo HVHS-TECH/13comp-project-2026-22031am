@@ -158,13 +158,14 @@ get(playerLobbyRef).then((snapshot) => {
 // READ SHARED SECRET NUMBER
 /*******************************************************/
 // Keep the local secret number varibale synced with Firebase (listens)
+
 onValue(secretNumberRef, (snapshot) => {
-if (!turnSnapshot.exists()) {
+
     secretNumber = snapshot.val();
 
     console.log("Secret number:", secretNumber);
 
-});
+});3
 
 
 /*******************************************************/
