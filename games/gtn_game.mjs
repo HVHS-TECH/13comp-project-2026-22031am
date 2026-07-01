@@ -401,6 +401,11 @@ function checkGuess() {
 
         set(winnerRef, currentTurn);
 
+        console.log("===== WINNER BLOCK =====");
+        console.log("Winner:", currentTurn);
+        console.log("Host:", hostName);
+        console.log("Guest:", guestName);
+
         /*******************************************************/
         // UPDATE LEADERBOARD EACH TIME
         /*******************************************************/
@@ -435,8 +440,14 @@ function checkGuess() {
             set(winnerLeaderboardRef, {
                 wins: currentWins + 1,
                 losses: currentLosses
-            });
+            })
+            .then(() => {
+                console.log("Winner leaderboard saved");
+            })
+            .catch((error) => {
+                console.error("Winner leaderboard error:", error);
         });
+    });
 
         /*******************************************************/
         // UPDATE THE LOSER STATS
@@ -458,8 +469,17 @@ function checkGuess() {
             set(loserLeaderboardRef, {
                 wins: currentWins,
                 losses: currentLosses + 1
+            })
+            .then(() => {
+                console.log("Loser leaderboard saved");
+            })
+            .catch((error) => {
+                console.error("Loser leaderboard error:", error);
             });
         });
+    
+        
+        
 
         /*******************************************************/
         // UPDATE RESULT MESSAGE
