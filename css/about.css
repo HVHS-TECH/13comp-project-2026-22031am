@@ -1,0 +1,118 @@
+/*=================================================
+                ABOUT PAGE
+=================================================*/
+
+.about-background {
+    margin: 0;
+    min-height: 100vh;
+
+    /* FIXED - radial-gradient (not radial gradient) */
+    background: radial-gradient(circle at top, #241442 0%, #120d24 45%, #090714 100%);
+
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+/*=================================================
+TITLE
+=================================================*/
+
+.about-title {
+    margin-top: 90px;   
+    text-align: center;
+}
+
+.about-title h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 48px;
+    font-weight: bold;
+    letter-spacing: 3px;
+
+    background: linear-gradient(90deg, #30f3ff, #ff6bff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow: 0 0 15px #25efff;
+
+    margin-bottom: 15px;
+}
+
+.divider-line {
+    width: 300px;
+    height: 3px;
+    margin: auto;
+    background: linear-gradient(90deg, #23efff, #ff62ff);
+    box-shadow: 0 0 15px #ff62ff;
+}
+
+/*=================================================
+ABOUT BOX
+=================================================*/
+
+.about-box {
+    width: 70%;
+    margin: 25px auto;
+    padding: 25px 40px;
+
+    background: rgba(17, 18, 40, 0.72);
+
+    border: 2px solid rgba(120, 90, 255, 0.7);
+    border-radius: 22px;
+
+    backdrop-filter: blur(12px);
+
+    box-shadow: 0 0 25px rgba(120, 90, 255, 0.4);
+
+    transition: .4s;
+}
+
+.about-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 45px rgba(127, 92, 255, 0.65);
+}
+
+/*=================================================
+PARAGRAPHS
+=================================================*/
+
+.about-box p {
+    color: white;
+    text-align: center;
+
+    font-size: 17px;
+    line-height: 1.6;
+
+    margin-bottom: 18px;
+    font-weight: 300;
+}
+
+.highlight {
+    color: #2df7ff;
+    font-weight: 600;
+}
+
+.enjoy {
+    color: #ff65ef;
+    font-weight: bold;
+}
+
+/*=================================================
+RESPONSIVE
+=================================================*/
+
+@media (max-width:1000px) {
+
+    .about-title h1 {
+        font-size: 40px;
+    }
+
+    .about-box {
+        width: 92%;
+        padding: 20px;
+    }
+
+    .about-box p {
+        font-size: 16px;
+    }
+
+}
