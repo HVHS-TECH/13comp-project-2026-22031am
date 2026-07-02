@@ -46,21 +46,21 @@
             <span>1-100</span>
         </div>
 
-        <!-- MAIN CONTENT ***********************************************-->
-        <div class="main-content">
+    <!-- MAIN CONTENT ***********************************************-->
+    <div class="main-content">
 
-            <!-- PLAYERS ***********************************************-->
-            <div class="players-panel">
+      <!-- PLAYERS ***********************************************-->
+       <div class="players-panel">
 
-                <h2>PLAYERS</h2>
+          <h2>PLAYERS</h2>
 
-                <div class="player-card host">
-                    <h3>Player 1</h3>
-                    <p>(Host)</p>
+          <div class="player-card host">
+              <h3>Player 1</h3>
+              <p>(Host)</p>
 
-                    <p id="host-name"></p>
+              <p id="host-name"></p>
 
-                    <div class="connected">Connected</div>
+            <div class="connected">Connected</div>
                 </div>
 
                 <div class="player-card guest">
@@ -110,18 +110,22 @@
                     <!-- BUTTONS ***********************************************-->
                     <div class="button-row">
 
-                        <button id="leaderboard-button"
-                                onclick="window.location.href='gtn_leaderboard.html'">
-                            LEADERBOARD
-                        </button>
+            <button id="leaderboard-button"
+        onclick="window.location.href='gtn_leaderboard.html'">
+        LEADERBOARD
+    </button>
 
-                        <button id="leave-button"
-                                onclick="leaveGame()">
-                            LEAVE GAME
-                        </button>
+    <button id="lobby-button"
+        onclick="returnToLobby()">
+        RETURN TO LOBBY
+    </button>
 
-                    </div>
+    <button id="leave-button"
+        onclick="leaveGame()">
+        LEAVE GAME
+    </button>
 
+</div>
                 </div>
 
             </div>

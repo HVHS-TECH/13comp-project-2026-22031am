@@ -231,14 +231,37 @@ onValue(currentTurnRef, (snapshot) => {
 
         gameEnded = true; //prevent any further guesses once a winner has been declared
 
-        document.getElementById("result-box").innerHTML =
-        snapshot.val() + " WINS THE GAME!!";
+        alert(
+            `🎉 GAME OVER!
+            ${winner} guessed the correct number!
+            The leaderboard has updated.
+            Click "RETURN TO LOBBY" to start another game!`
+        );
+
+        const winner = snapshot.val();
+        
+        // Disable guessing
+        guessInput.disabled = true;
+        guessButton.disabled = true;
+
+        // Change turn box
+        document.getElementById("turn-box").innerHTML = 
+        "🎉 GAME OVER!";
+
+        // Show winner
+        document.getElementById("result-box").innerHTML = 
+        `
+        🏆 <b>${winner}</b> wins the game!<br><br>
+        Leaderboard updated successfully! <br> <br>
+        Click <b> RETURN TO LOBBY </b> to play another game.
+         `;
 
     }
 
 });
 
 
+        
 /*******************************************************/
 // LIVE RESULT SYNC
 /*******************************************************/
@@ -305,11 +328,10 @@ function checkGuess() {
     /*******************************************************/
     if (gameEnded) {
 
-        resultBox.innerHTML =
-        "Game already finished!";
-
+        alert(
+            "🎉 The game has already finished! \n\n Please click RETURN TO LOBBY to play another game."
+        );
         return;
-
     }
 
     /*******************************************************/
@@ -520,9 +542,17 @@ function checkGuess() {
         window.location.href = "lobby.html";
     }
 
+/*******************************************************/
+// RETURN TO LOBBY
+/*******************************************************/
+function returnToLobby() {
+    window.location.href = "lobby.html";
+}
+
 
 /*******************************************************/
 // MAKE FUNCTION ACCESSIBLE FROM HTML
 /*******************************************************/
 window.checkGuess = checkGuess;
 window.leaveGame = leaveGame;
+window.returnToLobby = returnToLobby;

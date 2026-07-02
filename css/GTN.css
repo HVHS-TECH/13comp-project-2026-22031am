@@ -281,3 +281,23 @@ body {
         gap: 8px;
     }
 }
+
+/*************************************************/
+/* RETURN TO LOBBY BUTTON */
+/*************************************************/
+
+#lobby-button {
+    background: #2bb673;
+    color: white;
+    border: none;
+    width: 170px;
+    height: 46px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+#lobby-button:hover {
+    transform: scale(1.05);
+}
