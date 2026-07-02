@@ -15,9 +15,9 @@ body {
 /*************************************************/
 
 .game-container {
-    max-width: 1000px;
+    max-width: 1120px;
     margin: auto;
-    padding: 6px 14px;
+    padding: 10px 18px;
 }
 
 /*************************************************/
@@ -27,8 +27,8 @@ body {
 .title {
     text-align: center;
     color: white;
-    font-size: 28px;
-    margin: 2px;
+    font-size: 38px;
+    margin: 6px 0 10px;
     font-family: 'Luckiest Guy', cursive;
     letter-spacing: 3px;
 }
@@ -39,18 +39,18 @@ body {
 
 .range-box {
     width: fit-content;
-    margin: 10px auto 8px;
+    margin: 10px auto 10px;
     background: white;
-    padding: 6px 16px;
+    padding: 8px 18px;
     border-radius: 16px;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bold;
     color: #16235c;
 }
 
 .range-box span {
     background: #8ef2f2;
-    padding: 5px 12px;
+    padding: 6px 14px;
     border-radius: 10px;
     margin-left: 8px;
 }
@@ -63,8 +63,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 16px;
+    flex-wrap: nowrap;
 }
 
 /*************************************************/
@@ -72,15 +72,15 @@ body {
 /*************************************************/
 
 .players-panel {
-    width: 170px;
+    width: 220px;
     margin-top: 0;
 }
 
 .players-panel h2 {
     color: white;
     text-align: center;
-    margin-bottom: 8px;
-    font-size: 20px;
+    margin-bottom: 10px;
+    font-size: 22px;
 }
 
 .player-card {
@@ -122,17 +122,17 @@ body {
 /*************************************************/
 
 .status-panel {
-    width: min(480px, 100%);
+    width: min(560px, 100%);
     background: #f7f5ff;
     border-radius: 24px;
-    padding: 10px 14px;
+    padding: 14px 18px;
 }
 
 .status-panel h2 {
     text-align: center;
     color: #16235c;
-    font-size: 20px;
-    margin: 4px 0 8px;
+    font-size: 22px;
+    margin: 6px 0 10px;
 }
 
 /*************************************************/
@@ -180,29 +180,29 @@ body {
 
 .guess-row {
     display: flex;
-    gap: 10px;
-    margin-top: 8px;
+    gap: 12px;
+    margin-top: 10px;
     align-items: center;
     flex-wrap: wrap;
 }
 
 .guess-row input {
     flex: 1;
-    min-width: 170px;
-    padding: 8px;
+    min-width: 240px;
+    padding: 12px;
     border-radius: 14px;
     border: 2px solid #c9b3ff;
-    font-size: 14px;
+    font-size: 17px;
 }
 
 .guess-row button {
-    flex: 0 0 150px;
+    flex: 0 0 220px;
     background: linear-gradient(to right, #9f7aea, #7f5cff);
     border: none;
     color: white;
-    padding: 8px 10px;
+    padding: 12px 14px;
     border-radius: 14px;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -218,8 +218,8 @@ body {
 .button-row {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
+    gap: 12px;
+    margin-top: 14px;
     flex-wrap: wrap;
 }
 
@@ -229,14 +229,14 @@ body {
 
 #leaderboard-button,
 #leave-button {
-    flex: 1 1 140px;
-    max-width: 160px;
-    min-width: 130px;
-    height: 42px;
+    flex: 1 1 170px;
+    max-width: 190px;
+    min-width: 150px;
+    height: 48px;
     border: none;
-    border-radius: 14px;
+    border-radius: 16px;
     color: white;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
@@ -257,7 +257,7 @@ body {
 
 @media (max-width: 920px) {
     .game-container {
-        padding: 6px 12px;
+        padding: 8px 12px;
     }
 
     .status-panel {
@@ -268,7 +268,16 @@ body {
         width: 100%;
     }
 
+    .guess-row input {
+        min-width: 160px;
+    }
+
+    .guess-row button {
+        flex: 1 1 100%;
+        max-width: none;
+    }
+
     .button-row {
-        gap: 6px;
+        gap: 8px;
     }
 }
