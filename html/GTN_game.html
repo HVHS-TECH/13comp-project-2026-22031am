@@ -3,129 +3,135 @@
 <head>
   <title>Guess the Number game</title>
   <meta charset="UTF-8">
-  <meta name="viewport"  content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="assets/images/fruitcatcher.jpg">
-  
+
   <!-- stylesheets *******************************************-->
   <link rel="stylesheet" href="../css/GTN.css">
 
   <!-- P5.js & P5.play ***************************************-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.4/p5.min.js"
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.4/p5.min.js"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/addons/p5.sound.min.js"
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/addons/p5.sound.min.js"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
 
-  <!-- p5play v3 — hosted on official site *******************-->
-<script src="https://p5play.org/v3/planck.min.js"></script>
-<script src="https://p5play.org/v3/p5play.js"></script>
-  
-   <!-- JQUERY ************************************************-->
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- p5play v3 -->
+  <script src="https://p5play.org/v3/planck.min.js"></script>
+  <script src="https://p5play.org/v3/p5play.js"></script>
 
- <!-- google fonts ************************************************-->
+  <!-- JQUERY -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 
 </head>
- 
 
 <body>
 
     <!-- MAIN CONTAINER ***********************************************-->
-     <div class="game-container">
-      
-      
-    <!-- TITLE ***********************************************-->
-     <h1 class="title"> GUESS THE NUMBER </h1>
+    <div class="game-container">
 
-    <!-- RANGE BOX ***********************************************-->
-      <div class="range-box">
-      I'm thinking of a number between 
-    <span> 1-100 </span>
-   </div>
+        <!-- TITLE ***********************************************-->
+        <h1 class="title">GUESS THE NUMBER</h1>
 
-    <!-- MAIN CONTENT ***********************************************-->
-     <div class="main-content">
-      
-    <!-- PLAYERS ***********************************************-->
-     <div class="players-panel">
-
-      <h2> PLAYERS </h2>
-
-      <div class="player-card host">
-        <h3> Player 1</h3>
-        <p> (Host) </p>
-
-        <p id="host-name"></p>
-        
-        <div class="connected"> Connected </div>
-      </div>  
-
-      <div class ="player-card guest">
-        <h3> Player 2 </h3>
-        <p> (Guest) </p>
-
-        <p id="guest-name"></p>
-
-
-        <div class="connected"> Connected</div>
-      </div>
-     </div>
-
-    <!-- GAME STATUS ***********************************************-->
-
-     <div class="status-panel"> 
-
-      <h2> GAME STATUS </h2>
-
-      <div class="turn-box" id="turn-box">
-        Loading turn...
-      
-      </div>
-
-      <!-- LAST RESULT ***********************************************-->
-       <div class="result-box" id="result-box">
-        Make a guess to see the result!
-       </div>
-
-       <!-- GUESS INPUT  ***********************************************-->
-      <div class="guess-section">
-        <label> Enter your guess (1-100) </label>
-
-        <div class="guess-row">
-          <input id="guess-input" type="number" placeholder="Enter your number...">
-
-          <button id="guess-button" onclick="checkGuess()"> SUBMIT YOUR GUESS! </button>
+        <!-- RANGE BOX ***********************************************-->
+        <div class="range-box">
+            I'm thinking of a number between
+            <span>1-100</span>
         </div>
 
-        <!-- LEADERBOARD BUTTON  ***********************************************-->
-         <div class="leave-row">
+        <!-- MAIN CONTENT ***********************************************-->
+        <div class="main-content">
 
-          <button id="leaderboard-button" onclick="window.location.href='gtn_leaderboard.html'">
-            LEADERBOARD
-          </button>
+            <!-- PLAYERS ***********************************************-->
+            <div class="players-panel">
+
+                <h2>PLAYERS</h2>
+
+                <div class="player-card host">
+                    <h3>Player 1</h3>
+                    <p>(Host)</p>
+
+                    <p id="host-name"></p>
+
+                    <div class="connected">Connected</div>
+                </div>
+
+                <div class="player-card guest">
+                    <h3>Player 2</h3>
+                    <p>(Guest)</p>
+
+                    <p id="guest-name"></p>
+
+                    <div class="connected">Connected</div>
+                </div>
+
+            </div>
+
+            <!-- GAME STATUS ***********************************************-->
+
+            <div class="status-panel">
+
+                <h2>GAME STATUS</h2>
+
+                <div class="turn-box" id="turn-box">
+                    Loading turn...
+                </div>
+
+                <!-- LAST RESULT ***********************************************-->
+                <div class="result-box" id="result-box">
+                    Make a guess to see the result!
+                </div>
+
+                <!-- GUESS INPUT ***********************************************-->
+                <div class="guess-section">
+
+                    <label>Enter your guess (1-100)</label>
+
+                    <div class="guess-row">
+
+                        <input id="guess-input"
+                               type="number"
+                               placeholder="Enter your number...">
+
+                        <button id="guess-button"
+                                onclick="checkGuess()">
+                            SUBMIT YOUR GUESS!
+                        </button>
+
+                    </div>
+
+                    <!-- BUTTONS ***********************************************-->
+                    <div class="button-row">
+
+                        <button id="leaderboard-button"
+                                onclick="window.location.href='gtn_leaderboard.html'">
+                            LEADERBOARD
+                        </button>
+
+                        <button id="leave-button"
+                                onclick="leaveGame()">
+                            LEAVE GAME
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-
-       <!-- LEAVE GAME BUTTON  ***********************************************-->
-        <div class="leave-row">
-          <button id="leave-button" onclick="leaveGame()">
-            LEAVE GAME
-          </button>
-
-
-        </div>
-
-      </div>
     </div>
-  </div> 
-</div>
 
-  <script type="module" src="../games/gtn_game.mjs"></script>
+    <script type="module" src="../games/gtn_game.mjs"></script>
+
 </body>
 </html>
 
